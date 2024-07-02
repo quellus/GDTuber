@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=13 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://MicRecord.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
+[ext_resource type="Script" path="res://sprite_controller.gd" id="3_sd1m6"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
 
@@ -41,6 +42,43 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_mp8u4"]
+resource_name = "bounce"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(355, 223), Vector2(355, 199.29), Vector2(355, 223)]
+}
+
+[sub_resource type="Animation" id="Animation_iyw88"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(355, 223)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_07wct"]
+_data = {
+"RESET": SubResource("Animation_iyw88"),
+"bounce": SubResource("Animation_mp8u4")
+}
+
 [node name="MicRecord" type="Control"]
 layout_mode = 3
 anchors_preset = 8
@@ -74,6 +112,10 @@ show_percentage = false
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(355, 223)
 sprite_frames = SubResource("SpriteFrames_361pb")
+script = ExtResource("3_sd1m6")
+
+[node name="BlinkTimer" type="Timer" parent="Sprite2D"]
+autostart = true
 
 [node name="VSlider" type="VSlider" parent="."]
 layout_mode = 0
@@ -85,4 +127,11 @@ max_value = 1.0
 step = 0.01
 value = 0.5
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_07wct")
+}
+
+[connection signal="timeout" from="Sprite2D/BlinkTimer" to="Sprite2D" method="_on_blink_timer_timeout"]
 [connection signal="drag_ended" from="VSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animator_stopped"]

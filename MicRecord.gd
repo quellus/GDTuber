@@ -2,34 +2,39 @@ extends Control
 
 var analyzer: AudioEffectSpectrumAnalyzerInstance
 var samples: Array[float] = []
-const MAX_SAMPLES = 20
+const MAX_SAMPLES = 10
 var threshold := 0.5
-
+var bus_index
+var is_talking = false
+@onready var animator = $AnimationPlayer
 @onready var sprite = $Sprite2D
 
 func _ready():
-	var idx = AudioServer.get_bus_index("Record")
-	analyzer = AudioServer.get_bus_effect_instance(idx, 0)
+	bus_index = AudioServer.get_bus_index("Record")
 
 
 func _process(_delta):
-	var sample = analyzer.get_magnitude_for_frequency_range(60, 500, AudioEffectSpectrumAnalyzerInstance.MAGNITUDE_AVERAGE)
-	var magnitude = sample.x  * 200
+	var magnitude = db_to_linear(AudioServer.get_bus_peak_volume_left_db(bus_index, 0))
 	
 	if samples.size() >= MAX_SAMPLES:
 		samples.pop_front()
 	samples.append(magnitude)
 	
 	var magnitude_avg = _get_average(samples)
-	
+
 	if magnitude_avg > threshold:
+		if !is_talking:
+			is_talking = true
+			if !animator.is_playing():
+				animator.play("bounce")
 		if sprite.frame % 2 == 0:
 			sprite.frame += 1
-			print(sprite.frame)
-	elif sprite.frame % 2 == 1:
-		sprite.frame -= 1
-		print(sprite.frame)
-	
+	else:
+		if is_talking:
+			is_talking = false
+		if sprite.frame % 2 == 1:
+			sprite.frame -= 1
+
 	$ProgressBar.value = magnitude_avg
 
 
@@ -43,3 +48,8 @@ func _get_average(samples: Array[float]) -> float:
 func _on_v_slider_drag_ended(value_changed):
 	threshold = $VSlider.value
 	print(threshold)
+
+func _on_animator_stopped(anim_name):
+	if is_talking:
+		animator.play("bounce")
+	
