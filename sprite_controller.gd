@@ -4,15 +4,14 @@ var blinking = false
 @onready var timer = $BlinkTimer
 var rng = RandomNumberGenerator.new()
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
+	get_tree().root.size_changed.connect(_reposition)
+	_reposition()
+	
+func _reposition():
+	print("resized")
+	offset = sprite_frames.get_frame_texture(animation, frame).get_size() / -2
+	position = Vector2.ZERO
 
 func _on_blink_timer_timeout():
 	if blinking == false:

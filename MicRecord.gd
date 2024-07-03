@@ -3,14 +3,16 @@ extends Control
 var analyzer: AudioEffectSpectrumAnalyzerInstance
 var samples: Array[float] = []
 const MAX_SAMPLES = 10
-var threshold := 0.5
 var bus_index
 var is_talking = false
-@onready var animator = $AnimationPlayer
-@onready var sprite = $Sprite2D
+@onready var animator = $Control/Control/AnimationPlayer
+@onready var sprite = %AvatarSprite
+@onready var menu = %Menu
 
 func _ready():
+	get_tree().get_root().set_transparent_background(true)
 	bus_index = AudioServer.get_bus_index("Record")
+	
 
 
 func _process(_delta):
@@ -22,7 +24,7 @@ func _process(_delta):
 	
 	var magnitude_avg = _get_average(samples)
 
-	if magnitude_avg > threshold:
+	if magnitude_avg > Save.threshold:
 		if !is_talking:
 			is_talking = true
 			if !animator.is_playing():
@@ -35,8 +37,13 @@ func _process(_delta):
 		if sprite.frame % 2 == 1:
 			sprite.frame -= 1
 
-	$ProgressBar.value = magnitude_avg
+	%VolumeVisual.value = magnitude_avg
 
+func _unhandled_input(event):
+	if event is InputEventKey or event is InputEventMouse:
+		if event.is_pressed():
+			menu.menu_shown = true
+		
 
 func _get_average(samples: Array[float]) -> float:
 	var mag_sum: float = 0.0
@@ -46,8 +53,7 @@ func _get_average(samples: Array[float]) -> float:
 	
 
 func _on_v_slider_drag_ended(value_changed):
-	threshold = $VSlider.value
-	print(threshold)
+	Save.threshold = %ThesholdSlider.value
 
 func _on_animator_stopped(anim_name):
 	if is_talking:

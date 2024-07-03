@@ -24,12 +24,17 @@ config/icon="res://icon.webp"
 driver/enable_input=true
 enable_audio_input=true
 
+[autoload]
+
+Save="*res://save.gd"
+
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=480
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/mode=3
+window/size/transparent=true
+window/per_pixel_transparency/allowed=true
 window/vsync/vsync_mode=0
 
 [rendering]
