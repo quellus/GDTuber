@@ -9,7 +9,6 @@ func _ready():
 	_reposition()
 	
 func _reposition():
-	print("resized")
 	offset = sprite_frames.get_frame_texture(animation, frame).get_size() / -2
 	position = Vector2.ZERO
 
