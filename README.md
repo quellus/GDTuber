@@ -1,17 +1,4 @@
-# Audio Mic Record
+Made by Quellus and [Code807](https://github.com/code807)
 
-This is an example showing how one can record audio from
-the microphone and later play it back or save it to a file.
-
-With an addition on how to change the format, mix rate and
-stereo settings of the recording.
-
-Language: GDScript
-
-Renderer: Compatibility
-
-Check out this demo on the asset library: https://godotengine.org/asset-library/asset/527
-
-## Screenshots
-
-![Screenshot](screenshots/mic_record.png)
+A PNG Tuber program in godot.
+Import you PNG and watch it react to your voice.
