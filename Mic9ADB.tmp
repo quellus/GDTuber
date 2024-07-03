@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=14 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://MicRecord.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
@@ -43,21 +43,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Animation" id="Animation_iyw88"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Control/AvatarSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(355, 223)]
-}
-
 [sub_resource type="Animation" id="Animation_mp8u4"]
 resource_name = "bounce"
 length = 0.4
@@ -74,23 +59,26 @@ tracks/0/keys = {
 "values": [Vector2(0, 0), Vector2(0, -23), Vector2(0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_iyw88"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Control/AvatarSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(355, 223)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_07wct"]
 _data = {
 "RESET": SubResource("Animation_iyw88"),
 "bounce": SubResource("Animation_mp8u4")
 }
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbb78"]
-content_margin_left = 20.0
-content_margin_top = 20.0
-content_margin_right = 20.0
-content_margin_bottom = 20.0
-bg_color = Color(0.262932, 0.262932, 0.262932, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0, 0, 0, 1)
 
 [node name="MicRecord" type="Control"]
 layout_mode = 3
@@ -146,39 +134,48 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_l3c8m")
 
-[node name="PanelContainer" type="PanelContainer" parent="Menu"]
+[node name="ColorRect" type="ColorRect" parent="Menu"]
+layout_mode = 0
+offset_right = 318.0
+offset_bottom = 726.0
+color = Color(1, 1, 1, 0.690196)
+
+[node name="QuitButton" type="Button" parent="Menu"]
 layout_mode = 1
-anchors_preset = 9
+anchors_preset = 2
+anchor_top = 1.0
 anchor_bottom = 1.0
-offset_right = 129.0
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
+offset_top = -31.0
+offset_right = 42.0
+grow_vertical = 0
+text = "Quit"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer"]
-layout_mode = 2
-theme_override_constants/separation = 15
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu"]
+layout_mode = 0
+offset_right = 105.88
+offset_bottom = 727.085
 
-[node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="DeviceDropdown" type="MenuButton" parent="Menu/VBoxContainer"]
 layout_mode = 2
-text = "Input Device"
+text = "test"
 item_count = 1
 popup/item_0/text = ""
 popup/item_0/id = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(89.705, 193.37)
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/VBoxContainer"]
+custom_minimum_size = Vector2(89.705, 150.67)
 layout_mode = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="ThesholdSlider" type="VSlider" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ThesholdSlider" type="VSlider" parent="Menu/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="VolumeVisual" type="ProgressBar" parent="Menu/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
@@ -187,34 +184,12 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="FileButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Change Texture"
-
-[node name="CloseButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="CloseButton" type="Button" parent="Menu/VBoxContainer"]
 layout_mode = 2
 text = "Close"
 
-[node name="QuitButton" type="Button" parent="Menu/PanelContainer"]
-layout_mode = 2
-size_flags_vertical = 8
-text = "Quit"
-
-[node name="FileDialog" type="FileDialog" parent="."]
-unique_name_in_owner = true
-title = "Open a File"
-initial_position = 1
-size = Vector2i(682, 589)
-ok_button_text = "Open"
-file_mode = 0
-access = 2
-filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
-use_native_dialog = true
-
 [connection signal="timeout" from="Control/Control/AvatarSprite/BlinkTimer" to="Control/Control/AvatarSprite" method="_on_blink_timer_timeout"]
 [connection signal="animation_finished" from="Control/Control/AnimationPlayer" to="." method="_on_animator_stopped"]
-[connection signal="drag_ended" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
-[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
-[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
-[connection signal="button_down" from="Menu/PanelContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
-[connection signal="file_selected" from="FileDialog" to="Menu" method="_on_file_dialog_file_selected"]
+[connection signal="button_down" from="Menu/QuitButton" to="Menu" method="_on_quit_button_button_down"]
+[connection signal="drag_ended" from="Menu/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="button_down" from="Menu/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]

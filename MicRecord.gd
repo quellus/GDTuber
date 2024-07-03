@@ -12,8 +12,6 @@ var is_talking = false
 func _ready():
 	get_tree().get_root().set_transparent_background(true)
 	bus_index = AudioServer.get_bus_index("Record")
-	
-
 
 func _process(_delta):
 	var magnitude = db_to_linear(AudioServer.get_bus_peak_volume_left_db(bus_index, 0))
