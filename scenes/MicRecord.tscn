@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=16 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://scripts/MicRecord.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
 [ext_resource type="Script" path="res://scripts/sprite_controller.gd" id="3_sd1m6"]
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
+[ext_resource type="Script" path="res://scripts/screen_object.gd" id="5_n1q42"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
 
@@ -120,6 +121,14 @@ grow_vertical = 0
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="ScreenObject" type="Node2D" parent="Control/Control"]
+position = Vector2(-680, -375)
+script = ExtResource("5_n1q42")
+texture = ExtResource("2_ohm23")
+blinking = true
+reactive = true
+talking = true
 
 [node name="AvatarSprite" type="AnimatedSprite2D" parent="Control/Control"]
 unique_name_in_owner = true

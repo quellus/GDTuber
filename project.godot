@@ -11,8 +11,6 @@ config_version=5
 [application]
 
 config/name="GDTuber"
-config/description="This is an example showing how one can record audio from
-the microphone and later play it back or save it to a file."
 config/tags=PackedStringArray("audio", "demo", "official")
 run/main_scene="res://scenes/MicRecord.tscn"
 config/features=PackedStringArray("4.2")

@@ -61,4 +61,4 @@ func _on_file_dialog_file_selected(path):
 		atlas.atlas = ImageTexture.new().create_from_image(image)
 		atlas.region = atlas_rect
 		%AvatarSprite.sprite_frames.set_frame("default", i, atlas)
-	%AvatarSprite._reposition()
+	%AvatarSprite.reposition()
