@@ -1,9 +1,9 @@
 [gd_scene load_steps=15 format=3 uid="uid://dvjlkpjvjxn0h"]
 
-[ext_resource type="Script" path="res://MicRecord.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/MicRecord.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
-[ext_resource type="Script" path="res://sprite_controller.gd" id="3_sd1m6"]
-[ext_resource type="Script" path="res://Menu.gd" id="4_l3c8m"]
+[ext_resource type="Script" path="res://scripts/sprite_controller.gd" id="3_sd1m6"]
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
 

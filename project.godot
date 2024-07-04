@@ -14,7 +14,7 @@ config/name="GDTuber"
 config/description="This is an example showing how one can record audio from
 the microphone and later play it back or save it to a file."
 config/tags=PackedStringArray("audio", "demo", "official")
-run/main_scene="res://MicRecord.tscn"
+run/main_scene="res://scenes/MicRecord.tscn"
 config/features=PackedStringArray("4.2")
 run/low_processor_mode=true
 config/icon="res://icon.webp"
@@ -26,7 +26,7 @@ enable_audio_input=true
 
 [autoload]
 
-Save="*res://save.gd"
+Save="*res://scripts/save.gd"
 
 [display]
 
