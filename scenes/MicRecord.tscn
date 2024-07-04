@@ -1,9 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=5 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://scripts/MicRecord.gd" id="1"]
-[ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
-[ext_resource type="Script" path="res://scripts/screen_object.gd" id="5_n1q42"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
 
@@ -35,28 +33,20 @@ bus = &"Record"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Control" type="Control" parent="Control"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ScreenObject" type="Node2D" parent="Control/Control"]
-position = Vector2(-680, -375)
-script = ExtResource("5_n1q42")
-texture = ExtResource("2_ohm23")
-blinking = true
-reactive = true
-talking = true
-
-[node name="Menu" type="Control" parent="."]
+[node name="Menu" type="Control" parent="." node_paths=PackedStringArray("ObjectsRoot", "MenusRoot")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -65,12 +55,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_l3c8m")
+ObjectsRoot = NodePath("../Control/Control")
+MenusRoot = NodePath("PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu"]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 334.0
+offset_right = 191.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
 
@@ -80,6 +72,7 @@ theme_override_constants/separation = 15
 
 [node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 text = "Input Device"
 item_count = 1
 popup/item_0/text = ""
@@ -88,6 +81,7 @@ popup/item_0/id = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(89.705, 193.37)
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 0
 alignment = 1
 
@@ -114,30 +108,24 @@ horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 3
 size_flags_vertical = 3
 
+[node name="Button" type="Button" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 23.555)
+layout_mode = 2
+text = "+"
+
 [node name="PanelContainer" type="PanelContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 30.29)
 layout_mode = 2
-size_flags_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer"]
+[node name="MenusRoot" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
-
-[node name="Button" type="Button" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-text = "Do thing"
-
-[node name="Button2" type="Button" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-text = "Do other thing"
-
-[node name="Button3" type="Button" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-text = "Do thing3"
 
 [node name="FileButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Change Texture"
 
@@ -162,6 +150,7 @@ filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *
 use_native_dialog = true
 
 [connection signal="drag_ended" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="Menu" method="_create_new_object"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
