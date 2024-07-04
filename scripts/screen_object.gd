@@ -25,17 +25,14 @@ var blink_timer: Timer
 var bounce_animator: AnimationPlayer
 var is_talking: bool:
 	set(value):
-		print("setter getting called")
 		is_talking = value
 		if talking and sprite is AnimatedSprite2D:
-			print("Setting sprite frame")
 			if value:
 				sprite.frame += 1
 			else:
 				sprite.frame -= 1
 		if is_instance_valid(bounce_animator):
 			if !bounce_animator.is_playing():
-				print("playing bounce animation")
 				bounce_animator.play("bounce")
 
 func _ready():

@@ -1,85 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=7 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://scripts/MicRecord.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
-[ext_resource type="Script" path="res://scripts/sprite_controller.gd" id="3_sd1m6"]
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
 [ext_resource type="Script" path="res://scripts/screen_object.gd" id="5_n1q42"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hbp0s"]
-atlas = ExtResource("2_ohm23")
-region = Rect2(0, 0, 480, 480)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fwshm"]
-atlas = ExtResource("2_ohm23")
-region = Rect2(480, 0, 480, 480)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_arakm"]
-atlas = ExtResource("2_ohm23")
-region = Rect2(0, 480, 480, 480)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_8h702"]
-atlas = ExtResource("2_ohm23")
-region = Rect2(480, 480, 480, 480)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_361pb"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hbp0s")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fwshm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_arakm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8h702")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
-[sub_resource type="Animation" id="Animation_iyw88"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Control/AvatarSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(355, 223)]
-}
-
-[sub_resource type="Animation" id="Animation_mp8u4"]
-resource_name = "bounce"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control/Control/AvatarSprite:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(0, -23), Vector2(0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_07wct"]
-_data = {
-"RESET": SubResource("Animation_iyw88"),
-"bounce": SubResource("Animation_mp8u4")
-}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbb78"]
 content_margin_left = 20.0
@@ -129,21 +55,6 @@ texture = ExtResource("2_ohm23")
 blinking = true
 reactive = true
 talking = true
-
-[node name="AvatarSprite" type="AnimatedSprite2D" parent="Control/Control"]
-unique_name_in_owner = true
-position = Vector2(355, 223)
-sprite_frames = SubResource("SpriteFrames_361pb")
-script = ExtResource("3_sd1m6")
-
-[node name="BlinkTimer" type="Timer" parent="Control/Control/AvatarSprite"]
-autostart = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Control"]
-root_node = NodePath("../../..")
-libraries = {
-"": SubResource("AnimationLibrary_07wct")
-}
 
 [node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -220,8 +131,6 @@ access = 2
 filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
 use_native_dialog = true
 
-[connection signal="timeout" from="Control/Control/AvatarSprite/BlinkTimer" to="Control/Control/AvatarSprite" method="_on_blink_timer_timeout"]
-[connection signal="animation_finished" from="Control/Control/AnimationPlayer" to="." method="_on_animator_stopped"]
 [connection signal="drag_ended" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]

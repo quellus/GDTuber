@@ -4,8 +4,6 @@ var analyzer: AudioEffectSpectrumAnalyzerInstance
 var samples: Array[float] = []
 const MAX_SAMPLES = 10
 var bus_index
-@onready var animator = $Control/Control/AnimationPlayer
-@onready var sprite = %AvatarSprite
 @onready var menu = %Menu
 
 var is_talking := false:
@@ -13,7 +11,6 @@ var is_talking := false:
 		if value != is_talking:
 			for screen_object in get_tree().get_nodes_in_group("reactive"):
 				if screen_object is ScreenObject:
-					print("found screen object")
 					screen_object.is_talking = value
 		is_talking = value
 
@@ -30,20 +27,12 @@ func _process(_delta):
 	
 	var magnitude_avg = _get_average(samples)
 
-	
-
 	if magnitude_avg > Save.threshold:
 		if !is_talking:
 			is_talking = true
-			#if !animator.is_playing():
-				#animator.play("bounce")
-		#if sprite.frame % 2 == 0:
-			#sprite.frame += 1
 	else:
 		if is_talking:
 			is_talking = false
-		#if sprite.frame % 2 == 1:
-			#sprite.frame -= 1
 
 	%VolumeVisual.value = magnitude_avg
 

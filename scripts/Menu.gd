@@ -2,7 +2,6 @@ class_name Menu extends Control
 
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
 @onready var file_dialog := %FileDialog
-@onready var sprite = %AvatarSprite
 
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
