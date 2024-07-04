@@ -2,6 +2,7 @@ class_name Menu extends Control
 
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
 @onready var file_dialog := %FileDialog
+var screen_objects : Array[ScreenObject] = []
 
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
