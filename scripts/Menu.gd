@@ -33,15 +33,16 @@ func _create_new_object():
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
 		newobject.texture = ImageTexture.create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
-		newmenu.request_file.connect(_on_file_button_button_down)
+		
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
-		newmenu.request_gizmo.connect(_on_drag_requested)
+		
 
 func _on_button_button_down():
 	menu_shown = false
 
 func _on_quit_button_button_down():
+	LayoutSaver.save(owner)
 	get_tree().quit()
 
 func _on_popup_menu_index_pressed(index: int):
@@ -62,12 +63,11 @@ func _on_file_dialog_file_selected(path):
 		if err != OK:
 			printerr("cannot load image.")
 			return
-		Save.filepath = path
 		openingfor.texture = ImageTexture.create_from_image(image)
 
 
 func _on_drag_requested(object: ScreenObject):
-	if drag_target == object:
+	if drag_target == object :
 		drag_target = null
 		gizmo.visible = false
 		gizmo.target = null

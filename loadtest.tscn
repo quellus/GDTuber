@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://g67gffns8kek"]
+
+[ext_resource type="Script" path="res://scripts/save.gd" id="1_y5rt8"]
+
+[node name="Node" type="Node"]
+
+[node name="LayoutSaver" type="Node" parent="."]
+script = ExtResource("1_y5rt8")
+
+[connection signal="ready" from="." to="LayoutSaver" method="load"]

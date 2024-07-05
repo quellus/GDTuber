@@ -45,6 +45,7 @@ var is_talking: bool:
 
 func _ready():
 	create_visual()
+	owner=get_parent().owner #nodes loaded with scene have the scene root as owner
 
 func create_visual():
 	remove_from_group("reactive")

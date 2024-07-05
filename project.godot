@@ -21,10 +21,6 @@ config/icon="res://icon.webp"
 driver/enable_input=true
 enable_audio_input=true
 
-[autoload]
-
-Save="*res://scripts/save.gd"
-
 [display]
 
 window/size/viewport_width=1280

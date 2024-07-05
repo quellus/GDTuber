@@ -5,6 +5,7 @@ var samples: Array[float] = []
 const MAX_SAMPLES = 10
 var bus_index
 @onready var menu = %Menu
+@export var threshold=0.5
 
 var is_talking := false:
 	set(value):
@@ -27,7 +28,7 @@ func _process(_delta):
 	
 	var magnitude_avg = _get_average()
 
-	if magnitude_avg > Save.threshold:
+	if magnitude_avg > threshold:
 		if !is_talking:
 			is_talking = true
 	else:
@@ -50,4 +51,4 @@ func _get_average() -> float:
 	
 
 func _on_v_slider_drag_ended(value_changed):
-	Save.threshold = %ThesholdSlider.value
+	threshold = %ThesholdSlider.value
