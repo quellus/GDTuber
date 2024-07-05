@@ -11,7 +11,6 @@ config_version=5
 [application]
 
 config/name="GDTuber"
-config/tags=PackedStringArray("audio", "demo", "official")
 run/main_scene="res://scenes/MicRecord.tscn"
 config/features=PackedStringArray("4.2")
 run/low_processor_mode=true

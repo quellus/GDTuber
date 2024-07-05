@@ -32,7 +32,7 @@ func _create_new_object():
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate()
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
-		newobject.texture = ImageTexture.new().create_from_image(Image.load_from_file("res://icon.svg"))
+		newobject.texture = ImageTexture.new().create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
 		newmenu.request_file.connect(_on_file_button_button_down)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
