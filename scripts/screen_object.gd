@@ -1,4 +1,5 @@
 class_name ScreenObject extends Node2D
+
 var rng = RandomNumberGenerator.new()
 @export var texture: Texture2D:
 	set(value): 

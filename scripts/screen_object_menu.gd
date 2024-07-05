@@ -1,5 +1,7 @@
 class_name ScreenObjectMenu extends PanelContainer
 
+signal request_gizmo(ScreenObject)
+
 var object: ScreenObject
 
 signal request_file(ScreenObject)
@@ -20,3 +22,6 @@ func _set_talks(value):
 
 func _request_file():
 	emit_signal("request_file", object)
+
+func _request_gizmo():
+	emit_signal("request_gizmo", object)

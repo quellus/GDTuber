@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=4 format=3 uid="uid://crst8lnhaxjoo"]
 
-[ext_resource type="Script" path="res://scenes/screen_object_menu.gd" id="1_cks2u"]
+[ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="1_dxbbx"]
+[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_nubdv"]
 
 [node name="ScreenObjectMenu" type="PanelContainer"]
+offset_right = 159.0
+offset_bottom = 69.0
 size_flags_horizontal = 4
 size_flags_vertical = 2
-script = ExtResource("1_cks2u")
+script = ExtResource("1_0piso")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
@@ -15,17 +18,25 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 27.345)
 layout_mode = 2
 
-[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(21.48, 0)
 layout_mode = 2
 theme = ExtResource("1_dxbbx")
 text = "X"
 
-[node name="Button2" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Change Image" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_dxbbx")
 text = "Change Image"
+
+[node name="Gizmo" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+theme = ExtResource("1_dxbbx")
+texture_normal = ExtResource("3_nubdv")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="Booleans" type="PanelContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 29.025)
@@ -88,8 +99,9 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_dxbbx")
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="_delete_object"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="_request_file"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Gizmo" to="." method="_request_gizmo"]
 [connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer/CheckBox" to="." method="_set_talks"]
 [connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer/CheckBox" to="." method="_set_bounces"]
 [connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox" to="." method="_set_blinks"]
