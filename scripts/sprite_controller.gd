@@ -5,10 +5,10 @@ var blinking = false
 var rng = RandomNumberGenerator.new()
 
 func _ready():
-	get_tree().root.size_changed.connect(_reposition)
-	_reposition()
+	get_tree().root.size_changed.connect(reposition)
+	reposition()
 	
-func _reposition():
+func reposition():
 	offset = sprite_frames.get_frame_texture(animation, frame).get_size() / -2
 	position = Vector2.ZERO
 
