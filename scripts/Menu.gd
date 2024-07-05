@@ -8,7 +8,8 @@ var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
-
+@export var gizmo: Gizmo
+var drag_target: ScreenObject
 var openingfor: ScreenObject 
 
 var menu_shown = false:
@@ -35,6 +36,7 @@ func _create_new_object():
 		newmenu.request_file.connect(_on_file_button_button_down)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
+		newmenu.request_gizmo.connect(_on_drag_requested)
 
 func _on_button_button_down():
 	menu_shown = false
@@ -61,27 +63,16 @@ func _on_file_dialog_file_selected(path):
 			print("AAAAAA")
 			return
 		Save.filepath = path
-		
 		openingfor.texture = ImageTexture.new().create_from_image(image)
-		
-		"""
-		var width = floor(image.get_width()/2)
-		var height = floor(image.get_height()/2)
-		for i in range(4):
-			var atlas = AtlasTexture.new()
-			var atlas_rect
-			match i:
-				0:
-					atlas_rect = Rect2(0, 0, width, height)
-				1:
-					atlas_rect = Rect2(width, 0, width, height)
-				2:
-					atlas_rect = Rect2(0, height, width, height)
-				3:
-					atlas_rect = Rect2(width, height, width, height)
-					
-			atlas.atlas = ImageTexture.new().create_from_image(image)
-			atlas.region = atlas_rect
-			%AvatarSprite.sprite_frames.set_frame("default", i, atlas)
-		%AvatarSprite.reposition()
-		"""
+
+
+func _on_drag_requested(object: ScreenObject):
+	if drag_target == object:
+		drag_target = null
+		gizmo.visible = false
+		gizmo.target = null
+	else:
+		gizmo.global_position = object.global_position
+		gizmo.visible = true
+		gizmo.target = object
+		drag_target = object
