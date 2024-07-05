@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4sf3pdswvgrf"]
+
+[ext_resource type="Script" path="res://MainMenu.gd" id="1_gs65l"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 18.0
+offset_right = 40.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_gs65l")
+
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1228.0
+offset_bottom = 700.0
+color = Color(0.372549, 0.588235, 0.87451, 0.462745)
+
+[node name="title" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 534.0
+offset_top = 61.0
+offset_right = 770.0
+offset_bottom = 143.0
+theme_override_font_sizes/bold_font_size = 55
+text = "GD Tuber"
+tab_size = 5
+
+[node name="play" type="Button" parent="."]
+layout_mode = 0
+offset_left = 388.0
+offset_top = 157.0
+offset_right = 796.0
+offset_bottom = 230.0
+text = "PLAY"
+
+[node name="change" type="Button" parent="."]
+layout_mode = 0
+offset_left = 388.0
+offset_top = 332.0
+offset_right = 796.0
+offset_bottom = 405.0
+text = "quit"
+
+[node name="quit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 241.0
+offset_right = 798.0
+offset_bottom = 314.0
+text = "change PNG TUBER"
