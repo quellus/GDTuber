@@ -4,6 +4,7 @@
 bg_color = Color(0.85098, 0.85098, 0.85098, 1)
 
 [resource]
+default_font_size = 11
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/font_sizes/font_size = 11
 Button/styles/normal = SubResource("StyleBoxFlat_wb5p2")

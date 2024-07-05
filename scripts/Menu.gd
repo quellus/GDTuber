@@ -16,7 +16,6 @@ var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
 func _ready():
-	menu_shown = false
 	var popup_menu = device_dropdown.get_popup()
 	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	var devices = AudioServer.get_input_device_list()
