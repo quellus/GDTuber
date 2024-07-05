@@ -1,5 +1,5 @@
 class_name ScreenObject extends Node2D
-
+var rng = RandomNumberGenerator.new()
 @export var texture: Texture2D:
 	set(value): 
 		texture = value
@@ -23,6 +23,13 @@ var user_position: Vector2
 var sprite: Node2D
 var blink_timer: Timer
 var bounce_animator: AnimationPlayer
+var is_blinking: bool:
+	set(value):
+		is_blinking = value
+		if value:
+			sprite.frame += 2
+		else:
+			sprite.frame -= 2
 var is_talking: bool:
 	set(value):
 		is_talking = value
@@ -49,6 +56,12 @@ func create_visual():
 			bounce_animator = null
 		if talking:
 			create_talking_atlas()
+			if blinking:
+				blink_timer = Timer.new()
+				add_child(blink_timer)
+				blink_timer.timeout.connect(_on_blink_timer_timeout)
+				blink_timer.start(1)
+				
 		else:
 			create_normal_sprite()
 		if reactive:
@@ -57,6 +70,7 @@ func create_visual():
 			if bounce_animator:
 				bounce_animator.queue_free()
 				bounce_animator = null
+		
 	
 func create_talking_atlas():
 	var width = floor(texture.get_width()/2)
@@ -110,3 +124,11 @@ func generate_animation():
 func _on_animator_stopped(anim_name):
 	if is_talking:
 		bounce_animator.play("bounce")
+
+
+func _on_blink_timer_timeout():
+	if is_blinking:
+		blink_timer.start(rng.randf_range(2, 4))
+	else:
+		blink_timer.start(0.2)
+	is_blinking = !is_blinking
