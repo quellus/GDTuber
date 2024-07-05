@@ -1,9 +1,9 @@
 extends Control
 
-
-func run():
-	get_tree().change_scene_to_file("res://MicRecord.tscn")
+func Run():
+	get_tree().change_scene_to_file("res://GDTuber-main/MicRecord.tscn")
 	
 	
-func quit():
+func Quit():
 	get_tree().quit()
+

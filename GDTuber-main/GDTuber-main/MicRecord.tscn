@@ -1,0 +1,275 @@
+[gd_scene load_steps=17 format=3 uid="uid://dvjlkpjvjxn0h"]
+
+[ext_resource type="Script" path="res://MicRecord.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_ohm23"]
+[ext_resource type="Script" path="res://sprite_controller.gd" id="3_sd1m6"]
+[ext_resource type="Script" path="res://Menu.gd" id="4_l3c8m"]
+[ext_resource type="Script" path="res://MainMenu.gd" id="5_vn0em"]
+
+[sub_resource type="AudioStreamMicrophone" id="1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbp0s"]
+atlas = ExtResource("2_ohm23")
+region = Rect2(0, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwshm"]
+atlas = ExtResource("2_ohm23")
+region = Rect2(480, 0, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arakm"]
+atlas = ExtResource("2_ohm23")
+region = Rect2(0, 480, 480, 480)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h702"]
+atlas = ExtResource("2_ohm23")
+region = Rect2(480, 480, 480, 480)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_361pb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbp0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwshm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arakm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h702")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_iyw88"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Control/AvatarSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(355, 223)]
+}
+
+[sub_resource type="Animation" id="Animation_mp8u4"]
+resource_name = "bounce"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control/Control/AvatarSprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -23), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_07wct"]
+_data = {
+"RESET": SubResource("Animation_iyw88"),
+"bounce": SubResource("Animation_mp8u4")
+}
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbb78"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.262932, 0.262932, 0.262932, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SystemFont" id="SystemFont_6uorv"]
+
+[node name="MicRecord" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
+stream = SubResource("1")
+autoplay = true
+bus = &"Record"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="Control"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_l3c8m")
+
+[node name="AvatarSprite" type="AnimatedSprite2D" parent="Control/Control"]
+unique_name_in_owner = true
+position = Vector2(355, 223)
+sprite_frames = SubResource("SpriteFrames_361pb")
+script = ExtResource("3_sd1m6")
+
+[node name="BlinkTimer" type="Timer" parent="Control/Control/AvatarSprite"]
+autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control/Control"]
+root_node = NodePath("../../..")
+libraries = {
+"": SubResource("AnimationLibrary_07wct")
+}
+
+[node name="Menu" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_l3c8m")
+
+[node name="PanelContainer" type="PanelContainer" parent="Menu"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 170.0
+offset_bottom = -208.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Input Device"
+item_count = 1
+popup/item_0/text = ""
+popup/item_0/id = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(89.705, 193.37)
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="ThesholdSlider" type="VSlider" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="FileButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Change Texture"
+
+[node name="CloseButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Close"
+
+[node name="QuitButton" type="Button" parent="Menu/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Quit"
+
+[node name="FileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 1
+size = Vector2i(682, 589)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
+use_native_dialog = true
+
+[node name="MainMenu" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 10.0
+offset_top = -709.0
+offset_right = 1299.0
+offset_bottom = -4.0
+script = ExtResource("5_vn0em")
+
+[node name="ColorRect" type="ColorRect" parent="MainMenu"]
+layout_mode = 0
+offset_right = 1286.0
+offset_bottom = 705.0
+color = Color(0.160784, 0.568627, 1, 1)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 25.0
+offset_right = 771.0
+offset_bottom = 77.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/bold_font = SubResource("SystemFont_6uorv")
+theme_override_font_sizes/bold_font_size = 61
+text = "GD Tuber"
+tab_size = 24
+
+[node name="play" type="Button" parent="MainMenu"]
+layout_mode = 0
+offset_left = 479.0
+offset_top = 118.0
+offset_right = 781.0
+offset_bottom = 194.0
+text = "run"
+
+[node name="change skin" type="Button" parent="MainMenu"]
+layout_mode = 0
+offset_left = 483.0
+offset_top = 330.0
+offset_right = 785.0
+offset_bottom = 406.0
+text = "change skin"
+
+[node name="quit" type="Button" parent="MainMenu"]
+layout_mode = 0
+offset_left = 481.0
+offset_top = 222.0
+offset_right = 783.0
+offset_bottom = 298.0
+text = "quit"
+
+[connection signal="timeout" from="Control/Control/AvatarSprite/BlinkTimer" to="Control/Control/AvatarSprite" method="_on_blink_timer_timeout"]
+[connection signal="animation_finished" from="Control/Control/AnimationPlayer" to="." method="_on_animator_stopped"]
+[connection signal="drag_ended" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
+[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
+[connection signal="button_down" from="Menu/PanelContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
+[connection signal="file_selected" from="FileDialog" to="Menu" method="_on_file_dialog_file_selected"]
