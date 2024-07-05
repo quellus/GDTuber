@@ -16,7 +16,7 @@ var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
 func _ready():
-	menu_shown = false
+	menu_shown = true
 	var popup_menu = device_dropdown.get_popup()
 	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	var devices = AudioServer.get_input_device_list()
@@ -32,7 +32,7 @@ func _create_new_object():
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate()
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
-		newobject.texture = ImageTexture.new().create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
+		newobject.texture = ImageTexture.create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
 		newmenu.request_file.connect(_on_file_button_button_down)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
@@ -60,10 +60,10 @@ func _on_file_dialog_file_selected(path):
 		var image = Image.new()
 		var err = image.load(path)
 		if err != OK:
-			print("AAAAAA")
+			printerr("cannot load image.")
 			return
 		Save.filepath = path
-		openingfor.texture = ImageTexture.new().create_from_image(image)
+		openingfor.texture = ImageTexture.create_from_image(image)
 
 
 func _on_drag_requested(object: ScreenObject):
