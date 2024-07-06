@@ -15,9 +15,12 @@ grow_vertical = 2
 script = ExtResource("1_mcrah")
 
 [node name="Background" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1284.0
-offset_bottom = 710.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.00784314, 0.568627, 1, 1)
 
 [node name="Title" type="RichTextLabel" parent="."]
@@ -70,8 +73,5 @@ offset_bottom = 255.0
 theme_override_font_sizes/normal_font_size = 19
 text = "make sure your avatar is in this order:"
 
-[connection signal="pressed" from="Use" to="." method="play"]
-[connection signal="pressed" from="Use" to="." method="use"]
-[connection signal="pressed" from="Use" to="." method="Run"]
+[connection signal="pressed" from="Use" to="." method="run"]
 [connection signal="pressed" from="quit" to="." method="quit"]
-[connection signal="pressed" from="quit" to="." method="Quit"]
