@@ -1,4 +1,5 @@
 class_name ScreenObject extends Node2D
+
 var rng = RandomNumberGenerator.new()
 @export var texture: Texture2D:
 	set(value): 
@@ -6,15 +7,15 @@ var rng = RandomNumberGenerator.new()
 		create_visual()
 
 var id: String
-@export var blinking: bool:
+@export var blinking := true:
 	set(value):
 		blinking = value
 		create_visual()
-@export var reactive: bool:
+@export var reactive := true:
 	set(value):
 		reactive = value
 		create_visual()
-@export var talking: bool:
+@export var talking := true:
 	set(value):
 		talking = value
 		create_visual()

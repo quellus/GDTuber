@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=8 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://scripts/MicRecord.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_kgjae"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="3_lar1l"]
+[ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_6j4ar"]
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
@@ -46,7 +49,7 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Menu" type="Control" parent="." node_paths=PackedStringArray("ObjectsRoot", "MenusRoot")]
+[node name="Menu" type="Control" parent="." node_paths=PackedStringArray("ObjectsRoot", "MenusRoot", "gizmo")]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -57,6 +60,7 @@ grow_vertical = 2
 script = ExtResource("4_l3c8m")
 ObjectsRoot = NodePath("../Control/Control")
 MenusRoot = NodePath("PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
+gizmo = NodePath("Gizmo")
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu"]
 layout_mode = 1
@@ -102,14 +106,14 @@ fill_mode = 3
 show_percentage = false
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Menu/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 138.745)
+custom_minimum_size = Vector2(0, 130.82)
 layout_mode = 2
+size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 3
 
 [node name="Button" type="Button" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.555)
@@ -129,14 +133,36 @@ visible = false
 layout_mode = 2
 text = "Change Texture"
 
+[node name="Label" type="Label" parent="Menu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_lar1l")
+text = "Press any key to open this menu again"
+horizontal_alignment = 1
+autowrap_mode = 2
+
 [node name="CloseButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Close"
 
-[node name="QuitButton" type="Button" parent="Menu/PanelContainer"]
+[node name="QuitButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Quit"
+
+[node name="Gizmo" type="Control" parent="Menu"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_6j4ar")
+
+[node name="Button" type="TextureButton" parent="Menu/Gizmo"]
+layout_mode = 0
+offset_left = -62.5
+offset_top = -62.5
+offset_right = 62.5
+offset_bottom = 62.5
+texture_normal = ExtResource("3_kgjae")
 
 [node name="FileDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
@@ -153,5 +179,7 @@ use_native_dialog = true
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="Menu" method="_create_new_object"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
-[connection signal="button_down" from="Menu/PanelContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
+[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
+[connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
+[connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
 [connection signal="file_selected" from="FileDialog" to="Menu" method="_on_file_dialog_file_selected"]

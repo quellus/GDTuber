@@ -25,7 +25,7 @@ func _process(_delta):
 		samples.pop_front()
 	samples.append(magnitude)
 	
-	var magnitude_avg = _get_average(samples)
+	var magnitude_avg = _get_average()
 
 	if magnitude_avg > Save.threshold:
 		if !is_talking:
@@ -42,7 +42,7 @@ func _unhandled_input(event):
 			menu.menu_shown = true
 		
 
-func _get_average(samples: Array[float]) -> float:
+func _get_average() -> float:
 	var mag_sum: float = 0.0
 	for i in samples:
 		mag_sum += i
