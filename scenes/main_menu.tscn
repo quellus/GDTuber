@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc1n565tygt01"]
+[gd_scene load_steps=5 format=3 uid="uid://cc1n565tygt01"]
 
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_mcrah"]
 [ext_resource type="Texture2D" uid="uid://fpqbctbhjl1a" path="res://DefaultAvatar.png" id="2_1kkw0"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="2_qqjjq"]
+[ext_resource type="Script" path="res://scripts/save.gd" id="4_ac6gh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -70,6 +71,9 @@ custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 texture = ExtResource("2_1kkw0")
 stretch_mode = 5
+
+[node name="LayoutSaver" type="Node" parent="."]
+script = ExtResource("4_ac6gh")
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/Use" to="." method="run"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/quit" to="." method="quit"]
