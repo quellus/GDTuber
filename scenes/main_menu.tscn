@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc1n565tygt01"]
+[gd_scene load_steps=4 format=3 uid="uid://cc1n565tygt01"]
 
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_mcrah"]
-[ext_resource type="Texture2D" uid="uid://codp38btshq8t" path="res://QAvatar.png" id="2_1kkw0"]
+[ext_resource type="Texture2D" uid="uid://fpqbctbhjl1a" path="res://DefaultAvatar.png" id="2_1kkw0"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="2_qqjjq"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -23,55 +24,52 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.00784314, 0.568627, 1, 1)
 
-[node name="Title" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 432.0
-offset_top = 17.0
-offset_right = 864.0
-offset_bottom = 114.0
-theme_override_font_sizes/normal_font_size = 70
-text = "	GD-Tuber"
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Use" type="Button" parent="."]
-layout_mode = 0
-offset_left = 533.0
-offset_top = 166.0
-offset_right = 802.0
-offset_bottom = 245.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer2"]
+layout_mode = 2
+theme = ExtResource("2_qqjjq")
+theme_override_font_sizes/font_size = 79
+text = "	GDTuber"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(106.415, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="Use" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "USE APP"
 
-[node name="quit" type="Button" parent="."]
-layout_mode = 0
-offset_left = 534.0
-offset_top = 279.0
-offset_right = 803.0
-offset_bottom = 358.0
+[node name="quit" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Quit"
 
-[node name="change_avatar" type="Button" parent="."]
-layout_mode = 0
-offset_left = 536.0
-offset_top = 387.0
-offset_right = 805.0
-offset_bottom = 466.0
-theme_override_font_sizes/font_size = 20
-text = "change avatar"
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer2"]
+layout_mode = 2
+text = "This program works best with a sprite sheet in this format"
 
-[node name="QAvatar" type="Sprite2D" parent="."]
-position = Vector2(1086, 480)
-scale = Vector2(0.367708, 0.473958)
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer2"]
+texture_filter = 1
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
 texture = ExtResource("2_1kkw0")
+stretch_mode = 5
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
-layout_mode = 0
-offset_left = 895.0
-offset_top = 201.0
-offset_right = 1280.0
-offset_bottom = 255.0
-theme_override_font_sizes/normal_font_size = 19
-text = "make sure your avatar is in this order:"
-
-[connection signal="pressed" from="Use" to="." method="run"]
-[connection signal="pressed" from="quit" to="." method="quit"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/Use" to="." method="run"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/quit" to="." method="quit"]
