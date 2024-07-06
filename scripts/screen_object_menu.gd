@@ -23,16 +23,13 @@ func _set_talks(value):
 
 func _request_file():
 	emit_signal("request_file", object)
-	print("file")
 
 func _request_gizmo():
 	emit_signal("request_gizmo", object)
-	print("giz")
 
 func _ready():
 	owner=get_parent().owner
 	if objectpath!=NodePath(""):
-		print(objectpath)
 		object=get_node(objectpath)
 	var menu=owner.get_node("Menu")
 	connect("request_gizmo",Callable(menu,"_on_drag_requested"),CONNECT_PERSIST)
