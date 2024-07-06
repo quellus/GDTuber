@@ -70,7 +70,6 @@ func _on_file_dialog_file_selected(path):
 
 
 func _on_drag_requested(object: ScreenObject):
-	print("req")
 	if drag_target == object :
 		drag_target = null
 		gizmo.visible = false
