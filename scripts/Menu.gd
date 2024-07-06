@@ -43,6 +43,9 @@ func _on_button_button_down():
 
 func _on_quit_button_button_down():
 	LayoutSaver.save(owner)
+	drag_target = null
+	gizmo.visible = false
+	gizmo.target = null
 	get_tree().quit()
 
 func _on_popup_menu_index_pressed(index: int):

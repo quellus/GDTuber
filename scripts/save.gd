@@ -1,7 +1,7 @@
 extends Node
 class_name LayoutSaver
 
-static var filepath: String="res://save.tscn"
+static var filepath: String="user://save.tscn"
 static func save(node):
 	var scene=PackedScene.new()
 	scene.pack(node)
