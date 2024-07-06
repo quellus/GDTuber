@@ -26,9 +26,11 @@ func _set_talks(value):
 
 func _request_file():
 	emit_signal("request_file", object)
+	print("file")
 
 func _request_gizmo():
 	emit_signal("request_gizmo", object)
+	print("giz")
 
 func _ready():
 	owner=get_parent().owner
