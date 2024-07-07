@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_mcrah"]
 [ext_resource type="Texture2D" uid="uid://fpqbctbhjl1a" path="res://DefaultAvatar.png" id="2_1kkw0"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="2_qqjjq"]
-[ext_resource type="Script" path="res://scripts/save.gd" id="4_ac6gh"]
+[ext_resource type="Script" path="res://scripts/layout_saver.gd" id="4_ac6gh"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
