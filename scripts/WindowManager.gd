@@ -13,6 +13,6 @@ func toggle_fullscreen():
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		if DisplayServer.window_get_size() == Vector2i(get_viewport().get_visible_rect().size):
+		if DisplayServer.window_get_size() == Vector2i(ProjectSettings.get_setting("display/window/size/viewport_width"),ProjectSettings.get_setting("display/window/size/viewport_height")):
 			change_window_size(default_window_size)
 	return DisplayServer.window_get_mode()
