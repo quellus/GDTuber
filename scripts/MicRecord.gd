@@ -6,6 +6,9 @@ const MAX_SAMPLES = 10
 var bus_index
 @onready var menu = %Menu
 
+const SCALE_RATIO = 1.1
+
+
 var is_talking := false:
 	set(value):
 		if value != is_talking:
@@ -51,3 +54,14 @@ func _get_average() -> float:
 
 func _on_v_slider_drag_ended(value_changed):
 	Save.threshold = %ThesholdSlider.value
+
+
+
+func _on_gui_input(event):
+	if event is InputEventMouseButton and menu.drag_target:
+		match event.button_index:
+			MOUSE_BUTTON_WHEEL_UP:
+				menu.drag_target.user_scale *= SCALE_RATIO
+			MOUSE_BUTTON_WHEEL_DOWN:
+				menu.drag_target.user_scale *= 1 / SCALE_RATIO
+	

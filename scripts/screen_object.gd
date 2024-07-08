@@ -19,7 +19,13 @@ var id: String
 	set(value):
 		talking = value
 		create_visual()
-var user_scale: Vector2
+
+var user_scale: Vector2  = Vector2(1, 1) :
+	set(value):
+		if sprite:
+			sprite.scale = value
+			user_scale = value
+
 var user_position: Vector2
 var sprite: Node2D
 var blink_timer: Timer
@@ -77,6 +83,7 @@ func create_talking_atlas():
 	var width = floor(texture.get_width()/2)
 	var height = floor(texture.get_height()/2)
 	sprite = AnimatedSprite2D.new()
+	sprite.scale = user_scale
 	sprite.sprite_frames = SpriteFrames.new()
 	for i in range(4):
 		var atlas_texture = AtlasTexture.new()
@@ -103,6 +110,7 @@ func create_normal_sprite():
 	sprite = Sprite2D.new()
 	sprite.texture = texture
 	sprite.name = "Sprite"
+	sprite.scale = user_scale
 	add_child(sprite)
 
 func generate_animation():
