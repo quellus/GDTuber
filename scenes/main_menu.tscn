@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cc1n565tygt01"]
+[gd_scene load_steps=4 format=3 uid="uid://35xnglky35cd"]
 
 [ext_resource type="Script" path="res://MainMenu.gd" id="1_mcrah"]
 [ext_resource type="Texture2D" uid="uid://fpqbctbhjl1a" path="res://DefaultAvatar.png" id="2_1kkw0"]
@@ -50,10 +50,16 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 15
 
-[node name="Use" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+[node name="RunWindowButton" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "USE APP"
+text = "Start (Window)"
+
+[node name="RunFullscreenButton" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Start (Fullscreen)"
 
 [node name="quit" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
@@ -71,5 +77,4 @@ layout_mode = 2
 texture = ExtResource("2_1kkw0")
 stretch_mode = 5
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/Use" to="." method="run"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/quit" to="." method="quit"]
