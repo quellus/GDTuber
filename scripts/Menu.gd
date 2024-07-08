@@ -28,6 +28,9 @@ func _ready():
 	for device_name in devices:
 		popup_menu.add_item(device_name)
 		
+	if DisplayServer.window_get_mode() == 3:
+		screen_toggle_button.text = "Window Mode"
+	
 	screen_toggle_button.connect("button_up",_on_screen_toggle_button_up)
 	close_button.connect("button_up",_on_close_button_button_up)
 	quit_button.connect("button_up",_on_quit_button_button_up)
