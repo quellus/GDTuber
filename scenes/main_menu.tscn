@@ -61,7 +61,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Start (Fullscreen)"
 
-[node name="quit" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Quit"
@@ -76,5 +76,3 @@ custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 texture = ExtResource("2_1kkw0")
 stretch_mode = 5
-
-[connection signal="pressed" from="CenterContainer/VBoxContainer2/VBoxContainer/quit" to="." method="quit"]
