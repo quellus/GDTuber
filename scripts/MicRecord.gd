@@ -1,13 +1,18 @@
 extends Control
 
+var bus_index
+
 var analyzer: AudioEffectSpectrumAnalyzerInstance
 var samples: Array[float] = []
-const MAX_SAMPLES = 10
-var bus_index
-@onready var menu = %Menu
+
+var amplify_effect : AudioEffectAmplify
+var default_input_gain : float = 0.0
 
 const SCALE_RATIO = 1.1
+const MAX_SAMPLES = 10
 
+@onready var menu = %Menu
+@onready var input_gain_slider = %InputGainSlider
 
 var is_talking := false:
 	set(value):
@@ -20,6 +25,9 @@ var is_talking := false:
 func _ready():
 	get_tree().get_root().set_transparent_background(true)
 	bus_index = AudioServer.get_bus_index("Record")
+	
+	init_amplifier(bus_index,0.0)
+	input_gain_slider.connect("value_changed",_on_input_gain_change)
 
 func _process(_delta):
 	var magnitude = db_to_linear(AudioServer.get_bus_peak_volume_left_db(bus_index, 0))
@@ -51,11 +59,23 @@ func _get_average() -> float:
 		mag_sum += i
 	return mag_sum / float(samples.size())
 	
+	
+func init_amplifier(_bus_index : int, _input_gain : float = 0.0):
+	amplify_effect = AudioEffectAmplify.new()
+	amplify_effect.volume_db = _input_gain
+	AudioServer.add_bus_effect(_bus_index,amplify_effect,1)
+	
+func update_amplifier(_new_input_gain : float):
+	if _new_input_gain <= -10.0 || _new_input_gain >= 20.0:
+		printt("Input gain out of range:",_new_input_gain)
+		return
+	if amplify_effect.volume_db != _new_input_gain:
+		amplify_effect.volume_db = _new_input_gain
+		printt("set amplify gain to:",_new_input_gain)
+
 
 func _on_v_slider_drag_ended(value_changed):
 	Save.threshold = %ThesholdSlider.value
-
-
 
 func _on_gui_input(event):
 	if event is InputEventMouseButton and menu.drag_target:
@@ -65,3 +85,6 @@ func _on_gui_input(event):
 			MOUSE_BUTTON_WHEEL_DOWN:
 				menu.drag_target.user_scale *= 1 / SCALE_RATIO
 	
+# Not necessary bur could be useful in the future 
+func _on_input_gain_change(_new_input_gain : float):
+	update_amplifier(_new_input_gain)

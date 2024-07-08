@@ -62,7 +62,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_dxbbx")
-button_pressed = true
+flat = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
 layout_mode = 2
@@ -81,7 +81,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_dxbbx")
-button_pressed = true
+flat = true
 
 [node name="PanelContainer3" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
 layout_mode = 2
@@ -100,7 +100,7 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_dxbbx")
-button_pressed = true
+flat = true
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
