@@ -27,9 +27,8 @@ Save="*res://scripts/save.gd"
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
-window/size/mode=3
+window/size/viewport_width=600
+window/size/viewport_height=550
 window/size/transparent=true
 window/subwindows/embed_subwindows=false
 window/per_pixel_transparency/allowed=true
