@@ -10,6 +10,7 @@ func _input(event):
 			position += event.relative
 			if target:
 				target.global_position = global_position
+				target.user_position = target.global_position
 
 func drag():
 	if !dragging:

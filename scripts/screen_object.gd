@@ -26,6 +26,9 @@ var user_scale: Vector2  = Vector2(1, 1) :
 			sprite.scale = value
 			user_scale = value
 
+signal update_menu
+
+var texturepath: String
 var user_position: Vector2
 var sprite: Node2D
 var blink_timer: Timer
