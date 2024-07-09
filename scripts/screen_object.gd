@@ -72,14 +72,8 @@ func create_visual():
 			sprite.queue_free()
 			sprite = null
 			bounce_animator = null
-		if talking:
-			create_talking_atlas()
-			if blinking:
-				blink_timer = Timer.new()
-				add_child(blink_timer)
-				blink_timer.timeout.connect(_on_blink_timer_timeout)
-				blink_timer.start(1)
-				
+		if talking or blinking:
+			create_atlas()
 		else:
 			create_normal_sprite()
 		if reactive:
@@ -91,32 +85,33 @@ func create_visual():
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if filter else TEXTURE_FILTER_NEAREST
 		
 	
-func create_talking_atlas():
-	var width = floor(texture.get_width()/2)
-	var height = floor(texture.get_height()/2)
+func create_atlas():
+	var width = floor(texture.get_width()/2) if talking else texture.get_width()
+	var height = floor(texture.get_height()/2) if blinking else texture.get_height()
 	sprite = AnimatedSprite2D.new()
 	sprite.scale = user_scale
 	sprite.sprite_frames = SpriteFrames.new()
-	for i in range(4):
-		var atlas_texture = AtlasTexture.new()
-		var atlas_rect
-		match i:
-			0:
-				atlas_rect = Rect2(0, 0, width, height)
-			1:
-				atlas_rect = Rect2(width, 0, width, height)
-			2:
-				atlas_rect = Rect2(0, height, width, height)
-			3:
-				atlas_rect = Rect2(width, height, width, height)
-				
-		atlas_texture.atlas = texture
-		atlas_texture.region = atlas_rect
-		
-		sprite.sprite_frames.add_frame("default", atlas_texture)
-		sprite.name = "Sprite"
+	var voffset = -height
+	for i in range(2 if blinking else 1):
+		voffset += height
+		var hoffset = -width
+		for d in range(2 if talking else 1):
+			hoffset += width
+			var atlas_texture = AtlasTexture.new()
+			var atlas_rect = Rect2(hoffset, voffset, width, height)
+			atlas_texture.atlas = texture
+			atlas_texture.region = atlas_rect
+			sprite.sprite_frames.add_frame("default", atlas_texture)
+	sprite.name = "Sprite"
 	add_child(sprite)
 	
+	if is_instance_valid(blink_timer):
+			blink_timer.queue_free()
+	if blinking:
+		blink_timer = Timer.new()
+		add_child(blink_timer)
+		blink_timer.timeout.connect(_on_blink_timer_timeout)
+		blink_timer.start(1)
 	
 func create_normal_sprite():
 	sprite = Sprite2D.new()
