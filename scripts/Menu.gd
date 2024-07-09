@@ -56,7 +56,7 @@ func _load_data():
 		for obj in save_dict["objects"]:
 			var newobj = _create_new_object()
 			newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
-			newobj.global_position = Vector2(obj["position.x"], obj["position.y"])
+			newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
 			newobj.blinking = obj["blinking"]
 			newobj.reactive = obj["reactive"]
 			newobj.talking = obj["talking"]
