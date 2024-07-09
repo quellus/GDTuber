@@ -88,6 +88,7 @@ func create_visual():
 			if bounce_animator:
 				bounce_animator.queue_free()
 				bounce_animator = null
+		sprite.texture_filter = TEXTURE_FILTER_LINEAR if filter else TEXTURE_FILTER_NEAREST
 		
 	
 func create_talking_atlas():

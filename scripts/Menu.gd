@@ -117,7 +117,7 @@ func _set_menu_shown(value: bool):
 
 func _create_new_object():
 	if MenusRoot and ObjectsRoot:
-		var newmenu: ScreenObjectMenu = somenuscene.instantiate()
+		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
 		newobject.texture = ImageTexture.create_from_image(Image.load_from_file(DEFAULT_IMAGE))
