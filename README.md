@@ -109,3 +109,6 @@ Your pull request will be reviewed by one of our team members. We may ask for ch
 Thank you for your contributions!
 
 For any questions or additional help, feel free to open an issue or contact the maintainers.
+
+## Attribution
+[Contract icon](https://game-icons.net/1x1/delapouite/contract.html) by [Delapouite](https://delapouite.com/) under CC BY 3.0
