@@ -1,13 +1,11 @@
 class_name ScreenObjectMenu extends PanelContainer
 
 signal request_gizmo(ScreenObject)
+signal grab_gizmo(ScreenObject)
 
 @export var blinkbox: CheckBox
 @export var bouncebox: CheckBox
 @export var talkbox: CheckBox
-
-# TODO: recenter button
-# TODO: gizmo go away when I go away
 
 var object: ScreenObject:
 	set(value):
@@ -58,4 +56,11 @@ func _update_menu():
 	if talkbox:
 		if object.talking:
 			talkbox.button_pressed = true
+	pass
+	
+func _recenter():
+	var viewportsize = object.get_viewport_rect().size
+	object.user_position = viewportsize/2
+	object.get_viewport_transform()
+	grab_gizmo.emit(object)
 	pass

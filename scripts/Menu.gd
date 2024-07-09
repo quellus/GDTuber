@@ -40,30 +40,53 @@ func _save_data():
 				"talking": obj.talking
 			})
 	save_game.store_line(JSON.stringify(savedict))
-	
-# TODO: validate json before clearing current children and loading
+
+func _validate_object_json(dict) -> bool:
+	var fields = [
+		"scale.x",
+		"scale.y",
+		"position.x",
+		"position.y",
+		"texturepath",
+		"blinking",
+		"reactive",
+		"talking",
+	]
+	for field in fields:
+		if field not in dict:
+			return false
+	return true
+
 func _load_data():
-	for obj in ObjectsRoot.get_children():
-		obj.queue_free()
-	for men in MenusRoot.get_children():
-		men.queue_free()
-	gizmo.visible = false
 	var save_json = FileAccess.get_file_as_string("user://gdtuber.json")
 	if save_json == "":
 		return
 	var save_dict = JSON.parse_string(save_json)
 	if save_dict:
-		for obj in save_dict["objects"]:
-			var newobj = _create_new_object()
-			newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
-			newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
-			newobj.blinking = obj["blinking"]
-			newobj.reactive = obj["reactive"]
-			newobj.talking = obj["talking"]
-			if obj["texturepath"] != "":
-				openingfor = newobj
-				_on_file_dialog_file_selected(obj["texturepath"])
-			newobj.update_menu.emit()
+		if "objects" in save_dict:
+			if save_dict["objects"] is Array:
+				for obj in ObjectsRoot.get_children():
+					obj.queue_free()
+				for men in MenusRoot.get_children():
+					men.queue_free()
+				for obj in save_dict["objects"]:
+					if _validate_object_json(obj):
+						var newobj = _create_new_object()
+						newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
+						newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
+						newobj.blinking = obj["blinking"]
+						newobj.reactive = obj["reactive"]
+						newobj.talking = obj["talking"]
+						if obj["texturepath"] != "":
+							openingfor = newobj
+							_on_file_dialog_file_selected(obj["texturepath"])
+						newobj.update_menu.emit()
+					else:
+						print("ERROR: object does not contain required fields")
+			else:
+				print("ERROR: dictionary contains no \"objects\" field")
+	else:
+		print("ERROR: JSON file is invalid")
 
 func _set_menu_shown(value: bool):
 	visible = value
@@ -76,9 +99,11 @@ func _create_new_object():
 		newmenu.object = newobject
 		newobject.texture = ImageTexture.create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
 		newmenu.request_file.connect(_on_file_button_button_down)
+		newmenu.tree_exiting.connect(clear_gizmo)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
 		newmenu.request_gizmo.connect(_on_drag_requested)
+		newmenu.grab_gizmo.connect(_grab_gizmo)
 		newobject.user_position = newobject.global_position
 		return newobject
 
@@ -110,6 +135,12 @@ func _on_file_dialog_file_selected(path):
 		openingfor.texture = ImageTexture.create_from_image(image)
 		openingfor.texturepath = path
 
+func clear_gizmo():
+	gizmo.target = null
+	gizmo.visible = false
+
+func _grab_gizmo(object: ScreenObject):
+	gizmo.global_position = object.global_position
 
 func _on_drag_requested(object: ScreenObject):
 	if drag_target == object:
