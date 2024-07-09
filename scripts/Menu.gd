@@ -48,17 +48,17 @@ func _save_data():
 func _validate_object_json(dict, v) -> bool:
 	var versions = {
 		0.1:{
-			"scale.x":float(),
-			"scale.y":float(),
-			"position.x":float(),
-			"position.y":float(),
-			"texturepath":String(),
-			"blinking":bool(),
-			"reactive":bool(),
-			"talking":bool()
+			"scale.x":TYPE_FLOAT,
+			"scale.y":TYPE_FLOAT,
+			"position.x":TYPE_FLOAT,
+			"position.y":TYPE_FLOAT,
+			"texturepath":TYPE_STRING,
+			"blinking":TYPE_BOOL,
+			"reactive":TYPE_BOOL,
+			"talking":TYPE_BOOL
 		},
 		0.2:{
-			"filter":bool()
+			"filter":TYPE_BOOL
 		}
 	}
 	for version in versions:
@@ -66,7 +66,7 @@ func _validate_object_json(dict, v) -> bool:
 			for field in versions[version]:
 				if field not in dict:
 					return false
-				if !is_instance_of(dict[field], typeof(versions[version][field])):
+				if !is_instance_of(dict[field], versions[version][field]):
 					return false
 	return true
 
