@@ -6,6 +6,11 @@ var rng = RandomNumberGenerator.new()
 		texture = value
 		create_visual()
 
+var filter: bool = true:
+	set(value):
+		sprite.texture_filter = TEXTURE_FILTER_LINEAR if value else TEXTURE_FILTER_NEAREST
+		filter = value
+		
 var id: String
 @export var blinking := true:
 	set(value):
