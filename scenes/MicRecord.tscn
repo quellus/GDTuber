@@ -142,7 +142,15 @@ autowrap_mode = 2
 
 [node name="CloseButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "Close"
+text = "Hide Menu"
+
+[node name="Save Data" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Save Data"
+
+[node name="Load Data" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Load Data"
 
 [node name="QuitButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -180,6 +188,8 @@ use_native_dialog = true
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="Menu" method="_create_new_object"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
+[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/Save Data" to="Menu" method="_save_data"]
+[connection signal="button_up" from="Menu/PanelContainer/VBoxContainer/Load Data" to="Menu" method="_load_data"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]

@@ -26,7 +26,13 @@ var user_scale: Vector2  = Vector2(1, 1) :
 			sprite.scale = value
 			user_scale = value
 
-var user_position: Vector2
+signal update_menu
+
+var texturepath: String
+var user_position: Vector2:
+	set(value):
+		user_position = value
+		global_position = value
 var sprite: Node2D
 var blink_timer: Timer
 var bounce_animator: AnimationPlayer

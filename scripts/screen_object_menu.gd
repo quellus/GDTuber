@@ -2,7 +2,29 @@ class_name ScreenObjectMenu extends PanelContainer
 
 signal request_gizmo(ScreenObject)
 
-var object: ScreenObject
+@export var blinkbox: CheckBox
+@export var bouncebox: CheckBox
+@export var talkbox: CheckBox
+
+# TODO: recenter button
+# TODO: gizmo go away when I go away
+
+var object: ScreenObject:
+	set(value):
+		if value:
+			value.update_menu.connect(_update_menu)
+		object = value
+
+var user_scale: Vector2:
+	set(value):
+		user_scale = value
+		if object:
+			object.user_scale = value
+var user_position: Vector2:
+	set(value):
+		user_position = value
+		if object:
+			object.user_position = value
 
 signal request_file(ScreenObject)
 
@@ -25,3 +47,15 @@ func _request_file():
 
 func _request_gizmo():
 	emit_signal("request_gizmo", object)
+
+func _update_menu():
+	if blinkbox:
+		if object.blinking:
+			blinkbox.button_pressed = true
+	if bouncebox:
+		if object.reactive:
+			bouncebox.button_pressed = true
+	if talkbox:
+		if object.talking:
+			talkbox.button_pressed = true
+	pass
