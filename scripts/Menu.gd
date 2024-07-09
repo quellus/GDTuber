@@ -3,6 +3,9 @@ class_name Menu extends Control
 
 var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
+const VERSION = 0.2
+const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
+
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
 @onready var file_dialog := %FileDialog
 
@@ -25,8 +28,7 @@ func _ready():
 
 func _save_data():
 	var save_game = FileAccess.open("user://gdtuber.json", FileAccess.WRITE)
-	var version = 0.1
-	var savedict = {"version":version, "objects":[]}
+	var savedict = {"version":VERSION, "objects":[]}
 	for obj in ObjectsRoot.get_children():
 		if obj is ScreenObject:
 			savedict["objects"].append({
@@ -37,24 +39,35 @@ func _save_data():
 				"texturepath": obj.texturepath,
 				"blinking": obj.blinking,
 				"reactive": obj.reactive,
-				"talking": obj.talking
+				"talking": obj.talking,
+				"filter": obj.filter
 			})
 	save_game.store_line(JSON.stringify(savedict))
 
-func _validate_object_json(dict) -> bool:
-	var fields = [
-		"scale.x",
-		"scale.y",
-		"position.x",
-		"position.y",
-		"texturepath",
-		"blinking",
-		"reactive",
-		"talking",
-	]
-	for field in fields:
-		if field not in dict:
-			return false
+
+func _validate_object_json(dict, v) -> bool:
+	var versions = {
+		0.1:{
+			"scale.x":float(),
+			"scale.y":float(),
+			"position.x":float(),
+			"position.y":float(),
+			"texturepath":String(),
+			"blinking":bool(),
+			"reactive":bool(),
+			"talking":bool()
+		},
+		0.2:{
+			"filter":bool()
+		}
+	}
+	for version in versions:
+		if version <= v:
+			for field in versions[version]:
+				if field not in dict:
+					return false
+				if !is_instance_of(dict[field], typeof(versions[version][field])):
+					return false
 	return true
 
 func _load_data():
@@ -62,7 +75,13 @@ func _load_data():
 	if save_json == "":
 		return
 	var save_dict = JSON.parse_string(save_json)
+	var version = VERSION
 	if save_dict:
+		if "version" in save_dict:
+			if save_dict["version"] is float:
+				version = save_dict["version"]
+		if version > VERSION:
+			print("WARNING: save data is newer than current version, attempting to load data")
 		if "objects" in save_dict:
 			if save_dict["objects"] is Array:
 				for obj in ObjectsRoot.get_children():
@@ -70,7 +89,8 @@ func _load_data():
 				for men in MenusRoot.get_children():
 					men.queue_free()
 				for obj in save_dict["objects"]:
-					if _validate_object_json(obj):
+					if _validate_object_json(obj, version):
+						# 0.1
 						var newobj = _create_new_object()
 						newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 						newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
@@ -79,7 +99,10 @@ func _load_data():
 						newobj.talking = obj["talking"]
 						if obj["texturepath"] != "":
 							openingfor = newobj
-							_on_file_dialog_file_selected(obj["texturepath"])
+							_request_image(obj["texturepath"])
+						# 0.2
+						if version >= 0.2:
+							newobj.filter = obj["filter"]
 						newobj.update_menu.emit()
 					else:
 						print("ERROR: object does not contain required fields")
@@ -94,10 +117,10 @@ func _set_menu_shown(value: bool):
 
 func _create_new_object():
 	if MenusRoot and ObjectsRoot:
-		var newmenu: ScreenObjectMenu = somenuscene.instantiate()
+		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
-		newobject.texture = ImageTexture.create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
+		newobject.texture = ImageTexture.create_from_image(Image.load_from_file(DEFAULT_IMAGE))
 		newmenu.request_file.connect(_on_file_button_button_down)
 		newmenu.tree_exiting.connect(clear_gizmo)
 		MenusRoot.add_child(newmenu)
@@ -105,6 +128,7 @@ func _create_new_object():
 		newmenu.request_gizmo.connect(_on_drag_requested)
 		newmenu.grab_gizmo.connect(_grab_gizmo)
 		newobject.user_position = newobject.global_position
+		newmenu.update_menu()
 		return newobject
 
 func _on_button_button_down():
@@ -124,7 +148,7 @@ func _on_file_button_button_down(requestor):
 	file_dialog.popup_centered()
 
 
-func _on_file_dialog_file_selected(path):
+func _request_image(path):
 	if openingfor:
 		var image = Image.new()
 		var err = image.load(path)

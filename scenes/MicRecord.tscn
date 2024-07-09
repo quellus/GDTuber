@@ -193,4 +193,4 @@ use_native_dialog = true
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
-[connection signal="file_selected" from="FileDialog" to="Menu" method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="FileDialog" to="Menu" method="_request_image"]
