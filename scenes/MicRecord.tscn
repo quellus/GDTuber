@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=10 format=3 uid="uid://dvjlkpjvjxn0h"]
 
+[ext_resource type="Script" path="res://scenes/LineEditReset.gd" id="2_4pwma"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_kgjae"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="3_lar1l"]
 [ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_6j4ar"]
@@ -46,6 +47,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 1, 0, 1)
 
 [node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
@@ -56,6 +58,7 @@ bus = &"Record"
 [node name="ObjectsRoot" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
+mouse_filter = 2
 
 [node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -65,6 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu"]
 layout_mode = 1
@@ -72,6 +76,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 191.0
 grow_vertical = 2
+mouse_force_pass_scroll_events = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
 
 [node name="MainMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
@@ -79,11 +84,20 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 6
 
+[node name="TitleEdit" type="LineEdit" parent="Menu/PanelContainer/MainMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "[Profile Name]"
+alignment = 1
+caret_blink = true
+script = ExtResource("2_4pwma")
+
 [node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/MainMenu"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Input Device"
+flat = false
 item_count = 1
 popup/item_0/text = ""
 popup/item_0/id = 0
@@ -309,6 +323,7 @@ filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
 
+[connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]

@@ -2,6 +2,7 @@ class_name ScreenObjectMenu extends PanelContainer
 
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
+signal duplicate_object(ScreenObject)
 # signal set_filter(ScreenObject, bool)
 
 @export var talkbox: CheckBox
@@ -49,7 +50,8 @@ func _request_gizmo():
 	emit_signal("request_gizmo", object)
 
 func _set_filter(value):
-	object.filter = value
+	if object:
+		object.filter = value
 	# set_filter.emit(object, value)
 
 func update_menu():
@@ -62,7 +64,11 @@ func update_menu():
 	if filterbox:
 		filterbox.button_pressed = object.filter
 	pass
-	
+
+func _duplicate():
+	duplicate_object.emit(object)
+	pass
+
 func _recenter():
 	var viewportsize = object.get_viewport_rect().size
 	object.user_position = viewportsize/2

@@ -1,12 +1,15 @@
 class_name Menu extends Control
 
-const VERSION = 0.3
+const VERSION = 0.4
 
 # Window Management
+@onready var titleedit: LineEdit = %TitleEdit
+@onready var profilename: String = "GDTuber Avatar"
 @onready var mainmenu: Control = %MainMenu
 @onready var settingsmenu: Control = %SettingsMenu
 @onready var background = %Background
 @onready var bgcolor = %BackgroundColor
+@onready var menu = %Menu
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
@@ -31,8 +34,12 @@ var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
 var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
 # Screen Object Editing
+const SNAP_ANGLE = PI/4
 @export var gizmo: Gizmo
 var drag_target: ScreenObject
+var rotating = false
+var rotation_center: Vector2 = Vector2()
+var starting_rotation: float = 0
 
 # File Management
 @onready var file_dialog := %ImageOpenDialog
@@ -96,6 +103,7 @@ func _save_data():
 		"version":VERSION, 
 		"threshold":threshold,
 		"input_gain":input_gain,
+		"profile_name":profilename,
 		"objects":[]
 	}
 	for obj in ObjectsRoot.get_children():
@@ -110,6 +118,7 @@ func _save_data():
 				"reactive": obj.reactive,
 				"talking": obj.talking,
 				"filter": obj.filter,
+				"rotation": obj.user_rotation,
 			})
 	savedata = JSON.stringify(savedict)
 	json_save_dialog.popup_centered()
@@ -124,6 +133,9 @@ func _validate_save_json(dict, v) -> bool:
 		0.3:{
 			"threshold":TYPE_FLOAT,
 			"input_gain":TYPE_FLOAT
+		},
+		0.4:{
+			"profile_name":TYPE_STRING,
 		}
 	}
 	for version in versions:
@@ -149,6 +161,9 @@ func _validate_object_json(dict, v) -> bool:
 		},
 		0.2:{
 			"filter":TYPE_BOOL
+		},
+		0.4:{
+			"rotation":TYPE_FLOAT
 		}
 	}
 	for version in versions:
@@ -200,6 +215,9 @@ func _load_data(path):
 					if version >= 0.2:
 						newobj.filter = obj["filter"]
 					newobj.update_menu.emit()
+					# 0.4
+					if version >= 0.4:
+						newobj.user_rotation = obj["rotation"]
 				else:
 					print("ERROR: object does not contain required fields")
 			# Load Program Settings
@@ -209,6 +227,10 @@ func _load_data(path):
 				threshold_slider.value = threshold
 				input_gain = save_dict["input_gain"]
 				input_gain_slider.value = input_gain
+			#0.4
+			if version >= 0.4:
+				titleedit.text = save_dict["profile_name"]
+				_set_profile_name(save_dict["profile_name"])
 		else:
 			print("ERROR: Required Fields for Save File Version not Found")
 	else:
@@ -232,7 +254,7 @@ func _request_image(path):
 
 ### Window Management
 func _set_menu_shown(value: bool):
-	visible = value
+	menu.visible = value
 	set_process_input(value)
 
 func _on_button_button_down():
@@ -259,23 +281,32 @@ func _toggle_transparent(value):
 func _change_background_color(color):
 	background.color = color
 
+func _set_profile_name(pname: String):
+	profilename = pname
+	get_tree().get_root().title = pname
+
+
 
 ### Screen Object Management
 func _create_new_object():
 	if MenusRoot and ObjectsRoot:
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
-		newmenu.object = newobject
 		newobject.texture = default_avatar_texture
-		newmenu.request_file.connect(_on_file_button_button_down)
-		newmenu.tree_exiting.connect(clear_gizmo)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
-		newmenu.request_gizmo.connect(_on_drag_requested)
-		newmenu.grab_gizmo.connect(_grab_gizmo)
+		newmenu.object = newobject
+		_connect_menu(newmenu)
 		newobject.user_position = get_viewport_rect().size/2
 		newmenu.update_menu()
 		return newobject
+
+func _connect_menu(smenu: ScreenObjectMenu):
+	smenu.request_file.connect(_on_file_button_button_down)
+	smenu.tree_exiting.connect(clear_gizmo)
+	smenu.duplicate_object.connect(_duplicate_object)
+	smenu.request_gizmo.connect(_on_drag_requested)
+	smenu.grab_gizmo.connect(_grab_gizmo)
 
 func clear_gizmo():
 	gizmo.target = null
@@ -294,6 +325,20 @@ func _on_drag_requested(object: ScreenObject):
 		gizmo.visible = true
 		gizmo.target = object
 		drag_target = object
+
+func _duplicate_object(obj: ScreenObject):
+	var newobj = _create_new_object()
+	newobj.user_position = obj.user_position
+	newobj.user_rotation = obj.user_rotation
+	newobj.user_scale = obj.user_scale
+	newobj.texturepath = obj.texturepath
+	newobj.texture = obj.texture
+	newobj.filter = obj.filter
+	newobj.reactive = obj.reactive
+	newobj.talking = obj.talking
+	newobj.blinking = obj.blinking
+	newobj.update_menu.emit()
+	pass
 
 
 
@@ -337,7 +382,33 @@ func _on_input_gain_change(_new_input_gain : float):
 
 
 ### Input
+func _input(event):
+
+	if event is InputEventMouseMotion and drag_target and rotating:
+		var rotvector = event.global_position-rotation_center
+		var rotangle = atan2(rotvector.y, rotvector.x)
+		var targetrot = rotangle+starting_rotation
+		if Input.is_key_pressed(KEY_CTRL):
+			drag_target.user_rotation = round(targetrot/SNAP_ANGLE)*SNAP_ANGLE
+		else:
+			drag_target.user_rotation = targetrot
+
+	if event is InputEventMouseButton and drag_target:
+			print("mouse button pressed please help")
+			match event.button_index:
+				MOUSE_BUTTON_RIGHT:
+					if event.is_pressed():
+						if !rotating:
+							rotation_center = drag_target.global_position
+							var rotvector = event.global_position-rotation_center
+							var rotangle = atan2(rotvector.y, rotvector.x)
+							starting_rotation = drag_target.global_rotation - rotangle
+							rotating = true
+					else:
+						rotating = false
+
 func _unhandled_input(event):
+		
 	# Scroll to zoom
 	if event is InputEventMouseButton and drag_target:
 		if is_instance_valid(drag_target):
@@ -350,4 +421,3 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
-
