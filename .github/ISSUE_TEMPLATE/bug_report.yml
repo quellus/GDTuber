@@ -14,7 +14,7 @@ body:
     id: reproduction
     attributes:
       label: To Reproduce
-      description: Steps to reproduce the behavior. If possible, please include a link to content that exhibits this issue via a public folder, or world. recreate the issue in a new grid space template, and edit the world's metadata to 'anyone'.
+      description: Steps to reproduce the behavior.
     validations:
       required: true
   - type: textarea
@@ -46,7 +46,7 @@ body:
       options:
         - "Windows"
         - "Linux"
-        - "Mac OS"
+        - "macOS"
     validations:
       required: true
   - type: textarea
