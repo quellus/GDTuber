@@ -53,7 +53,7 @@ func _get_average() -> float:
 	
 
 func _on_v_slider_drag_ended(value_changed):
-	Save.threshold = %ThesholdSlider.value
+	Save.threshold = value_changed
 
 
 

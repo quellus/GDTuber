@@ -184,7 +184,7 @@ filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *
 use_native_dialog = true
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="drag_ended" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="Menu" method="_create_new_object"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
