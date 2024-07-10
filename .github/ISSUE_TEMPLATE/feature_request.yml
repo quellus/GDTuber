@@ -1,5 +1,6 @@
 name: Feature Request
 description: Recommend a feature for consideration.
+title: "[Feature Request]: "
 labels: [enhancement]
 assignees: code807,quellus
 body:
