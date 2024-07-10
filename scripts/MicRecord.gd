@@ -5,15 +5,7 @@ var bus_index
 var analyzer: AudioEffectSpectrumAnalyzerInstance
 var samples: Array[float] = []
 
-var amplifier_effect : AudioEffectAmplify
-var amplifier_input_gain : float = 0.0
-
-var compressor_effect : AudioEffectCompressor
-var compressor_threshold : float = -12.0 # Compression threshold in dB
-var compressor_ratio : float = 2.0 # Compression ratio in dB
-var compressor_attack_time : float = 5000.0 # Attack time in MICROseconds
-var compressor_release_time : float = 300.0 # Release time in MILLIseconds
-var compressor_makeup_gain : float = 9.0 # Makeup gain that get's add to the compressor output signal
+var amplifier_effect = AudioEffectAmplify
 
 const SCALE_RATIO = 1.1
 const MAX_SAMPLES = 20
@@ -32,11 +24,7 @@ var is_talking := false:
 func _ready():
 	get_tree().get_root().set_transparent_background(true)
 	bus_index = AudioServer.get_bus_index("Record")
-	
-	init_amplifier(bus_index,amplifier_input_gain)
-	init_compressor(bus_index)
-	
-	input_gain_slider.connect("value_changed",_on_input_gain_change)
+	amplifier_effect = AudioServer.get_bus_effect(bus_index, 1)
 
 func _process(_delta):
 	var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
@@ -70,24 +58,8 @@ func _get_average() -> float:
 	for i in samples:
 		mag_sum += i
 	mag_avg = mag_sum / float(samples.size())
-	#$Menu/PanelContainer/VBoxContainer/CurrentGainLabel.text = str(mag_avg)
 	return mag_avg
 	
-	
-func init_amplifier(_bus_index : int, _input_gain : float = 0.0):
-	amplifier_effect = AudioEffectAmplify.new()
-	amplifier_effect.volume_db = _input_gain
-	AudioServer.add_bus_effect(_bus_index,amplifier_effect,1)
-	print("Amplifier effect initialized")
-	
-func init_compressor(_bus_index : int):
-	compressor_effect = AudioEffectCompressor.new()
-	compressor_effect.threshold = compressor_threshold
-	compressor_effect.attack_us = compressor_attack_time
-	compressor_effect.release_ms = compressor_release_time
-	compressor_effect.gain = compressor_makeup_gain
-	AudioServer.add_bus_effect(_bus_index,compressor_effect,2)
-	print("Compressor effect initialized")
 	
 func update_amplifier(_new_input_gain : float):
 	if _new_input_gain <= -10.0 || _new_input_gain >= 24.1:
