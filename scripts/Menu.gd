@@ -1,21 +1,24 @@
 class_name Menu extends Control
 
-@export var ObjectsRoot: Node
-@export var MenusRoot: Node
-@export var gizmo: Gizmo
 
 var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
+const VERSION = 0.2
+const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
+var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
+
+
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
-@onready var file_dialog := %FileDialog
+@onready var file_dialog := %ImageOpenDialog
+@onready var json_save_dialog : FileDialog = %JSONSaveDialog
+@onready var json_load_dialog : FileDialog = %JSONLoadDialog
 
-@onready var screen_toggle_button = $PanelContainer/VBoxContainer/ScreenToggleButton
-@onready var close_button = $PanelContainer/VBoxContainer/CloseButton
-@onready var quit_button = $PanelContainer/VBoxContainer/QuitButton
-
-
+@export var ObjectsRoot: Node
+@export var MenusRoot: Node
+@export var gizmo: Gizmo
 var drag_target: ScreenObject
 var openingfor: ScreenObject 
+var savedata: String
 
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
@@ -27,13 +30,103 @@ func _ready():
 	var devices = AudioServer.get_input_device_list()
 	for device_name in devices:
 		popup_menu.add_item(device_name)
-		
-	if DisplayServer.window_get_mode() == 3:
-		screen_toggle_button.text = "Window Mode"
+
+func _save_file(path: String):
+	if path.get_extension() == "":
+		path = path+".json"
+	var save_game = FileAccess.open(path, FileAccess.WRITE)
+	save_game.store_line(savedata)
+
+func _save_data():
+	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
+	var savedict = {"version":VERSION, "objects":[]}
+	for obj in ObjectsRoot.get_children():
+		if obj is ScreenObject:
+			savedict["objects"].append({
+				"scale.x": obj.user_scale.x,
+				"scale.y": obj.user_scale.y,
+				"position.x": obj.user_position.x,
+				"position.y": obj.user_position.y,
+				"texturepath": obj.texturepath,
+				"blinking": obj.blinking,
+				"reactive": obj.reactive,
+				"talking": obj.talking,
+				"filter": obj.filter
+			})
+	savedata = JSON.stringify(savedict)
+	json_save_dialog.popup_centered()
 	
-	screen_toggle_button.connect("button_up",_on_screen_toggle_button_up)
-	close_button.connect("button_up",_on_close_button_button_up)
-	quit_button.connect("button_up",_on_quit_button_button_up)
+
+
+func _validate_object_json(dict, v) -> bool:
+	var versions = {
+		0.1:{
+			"scale.x":TYPE_FLOAT,
+			"scale.y":TYPE_FLOAT,
+			"position.x":TYPE_FLOAT,
+			"position.y":TYPE_FLOAT,
+			"texturepath":TYPE_STRING,
+			"blinking":TYPE_BOOL,
+			"reactive":TYPE_BOOL,
+			"talking":TYPE_BOOL
+		},
+		0.2:{
+			"filter":TYPE_BOOL
+		}
+	}
+	for version in versions:
+		if version <= v:
+			for field in versions[version]:
+				if field not in dict:
+					return false
+				if !is_instance_of(dict[field], versions[version][field]):
+					return false
+	return true
+
+
+func _load_dialog():
+	json_load_dialog.popup_centered()
+
+func _load_data(path):
+	var save_json = FileAccess.get_file_as_string(path)
+	if save_json == "":
+		return
+	var save_dict = JSON.parse_string(save_json)
+	var version = VERSION
+	if save_dict:
+		if "version" in save_dict:
+			if save_dict["version"] is float:
+				version = save_dict["version"]
+		if version > VERSION:
+			print("WARNING: save data is newer than current version, attempting to load data")
+		if "objects" in save_dict:
+			if save_dict["objects"] is Array:
+				for obj in ObjectsRoot.get_children():
+					obj.queue_free()
+				for men in MenusRoot.get_children():
+					men.queue_free()
+				for obj in save_dict["objects"]:
+					if _validate_object_json(obj, version):
+						# 0.1
+						var newobj = _create_new_object()
+						newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
+						newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
+						newobj.blinking = obj["blinking"]
+						newobj.reactive = obj["reactive"]
+						newobj.talking = obj["talking"]
+						if obj["texturepath"] != "":
+							openingfor = newobj
+							_request_image(obj["texturepath"])
+						# 0.2
+						if version >= 0.2:
+							newobj.filter = obj["filter"]
+						newobj.update_menu.emit()
+					else:
+						print("ERROR: object does not contain required fields")
+			else:
+				print("ERROR: dictionary contains no \"objects\" field")
+	else:
+		print("ERROR: JSON file is invalid")
 
 func _set_menu_shown(value: bool):
 	visible = value
@@ -41,27 +134,25 @@ func _set_menu_shown(value: bool):
 
 func _create_new_object():
 	if MenusRoot and ObjectsRoot:
-		var newmenu: ScreenObjectMenu = somenuscene.instantiate()
+		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
-		newobject.texture = ImageTexture.create_from_image(Image.load_from_file("res://DefaultAvatar.png"))
+		newobject.texture = default_avatar_texture
 		newmenu.request_file.connect(_on_file_button_button_down)
+		newmenu.tree_exiting.connect(clear_gizmo)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
 		newmenu.request_gizmo.connect(_on_drag_requested)
+		newmenu.grab_gizmo.connect(_grab_gizmo)
+		newobject.user_position = newobject.global_position
+		newmenu.update_menu()
+		return newobject
 
-func _on_close_button_button_up():
+func _on_button_button_down():
 	menu_shown = false
 
-func _on_quit_button_button_up():
+func _on_quit_button_button_down():
 	get_tree().quit()
-	
-func _on_screen_toggle_button_up():
-	if WindowManager.toggle_fullscreen() == 0:
-		screen_toggle_button.text = "Fullscreen"
-	else:
-		screen_toggle_button.text = "Window Mode"
-	
 
 func _on_popup_menu_index_pressed(index: int):
 	var popup_menu = device_dropdown.get_popup()
@@ -74,7 +165,7 @@ func _on_file_button_button_down(requestor):
 	file_dialog.popup_centered()
 
 
-func _on_file_dialog_file_selected(path):
+func _request_image(path):
 	if openingfor:
 		var image = Image.new()
 		var err = image.load(path)
@@ -83,7 +174,14 @@ func _on_file_dialog_file_selected(path):
 			return
 		Save.filepath = path
 		openingfor.texture = ImageTexture.create_from_image(image)
+		openingfor.texturepath = path
 
+func clear_gizmo():
+	gizmo.target = null
+	gizmo.visible = false
+
+func _grab_gizmo(object: ScreenObject):
+	gizmo.global_position = object.global_position
 
 func _on_drag_requested(object: ScreenObject):
 	if drag_target == object:
