@@ -3,14 +3,18 @@
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="1_dxbbx"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_nubdv"]
-[ext_resource type="Texture2D" path="res://contract.png" id="3_rgfwj"]
+[ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://contract.png" id="3_rgfwj"]
 
-[node name="ScreenObjectMenu" type="PanelContainer"]
+[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("talkbox", "bouncebox", "blinkbox", "filterbox")]
 offset_right = 159.0
 offset_bottom = 69.0
 size_flags_horizontal = 4
 size_flags_vertical = 2
 script = ExtResource("1_0piso")
+talkbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer/CheckBox")
+bouncebox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer/CheckBox")
+blinkbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox")
+filterbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2

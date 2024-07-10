@@ -29,7 +29,6 @@ func _ready():
 func _process(_delta):
 	var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
 	var magnitude = db_to_linear(current_db)
-	$Menu/PanelContainer/VBoxContainer/CurrentGainLabel.text = str(snapped(current_db,1.0))
 	
 	if samples.size() >= MAX_SAMPLES:
 		samples.pop_front()

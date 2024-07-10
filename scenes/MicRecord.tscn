@@ -111,9 +111,6 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="CurrentGainLabel" type="Label" parent="Menu/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
 [node name="Input Gain" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer"]
 layout_mode = 2
 
