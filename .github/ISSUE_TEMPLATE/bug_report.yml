@@ -1,5 +1,6 @@
 name: Bug Report
 description: When a feature is not behaving as expected.
+title: "[Bug]: "
 labels: [bug]
 assignees: code807,quellus
 body:
