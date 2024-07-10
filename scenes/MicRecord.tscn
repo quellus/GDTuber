@@ -47,6 +47,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 1, 0, 1)
 
 [node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
@@ -57,6 +58,7 @@ bus = &"Record"
 [node name="ObjectsRoot" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 0
+mouse_filter = 2
 
 [node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -66,6 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu"]
 layout_mode = 1
@@ -73,6 +76,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 191.0
 grow_vertical = 2
+mouse_force_pass_scroll_events = false
 theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
 
 [node name="MainMenu" type="VBoxContainer" parent="Menu/PanelContainer"]

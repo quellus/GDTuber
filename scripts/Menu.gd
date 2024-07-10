@@ -9,6 +9,7 @@ const VERSION = 0.4
 @onready var settingsmenu: Control = %SettingsMenu
 @onready var background = %Background
 @onready var bgcolor = %BackgroundColor
+@onready var menu = %Menu
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
@@ -253,7 +254,7 @@ func _request_image(path):
 
 ### Window Management
 func _set_menu_shown(value: bool):
-	visible = value
+	menu.visible = value
 	set_process_input(value)
 
 func _on_button_button_down():
@@ -286,23 +287,26 @@ func _set_profile_name(pname: String):
 
 
 
-# TODO: Duplicate Objects
 ### Screen Object Management
 func _create_new_object():
 	if MenusRoot and ObjectsRoot:
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
-		newmenu.object = newobject
 		newobject.texture = default_avatar_texture
-		newmenu.request_file.connect(_on_file_button_button_down)
-		newmenu.tree_exiting.connect(clear_gizmo)
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
-		newmenu.request_gizmo.connect(_on_drag_requested)
-		newmenu.grab_gizmo.connect(_grab_gizmo)
+		newmenu.object = newobject
+		_connect_menu(newmenu)
 		newobject.user_position = get_viewport_rect().size/2
 		newmenu.update_menu()
 		return newobject
+
+func _connect_menu(smenu: ScreenObjectMenu):
+	smenu.request_file.connect(_on_file_button_button_down)
+	smenu.tree_exiting.connect(clear_gizmo)
+	smenu.duplicate_object.connect(_duplicate_object)
+	smenu.request_gizmo.connect(_on_drag_requested)
+	smenu.grab_gizmo.connect(_grab_gizmo)
 
 func clear_gizmo():
 	gizmo.target = null
@@ -321,6 +325,20 @@ func _on_drag_requested(object: ScreenObject):
 		gizmo.visible = true
 		gizmo.target = object
 		drag_target = object
+
+func _duplicate_object(obj: ScreenObject):
+	var newobj = _create_new_object()
+	newobj.user_position = obj.user_position
+	newobj.user_rotation = obj.user_rotation
+	newobj.user_scale = obj.user_scale
+	newobj.texturepath = obj.texturepath
+	newobj.texture = obj.texture
+	newobj.filter = obj.filter
+	newobj.reactive = obj.reactive
+	newobj.talking = obj.talking
+	newobj.blinking = obj.blinking
+	newobj.update_menu.emit()
+	pass
 
 
 
@@ -374,29 +392,31 @@ func _input(event):
 			drag_target.user_rotation = round(targetrot/SNAP_ANGLE)*SNAP_ANGLE
 		else:
 			drag_target.user_rotation = targetrot
-		
-	
-	# Scroll to zoom
+
 	if event is InputEventMouseButton and drag_target:
-		print("0")
-		if is_instance_valid(drag_target):
+			print("mouse button pressed please help")
 			match event.button_index:
-				MOUSE_BUTTON_WHEEL_UP:
-					drag_target.user_scale *= SCALE_RATIO
-				MOUSE_BUTTON_WHEEL_DOWN:
-					drag_target.user_scale *= 1 / SCALE_RATIO
 				MOUSE_BUTTON_RIGHT:
 					if event.is_pressed():
 						if !rotating:
-							print("start rotating")
 							rotation_center = drag_target.global_position
 							var rotvector = event.global_position-rotation_center
 							var rotangle = atan2(rotvector.y, rotvector.x)
 							starting_rotation = drag_target.global_rotation - rotangle
 							rotating = true
 					else:
-						print("stop rotating")
 						rotating = false
+
+func _unhandled_input(event):
+		
+	# Scroll to zoom
+	if event is InputEventMouseButton and drag_target:
+		if is_instance_valid(drag_target):
+			match event.button_index:
+				MOUSE_BUTTON_WHEEL_UP:
+					drag_target.user_scale *= SCALE_RATIO
+				MOUSE_BUTTON_WHEEL_DOWN:
+					drag_target.user_scale *= 1 / SCALE_RATIO
 	# Toggle Menu
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
