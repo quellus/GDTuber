@@ -1,36 +1,85 @@
 class_name Menu extends Control
 
+const VERSION = 0.3
 
-var somenuscene = preload("res://scenes/screen_object_menu.tscn")
-
-const VERSION = 0.2
-const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
-var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
-
-
-@onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
-@onready var file_dialog := %ImageOpenDialog
-@onready var json_save_dialog : FileDialog = %JSONSaveDialog
-@onready var json_load_dialog : FileDialog = %JSONLoadDialog
-
-@export var ObjectsRoot: Node
-@export var MenusRoot: Node
-@export var gizmo: Gizmo
-var drag_target: ScreenObject
-var openingfor: ScreenObject 
-var savedata: String
-
+# Window Management
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
+# Audio Management
+const MAX_SAMPLES = 20
+const SCALE_RATIO = 1.1
+@onready var input_gain_slider: Slider = %InputGainSlider
+@onready var threshold_slider: Slider = %ThresholdSlider
+@onready var device_dropdown := %DeviceDropdown
+var bus_index
+var analyzer: AudioEffectSpectrumAnalyzerInstance
+var samples: Array[float] = []
+var amplifier_effect = AudioEffectAmplify
+var threshold = 0.5
+var input_gain: float
+
+# Screen Object Management
+const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
+@export var ObjectsRoot: Node
+@export var MenusRoot: Node
+var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
+var somenuscene = preload("res://scenes/screen_object_menu.tscn")
+
+# Screen Object Editing
+@export var gizmo: Gizmo
+var drag_target: ScreenObject
+
+# File Management
+@onready var file_dialog := %ImageOpenDialog
+@onready var json_save_dialog : FileDialog = %JSONSaveDialog
+@onready var json_load_dialog : FileDialog = %JSONLoadDialog
+var openingfor: ScreenObject 
+var savedata: String
+
+### Ready
 func _ready():
-	menu_shown = true
+	# Set Window Properties
+	get_tree().get_root().set_transparent_background(true)
+	
+	# Set Audio Properties
+	bus_index = AudioServer.get_bus_index("Record")
+	amplifier_effect = AudioServer.get_bus_effect(bus_index, 1)
 	var popup_menu = device_dropdown.get_popup()
-	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	var devices = AudioServer.get_input_device_list()
+	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	for device_name in devices:
 		popup_menu.add_item(device_name)
+	
+	# Initialize Menu
+	menu_shown = true
 
+
+
+### Process
+func _process(_delta):
+	# Audio Processing
+	var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
+	var magnitude = db_to_linear(current_db)
+	
+	if samples.size() >= MAX_SAMPLES:
+		samples.pop_front()
+	samples.append(magnitude)
+	
+	var magnitude_avg = _get_average()
+
+	if magnitude_avg > threshold:
+		if !is_talking:
+			is_talking = true
+	else:
+		if is_talking:
+			is_talking = false
+
+	%VolumeVisual.value = magnitude_avg
+
+
+
+### File I/O
 func _save_file(path: String):
 	if path.get_extension() == "":
 		path = path+".json"
@@ -39,7 +88,12 @@ func _save_file(path: String):
 
 func _save_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
-	var savedict = {"version":VERSION, "objects":[]}
+	var savedict = {
+		"version":VERSION, 
+		"threshold":threshold,
+		"input_gain":input_gain,
+		"objects":[]
+	}
 	for obj in ObjectsRoot.get_children():
 		if obj is ScreenObject:
 			savedict["objects"].append({
@@ -51,12 +105,31 @@ func _save_data():
 				"blinking": obj.blinking,
 				"reactive": obj.reactive,
 				"talking": obj.talking,
-				"filter": obj.filter
+				"filter": obj.filter,
 			})
 	savedata = JSON.stringify(savedict)
 	json_save_dialog.popup_centered()
-	
 
+func _validate_save_json(dict, v) -> bool:
+	pass
+	var versions = {
+		0.1:{
+			"objects":TYPE_ARRAY,
+			"version":TYPE_FLOAT
+		},
+		0.3:{
+			"threshold":TYPE_FLOAT,
+			"input_gain":TYPE_FLOAT
+		}
+	}
+	for version in versions:
+		if version <= v:
+			for field in versions[version]:
+				if field not in dict:
+					return false
+				if !is_instance_of(dict[field], versions[version][field]):
+					return false
+	return true
 
 func _validate_object_json(dict, v) -> bool:
 	var versions = {
@@ -83,7 +156,6 @@ func _validate_object_json(dict, v) -> bool:
 					return false
 	return true
 
-
 func _load_dialog():
 	json_load_dialog.popup_centered()
 
@@ -92,46 +164,82 @@ func _load_data(path):
 	if save_json == "":
 		return
 	var save_dict = JSON.parse_string(save_json)
-	var version = VERSION
+	var version = 0.1
 	if save_dict:
 		if "version" in save_dict:
 			if save_dict["version"] is float:
 				version = save_dict["version"]
-		if version > VERSION:
-			print("WARNING: save data is newer than current version, attempting to load data")
-		if "objects" in save_dict:
-			if save_dict["objects"] is Array:
-				for obj in ObjectsRoot.get_children():
-					obj.queue_free()
-				for men in MenusRoot.get_children():
-					men.queue_free()
-				for obj in save_dict["objects"]:
-					if _validate_object_json(obj, version):
-						# 0.1
-						var newobj = _create_new_object()
-						newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
-						newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
-						newobj.blinking = obj["blinking"]
-						newobj.reactive = obj["reactive"]
-						newobj.talking = obj["talking"]
-						if obj["texturepath"] != "":
-							openingfor = newobj
-							_request_image(obj["texturepath"])
-						# 0.2
-						if version >= 0.2:
-							newobj.filter = obj["filter"]
-						newobj.update_menu.emit()
-					else:
-						print("ERROR: object does not contain required fields")
-			else:
-				print("ERROR: dictionary contains no \"objects\" field")
+		if _validate_save_json(save_dict, version):
+			version = save_dict["version"]
+			# Version Check
+			if version > VERSION:
+				print("WARNING: save data is newer than current version, attempting to load data")
+			
+			# Generate Objects from Objects Array
+			for obj in ObjectsRoot.get_children():
+				obj.queue_free()
+			for men in MenusRoot.get_children():
+				men.queue_free()
+			for obj in save_dict["objects"]:
+				if _validate_object_json(obj, version):
+					# 0.1
+					var newobj = _create_new_object()
+					newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
+					newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
+					newobj.blinking = obj["blinking"]
+					newobj.reactive = obj["reactive"]
+					newobj.talking = obj["talking"]
+					if obj["texturepath"] != "":
+						openingfor = newobj
+						_request_image(obj["texturepath"])
+					# 0.2
+					if version >= 0.2:
+						newobj.filter = obj["filter"]
+					newobj.update_menu.emit()
+				else:
+					print("ERROR: object does not contain required fields")
+			# Load Program Settings
+			# 0.3
+			if version >= 0.3:
+				threshold = save_dict["threshold"]
+				threshold_slider.value = threshold
+				input_gain = save_dict["input_gain"]
+				input_gain_slider.value = input_gain
+		else:
+			print("ERROR: Required Fields for Save File Version not Found")
 	else:
 		print("ERROR: JSON file is invalid")
+	
+func _on_file_button_button_down(requestor):
+	openingfor = requestor
+	file_dialog.popup_centered()
 
+func _request_image(path):
+	if openingfor:
+		var image = Image.new()
+		var err = image.load(path)
+		if err != OK:
+			printerr("cannot load image.")
+			return
+		openingfor.texture = ImageTexture.create_from_image(image)
+		openingfor.texturepath = path
+
+
+
+### Window Management
 func _set_menu_shown(value: bool):
 	visible = value
 	set_process_input(value)
 
+func _on_button_button_down():
+	menu_shown = false
+
+func _on_quit_button_button_down():
+	get_tree().quit()
+
+
+
+### Screen Object Management
 func _create_new_object():
 	if MenusRoot and ObjectsRoot:
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
@@ -147,34 +255,6 @@ func _create_new_object():
 		newobject.user_position = newobject.global_position
 		newmenu.update_menu()
 		return newobject
-
-func _on_button_button_down():
-	menu_shown = false
-
-func _on_quit_button_button_down():
-	get_tree().quit()
-
-func _on_popup_menu_index_pressed(index: int):
-	var popup_menu = device_dropdown.get_popup()
-	AudioServer.set_input_device(popup_menu.get_item_text(index))
-	pass
-
-
-func _on_file_button_button_down(requestor):
-	openingfor = requestor
-	file_dialog.popup_centered()
-
-
-func _request_image(path):
-	if openingfor:
-		var image = Image.new()
-		var err = image.load(path)
-		if err != OK:
-			printerr("cannot load image.")
-			return
-		Save.filepath = path
-		openingfor.texture = ImageTexture.create_from_image(image)
-		openingfor.texturepath = path
 
 func clear_gizmo():
 	gizmo.target = null
@@ -193,3 +273,60 @@ func _on_drag_requested(object: ScreenObject):
 		gizmo.visible = true
 		gizmo.target = object
 		drag_target = object
+
+
+
+### Audio Management
+func _on_popup_menu_index_pressed(index: int):
+	var popup_menu = device_dropdown.get_popup()
+	AudioServer.set_input_device(popup_menu.get_item_text(index))
+	pass
+
+var is_talking := false:
+	set(value):
+		if value != is_talking:
+			for screen_object in get_tree().get_nodes_in_group("reactive"):
+				if screen_object is ScreenObject:
+					screen_object.is_talking = value
+		is_talking = value
+
+func _get_average() -> float:
+	var mag_sum: float = 0.0
+	var mag_avg: float = 0.0
+	for i in samples:
+		mag_sum += i
+	mag_avg = mag_sum / float(samples.size())
+	return mag_avg
+
+func update_amplifier(_new_input_gain : float):
+	if _new_input_gain <= -10.0 || _new_input_gain >= 24.1:
+		printt("Input gain out of range:",_new_input_gain)
+		return
+	if amplifier_effect.volume_db != _new_input_gain:
+		amplifier_effect.volume_db = _new_input_gain
+		printt("set amplify gain to:",_new_input_gain)
+
+func _on_v_slider_drag_ended(value_changed):
+	threshold = value_changed
+	
+func _on_input_gain_change(_new_input_gain : float):
+	input_gain = _new_input_gain
+	update_amplifier(_new_input_gain)
+
+
+
+### Input
+func _unhandled_input(event):
+	# Scroll to zoom
+	if event is InputEventMouseButton and drag_target:
+		if is_instance_valid(drag_target):
+			match event.button_index:
+				MOUSE_BUTTON_WHEEL_UP:
+					drag_target.user_scale *= SCALE_RATIO
+				MOUSE_BUTTON_WHEEL_DOWN:
+					drag_target.user_scale *= 1 / SCALE_RATIO
+	# Toggle Menu
+	if event is InputEventKey or event is InputEventMouse:
+		if event.is_pressed():
+			menu_shown = true
+

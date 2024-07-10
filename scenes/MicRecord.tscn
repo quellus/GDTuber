@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=9 format=3 uid="uid://dvjlkpjvjxn0h"]
 
-[ext_resource type="Script" path="res://scripts/MicRecord.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_kgjae"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="3_lar1l"]
 [ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_6j4ar"]
@@ -26,21 +25,24 @@ font_size = 12
 [sub_resource type="LabelSettings" id="LabelSettings_f3f2x"]
 font_size = 12
 
-[node name="MicRecord" type="Control"]
+[node name="Main" type="Control" node_paths=PackedStringArray("ObjectsRoot", "MenusRoot", "gizmo")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1")
+script = ExtResource("4_l3c8m")
+ObjectsRoot = NodePath("ObjectsRoot")
+MenusRoot = NodePath("Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
+gizmo = NodePath("Menu/Gizmo")
 
 [node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
 stream = SubResource("1")
 autoplay = true
 bus = &"Record"
 
-[node name="Control" type="Control" parent="."]
+[node name="ObjectsRoot" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -50,12 +52,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="Control"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Menu" type="Control" parent="." node_paths=PackedStringArray("ObjectsRoot", "MenusRoot", "gizmo")]
+[node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -63,10 +60,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_l3c8m")
-ObjectsRoot = NodePath("../Control/Control")
-MenusRoot = NodePath("PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
-gizmo = NodePath("Gizmo")
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu"]
 layout_mode = 1
@@ -81,6 +74,7 @@ layout_mode = 2
 theme_override_constants/separation = 15
 
 [node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Input Device"
@@ -95,7 +89,7 @@ size_flags_horizontal = 4
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="ThesholdSlider" type="VSlider" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ThresholdSlider" type="VSlider" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
@@ -239,17 +233,16 @@ filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
-[connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="Menu" method="_create_new_object"]
-[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Save Data" to="Menu" method="_save_data"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Load Data" to="Menu" method="_load_dialog"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
+[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="." method="_on_file_button_button_down"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="." method="_on_button_button_down"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Save Data" to="." method="_save_data"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Load Data" to="." method="_load_dialog"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
-[connection signal="file_selected" from="ImageOpenDialog" to="Menu" method="_request_image"]
-[connection signal="file_selected" from="JSONSaveDialog" to="Menu" method="_save_file"]
-[connection signal="file_selected" from="JSONLoadDialog" to="Menu" method="_load_data"]
+[connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]
+[connection signal="file_selected" from="JSONSaveDialog" to="." method="_save_file"]
+[connection signal="file_selected" from="JSONLoadDialog" to="." method="_load_data"]
