@@ -186,7 +186,6 @@ use_native_dialog = true
 [node name="JSONSaveDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
 access = 2
-root_subfolder = "user://"
 filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
@@ -198,7 +197,6 @@ size = Vector2i(312, 154)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-root_subfolder = "user://"
 filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
