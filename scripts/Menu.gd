@@ -21,7 +21,6 @@ var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
 func _ready():
-	print(default_avatar_texture)
 	menu_shown = true
 	var popup_menu = device_dropdown.get_popup()
 	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
