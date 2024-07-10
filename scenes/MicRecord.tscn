@@ -34,8 +34,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_l3c8m")
 ObjectsRoot = NodePath("ObjectsRoot")
-MenusRoot = NodePath("Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
+MenusRoot = NodePath("Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
 gizmo = NodePath("Menu/Gizmo")
+
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 1, 0, 1)
 
 [node name="AudioStreamRecord" type="AudioStreamPlayer" parent="."]
 stream = SubResource("1")
@@ -44,13 +55,7 @@ bus = &"Record"
 
 [node name="ObjectsRoot" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
 
 [node name="Menu" type="Control" parent="."]
 unique_name_in_owner = true
@@ -69,11 +74,13 @@ offset_right = 191.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer"]
+[node name="MainMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 6
 
-[node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/MainMenu"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
@@ -82,21 +89,23 @@ item_count = 1
 popup/item_0/text = ""
 popup/item_0/id = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(89.705, 193.37)
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu"]
+custom_minimum_size = Vector2(89.705, 104.755)
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="ThresholdSlider" type="VSlider" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ThresholdSlider" type="VSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
@@ -105,31 +114,31 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="Input Gain" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="Input Gain" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/PanelContainer/VBoxContainer/Input Gain"]
+[node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain"]
 layout_mode = 2
 text = "Input Gain"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/VBoxContainer/Input Gain"]
+[node name="VBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu/Input Gain"]
 layout_mode = 2
 
-[node name="BottomDbLabel" type="Label" parent="Menu/PanelContainer/VBoxContainer/Input Gain/VBoxContainer"]
+[node name="BottomDbLabel" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
 layout_mode = 2
 text = "0db"
 label_settings = SubResource("LabelSettings_34a71")
 vertical_alignment = 1
 
-[node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/VBoxContainer/Input Gain/VBoxContainer"]
+[node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 10)
 layout_mode = 2
 max_value = 24.0
 step = 0.1
 
-[node name="CeilingDbLabel" type="Label" parent="Menu/PanelContainer/VBoxContainer/Input Gain/VBoxContainer"]
+[node name="CeilingDbLabel" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
 layout_mode = 2
 text = "+24db"
 label_settings = SubResource("LabelSettings_f3f2x")
@@ -137,57 +146,124 @@ horizontal_alignment = 2
 vertical_alignment = 1
 justification_flags = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Menu/PanelContainer/MainMenu"]
 custom_minimum_size = Vector2(0, 130.82)
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Button" type="Button" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="Button" type="Button" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.555)
 layout_mode = 2
 text = "+"
 
-[node name="PanelContainer" type="PanelContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MenusRoot" type="VBoxContainer" parent="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/PanelContainer"]
+[node name="MenusRoot" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="FileButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-text = "Change Texture"
-
-[node name="Label" type="Label" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
 theme = ExtResource("3_lar1l")
 text = "Press any key to open this menu again"
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="CloseButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="Settings" type="Button" parent="Menu/PanelContainer/MainMenu"]
+layout_mode = 2
+text = "System Settings"
+
+[node name="CloseButton" type="Button" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
 text = "Hide Menu"
 
-[node name="Save Data" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="SettingsMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Main Menu" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
+layout_mode = 2
+text = "Back"
+
+[node name="Fullscreen" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="Save Data" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
 layout_mode = 2
 text = "Save Data"
 
-[node name="Load Data" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="Load Data" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
 layout_mode = 2
 text = "Load Data"
 
-[node name="QuitButton" type="Button" parent="Menu/PanelContainer/VBoxContainer"]
+[node name="QuitButton" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Quit"
+
+[node name="FullScreen Toggle" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/FullScreen Toggle"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Transparent BG"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.22
+theme = ExtResource("3_lar1l")
+button_pressed = true
+alignment = 1
+icon_alignment = 1
+
+[node name="BackgroundColor" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/BackgroundColor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "BG Color"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.52
+color = Color(0, 1, 0, 1)
 
 [node name="Gizmo" type="Control" parent="Menu"]
 visible = false
@@ -233,14 +309,18 @@ filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
 
-[connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
-[connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
-[connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="." method="_on_file_button_button_down"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="." method="_on_button_button_down"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Save Data" to="." method="_save_data"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Load Data" to="." method="_load_dialog"]
-[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_button_down"]
+[connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
+[connection signal="value_changed" from="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
+[connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
+[connection signal="pressed" from="Menu/PanelContainer/MainMenu/Settings" to="." method="_open_settings"]
+[connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Main Menu" to="." method="_close_settings"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Fullscreen" to="." method="_on_fullscreen_toggle"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_save_data"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Load Data" to="." method="_load_dialog"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
+[connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/CheckBox" to="." method="_toggle_transparent"]
+[connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]

@@ -3,6 +3,10 @@ class_name Menu extends Control
 const VERSION = 0.3
 
 # Window Management
+@onready var mainmenu: Control = %MainMenu
+@onready var settingsmenu: Control = %SettingsMenu
+@onready var background = %Background
+@onready var bgcolor = %BackgroundColor
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
 
@@ -237,6 +241,23 @@ func _on_button_button_down():
 func _on_quit_button_button_down():
 	get_tree().quit()
 
+func _on_fullscreen_toggle():
+	WindowManager.toggle_fullscreen()
+	
+func _open_settings():
+	settingsmenu.visible = true
+	mainmenu.visible = false
+
+func _close_settings():
+	mainmenu.visible = true
+	settingsmenu.visible = false
+
+func _toggle_transparent(value):
+	bgcolor.visible = !value
+	background.visible = !value
+	
+func _change_background_color(color):
+	background.color = color
 
 
 ### Screen Object Management
@@ -252,7 +273,7 @@ func _create_new_object():
 		ObjectsRoot.add_child(newobject)
 		newmenu.request_gizmo.connect(_on_drag_requested)
 		newmenu.grab_gizmo.connect(_grab_gizmo)
-		newobject.user_position = newobject.global_position
+		newobject.user_position = get_viewport_rect().size/2
 		newmenu.update_menu()
 		return newobject
 
