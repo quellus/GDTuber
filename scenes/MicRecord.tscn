@@ -172,7 +172,7 @@ offset_right = 62.5
 offset_bottom = 62.5
 texture_normal = ExtResource("3_kgjae")
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="ImageOpenDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
 title = "Open a File"
 initial_position = 1
@@ -183,14 +183,36 @@ access = 2
 filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
 use_native_dialog = true
 
+[node name="JSONSaveDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+access = 2
+root_subfolder = "user://"
+filters = PackedStringArray("*.json")
+show_hidden_files = true
+use_native_dialog = true
+
+[node name="JSONLoadDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+size = Vector2i(312, 154)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "user://"
+filters = PackedStringArray("*.json")
+show_hidden_files = true
+use_native_dialog = true
+
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="value_changed" from="Menu/PanelContainer/VBoxContainer/HBoxContainer/ThesholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/ScrollContainer/VBoxContainer/Button" to="Menu" method="_create_new_object"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/FileButton" to="Menu" method="_on_file_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/CloseButton" to="Menu" method="_on_button_button_down"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/Save Data" to="Menu" method="_save_data"]
-[connection signal="button_up" from="Menu/PanelContainer/VBoxContainer/Load Data" to="Menu" method="_load_data"]
+[connection signal="pressed" from="Menu/PanelContainer/VBoxContainer/Load Data" to="Menu" method="_load_dialog"]
 [connection signal="button_down" from="Menu/PanelContainer/VBoxContainer/QuitButton" to="Menu" method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
-[connection signal="file_selected" from="FileDialog" to="Menu" method="_request_image"]
+[connection signal="file_selected" from="ImageOpenDialog" to="Menu" method="_request_image"]
+[connection signal="file_selected" from="JSONSaveDialog" to="Menu" method="_save_file"]
+[connection signal="file_selected" from="JSONLoadDialog" to="Menu" method="_load_data"]
