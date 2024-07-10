@@ -6,6 +6,11 @@ var rng = RandomNumberGenerator.new()
 		texture = value
 		create_visual()
 
+var filter: bool = true:
+	set(value):
+		sprite.texture_filter = TEXTURE_FILTER_LINEAR if value else TEXTURE_FILTER_NEAREST
+		filter = value
+		
 var id: String
 @export var blinking := true:
 	set(value):
@@ -26,7 +31,13 @@ var user_scale: Vector2  = Vector2(1, 1) :
 			sprite.scale = value
 			user_scale = value
 
-var user_position: Vector2
+signal update_menu
+
+var texturepath: String
+var user_position: Vector2:
+	set(value):
+		user_position = value
+		global_position = value
 var sprite: Node2D
 var blink_timer: Timer
 var bounce_animator: AnimationPlayer
@@ -61,14 +72,8 @@ func create_visual():
 			sprite.queue_free()
 			sprite = null
 			bounce_animator = null
-		if talking:
-			create_talking_atlas()
-			if blinking:
-				blink_timer = Timer.new()
-				add_child(blink_timer)
-				blink_timer.timeout.connect(_on_blink_timer_timeout)
-				blink_timer.start(1)
-				
+		if talking or blinking:
+			create_atlas()
 		else:
 			create_normal_sprite()
 		if reactive:
@@ -77,35 +82,44 @@ func create_visual():
 			if bounce_animator:
 				bounce_animator.queue_free()
 				bounce_animator = null
+		sprite.texture_filter = TEXTURE_FILTER_LINEAR if filter else TEXTURE_FILTER_NEAREST
 		
 	
-func create_talking_atlas():
-	var width = floor(texture.get_width()/2)
-	var height = floor(texture.get_height()/2)
+func create_atlas():
+	var width = floor(float(texture.get_width())/2) if talking else texture.get_width()
+	var height = floor(float(texture.get_height())/2) if blinking else texture.get_height()
 	sprite = AnimatedSprite2D.new()
 	sprite.scale = user_scale
 	sprite.sprite_frames = SpriteFrames.new()
-	for i in range(4):
-		var atlas_texture = AtlasTexture.new()
-		var atlas_rect
-		match i:
-			0:
-				atlas_rect = Rect2(0, 0, width, height)
-			1:
-				atlas_rect = Rect2(width, 0, width, height)
-			2:
-				atlas_rect = Rect2(0, height, width, height)
-			3:
-				atlas_rect = Rect2(width, height, width, height)
-				
-		atlas_texture.atlas = texture
-		atlas_texture.region = atlas_rect
-		
-		sprite.sprite_frames.add_frame("default", atlas_texture)
-		sprite.name = "Sprite"
+	var voffset = -height
+	for i in range(2 if blinking else 1):
+		voffset += height
+		var hoffset = -width
+		for d in range(2 if talking else 1):
+			hoffset += width
+			var atlas_texture = AtlasTexture.new()
+			var atlas_rect = Rect2(hoffset, voffset, width, height)
+			atlas_texture.atlas = texture
+			atlas_texture.region = atlas_rect
+			sprite.sprite_frames.add_frame("default", atlas_texture)
+	sprite.name = "Sprite"
 	add_child(sprite)
 	
-	
+	if is_instance_valid(blink_timer):
+			blink_timer.queue_free()
+	if is_inside_tree():
+		_gentimer()
+
+func _gentimer():
+	if blinking:
+		blink_timer = Timer.new()
+		add_child(blink_timer)
+		blink_timer.timeout.connect(_on_blink_timer_timeout)
+		blink_timer.start(1)
+
+func _enter_tree():
+	_gentimer()
+
 func create_normal_sprite():
 	sprite = Sprite2D.new()
 	sprite.texture = texture
@@ -130,7 +144,7 @@ func generate_animation():
 	bounce_animator.animation_finished.connect(_on_animator_stopped)
 
 
-func _on_animator_stopped(anim_name):
+func _on_animator_stopped(_anim_name):
 	if is_talking:
 		bounce_animator.play("bounce")
 
