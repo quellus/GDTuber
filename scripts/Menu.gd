@@ -7,7 +7,6 @@ const VERSION = 0.2
 const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
 var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
 
-# var default_avatar_texture: ImageTexture = ImageTexture.create_from_image(default_avatar_image)
 
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
 @onready var file_dialog := %FileDialog
