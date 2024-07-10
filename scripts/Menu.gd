@@ -9,13 +9,16 @@ var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
 
 
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
-@onready var file_dialog := %FileDialog
+@onready var file_dialog := %ImageOpenDialog
+@onready var json_save_dialog : FileDialog = %JSONSaveDialog
+@onready var json_load_dialog : FileDialog = %JSONLoadDialog
 
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
 @export var gizmo: Gizmo
 var drag_target: ScreenObject
 var openingfor: ScreenObject 
+var savedata: String
 
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
@@ -28,8 +31,14 @@ func _ready():
 	for device_name in devices:
 		popup_menu.add_item(device_name)
 
+func _save_file(path: String):
+	if path.get_extension() == "":
+		path = path+".json"
+	var save_game = FileAccess.open(path, FileAccess.WRITE)
+	save_game.store_line(savedata)
+
 func _save_data():
-	var save_game = FileAccess.open("user://gdtuber.json", FileAccess.WRITE)
+	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	var savedict = {"version":VERSION, "objects":[]}
 	for obj in ObjectsRoot.get_children():
 		if obj is ScreenObject:
@@ -44,7 +53,9 @@ func _save_data():
 				"talking": obj.talking,
 				"filter": obj.filter
 			})
-	save_game.store_line(JSON.stringify(savedict))
+	savedata = JSON.stringify(savedict)
+	json_save_dialog.popup_centered()
+	
 
 
 func _validate_object_json(dict, v) -> bool:
@@ -72,8 +83,12 @@ func _validate_object_json(dict, v) -> bool:
 					return false
 	return true
 
-func _load_data():
-	var save_json = FileAccess.get_file_as_string("user://gdtuber.json")
+
+func _load_dialog():
+	json_load_dialog.popup_centered()
+
+func _load_data(path):
+	var save_json = FileAccess.get_file_as_string(path)
 	if save_json == "":
 		return
 	var save_dict = JSON.parse_string(save_json)
