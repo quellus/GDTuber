@@ -76,7 +76,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
 
 [node name="MainMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 6
 
@@ -186,6 +185,7 @@ text = "Hide Menu"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="Main Menu" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
@@ -203,11 +203,6 @@ text = "Save Data"
 [node name="Load Data" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
 layout_mode = 2
 text = "Load Data"
-
-[node name="QuitButton" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
-layout_mode = 2
-size_flags_vertical = 8
-text = "Quit"
 
 [node name="FullScreen Toggle" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
 custom_minimum_size = Vector2(0, 45)
@@ -265,6 +260,11 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.52
 color = Color(0, 1, 0, 1)
 
+[node name="QuitButton" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Quit"
+
 [node name="Gizmo" type="Control" parent="Menu"]
 visible = false
 anchors_preset = 0
@@ -318,9 +318,9 @@ use_native_dialog = true
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Fullscreen" to="." method="_on_fullscreen_toggle"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_save_data"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Load Data" to="." method="_load_dialog"]
-[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/CheckBox" to="." method="_toggle_transparent"]
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]
