@@ -5,6 +5,8 @@ var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
 const VERSION = 0.2
 const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
+var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
+
 
 @onready var device_dropdown := $PanelContainer/VBoxContainer/DeviceDropdown
 @onready var file_dialog := %FileDialog
@@ -120,7 +122,7 @@ func _create_new_object():
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
 		newmenu.object = newobject
-		newobject.texture = ImageTexture.create_from_image(Image.load_from_file(DEFAULT_IMAGE))
+		newobject.texture = default_avatar_texture
 		newmenu.request_file.connect(_on_file_button_button_down)
 		newmenu.tree_exiting.connect(clear_gizmo)
 		MenusRoot.add_child(newmenu)

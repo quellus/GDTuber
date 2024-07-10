@@ -86,8 +86,8 @@ func create_visual():
 		
 	
 func create_atlas():
-	var width = floor(texture.get_width()/2) if talking else texture.get_width()
-	var height = floor(texture.get_height()/2) if blinking else texture.get_height()
+	var width = floor(float(texture.get_width())/2) if talking else texture.get_width()
+	var height = floor(float(texture.get_height())/2) if blinking else texture.get_height()
 	sprite = AnimatedSprite2D.new()
 	sprite.scale = user_scale
 	sprite.sprite_frames = SpriteFrames.new()
@@ -107,12 +107,19 @@ func create_atlas():
 	
 	if is_instance_valid(blink_timer):
 			blink_timer.queue_free()
+	if is_inside_tree():
+		_gentimer()
+
+func _gentimer():
 	if blinking:
 		blink_timer = Timer.new()
 		add_child(blink_timer)
 		blink_timer.timeout.connect(_on_blink_timer_timeout)
 		blink_timer.start(1)
-	
+
+func _enter_tree():
+	_gentimer()
+
 func create_normal_sprite():
 	sprite = Sprite2D.new()
 	sprite.texture = texture
@@ -137,7 +144,7 @@ func generate_animation():
 	bounce_animator.animation_finished.connect(_on_animator_stopped)
 
 
-func _on_animator_stopped(anim_name):
+func _on_animator_stopped(_anim_name):
 	if is_talking:
 		bounce_animator.play("bounce")
 
