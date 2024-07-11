@@ -9,6 +9,7 @@ signal duplicate_object(ScreenObject)
 @export var bouncebox: CheckBox
 @export var blinkbox: CheckBox
 @export var filterbox: CheckBox
+@export var visibilitytoggle: TextureButton
 
 var object: ScreenObject:
 	set(value):
@@ -55,6 +56,8 @@ func _set_filter(value):
 	# set_filter.emit(object, value)
 
 func update_menu():
+	if visibilitytoggle:
+		visibilitytoggle.button_pressed = object.user_hidden
 	if blinkbox:
 		blinkbox.button_pressed = object.blinking
 	if bouncebox:
@@ -75,3 +78,6 @@ func _recenter():
 	object.get_viewport_transform()
 	grab_gizmo.emit(object)
 	pass
+
+func _togglevisibility(value):
+	object.user_hidden = value

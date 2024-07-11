@@ -6,6 +6,12 @@ var rng = RandomNumberGenerator.new()
 		texture = value
 		create_visual()
 
+var user_hidden: bool = false:
+	set(value):
+		user_hidden = value
+		if sprite:
+			sprite.visible = !user_hidden
+
 var filter: bool = true:
 	set(value):
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if value else TEXTURE_FILTER_NEAREST

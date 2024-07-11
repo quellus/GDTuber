@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-const VERSION = 0.4
+const VERSION = 0.5
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -119,6 +119,7 @@ func _save_data():
 				"talking": obj.talking,
 				"filter": obj.filter,
 				"rotation": obj.user_rotation,
+				"hidden": obj.user_hidden,
 			})
 	savedata = JSON.stringify(savedict)
 	json_save_dialog.popup_centered()
@@ -164,6 +165,9 @@ func _validate_object_json(dict, v) -> bool:
 		},
 		0.4:{
 			"rotation":TYPE_FLOAT
+		},
+		0.5:{
+			"hidden":TYPE_BOOL
 		}
 	}
 	for version in versions:
@@ -214,10 +218,13 @@ func _load_data(path):
 					# 0.2
 					if version >= 0.2:
 						newobj.filter = obj["filter"]
-					newobj.update_menu.emit()
 					# 0.4
 					if version >= 0.4:
 						newobj.user_rotation = obj["rotation"]
+					# 0.5
+					if version >= 0.5:
+						newobj.user_hidden = obj["hidden"]
+					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
 			# Load Program Settings
@@ -329,6 +336,7 @@ func _on_drag_requested(object: ScreenObject):
 func _duplicate_object(obj: ScreenObject):
 	var newobj = _create_new_object()
 	newobj.user_position = obj.user_position
+	newobj.user_hidden = obj.user_hidden
 	newobj.user_rotation = obj.user_rotation
 	newobj.user_scale = obj.user_scale
 	newobj.texturepath = obj.texturepath
