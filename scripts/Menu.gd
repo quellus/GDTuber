@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-const VERSION = 0.5
+const VERSION = 0.6
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -120,6 +120,7 @@ func _save_data():
 				"filter": obj.filter,
 				"rotation": obj.user_rotation,
 				"hidden": obj.user_hidden,
+				"name": obj.user_name,
 			})
 	savedata = JSON.stringify(savedict)
 	json_save_dialog.popup_centered()
@@ -168,6 +169,9 @@ func _validate_object_json(dict, v) -> bool:
 		},
 		0.5:{
 			"hidden":TYPE_BOOL
+		},
+		0.6:{
+			"name":TYPE_STRING,
 		}
 	}
 	for version in versions:
@@ -224,6 +228,9 @@ func _load_data(path):
 					# 0.5
 					if version >= 0.5:
 						newobj.user_hidden = obj["hidden"]
+					# 0.6
+					if version >= 0.6:
+						newobj.user_name = obj["name"]
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")

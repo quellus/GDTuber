@@ -1,14 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=9 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="1_dxbbx"]
+[ext_resource type="Script" path="res://scripts/name_edit.gd" id="2_wp1kw"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_nubdv"]
 [ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://contract.png" id="3_rgfwj"]
 [ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://Eyecon.png" id="4_bu76g"]
 [ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://dupeicon.png" id="5_esao5"]
 [ext_resource type="Texture2D" uid="uid://kjsgcuplqh0x" path="res://Eyecon2.png" id="5_nstd7"]
 
-[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("talkbox", "bouncebox", "blinkbox", "filterbox", "visibilitytoggle")]
+[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("talkbox", "bouncebox", "blinkbox", "filterbox", "visibilitytoggle", "name_field")]
 offset_right = 159.0
 offset_bottom = 69.0
 size_flags_horizontal = 4
@@ -19,9 +20,22 @@ bouncebox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxC
 blinkbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox")
 filterbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox")
 visibilitytoggle = NodePath("VBoxContainer/HBoxContainer/Visible")
+name_field = NodePath("VBoxContainer/TopRow/Name")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Name" type="LineEdit" parent="VBoxContainer/TopRow"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Name"
+alignment = 1
+script = ExtResource("2_wp1kw")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 27.345)
@@ -155,6 +169,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_dxbbx")
 
+[connection signal="text_changed" from="VBoxContainer/TopRow/Name" to="." method="_set_name"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Gizmo" to="." method="_request_gizmo"]

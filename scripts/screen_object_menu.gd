@@ -11,6 +11,8 @@ signal duplicate_object(ScreenObject)
 @export var filterbox: CheckBox
 @export var visibilitytoggle: TextureButton
 
+@export var name_field: LineEditReset
+
 var object: ScreenObject:
 	set(value):
 		if value:
@@ -27,6 +29,12 @@ var user_position: Vector2:
 		user_position = value
 		if object:
 			object.user_position = value
+
+var user_name: String:
+	set(value):
+		user_name = value
+		if object:
+			object.user_name = value
 
 signal request_file(ScreenObject)
 
@@ -55,6 +63,9 @@ func _set_filter(value):
 		object.filter = value
 	# set_filter.emit(object, value)
 
+func _set_name(value: String):
+	object.user_name = value
+
 func update_menu():
 	if visibilitytoggle:
 		visibilitytoggle.button_pressed = object.user_hidden
@@ -66,6 +77,8 @@ func update_menu():
 		talkbox.button_pressed = object.talking
 	if filterbox:
 		filterbox.button_pressed = object.filter
+	if name_field:
+		name_field.set_reset_text(object.user_name)
 	pass
 
 func _duplicate():
