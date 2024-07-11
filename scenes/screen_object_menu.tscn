@@ -20,16 +20,16 @@ bouncebox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxC
 blinkbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox")
 filterbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox")
 visibilitytoggle = NodePath("VBoxContainer/HBoxContainer/Visible")
-name_field = NodePath("VBoxContainer/HBoxContainer2/Name")
+name_field = NodePath("VBoxContainer/TopRow/Name")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+[node name="TopRow" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Name" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+[node name="Name" type="LineEdit" parent="VBoxContainer/TopRow"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -169,7 +169,7 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme = ExtResource("1_dxbbx")
 
-[connection signal="text_changed" from="VBoxContainer/HBoxContainer2/Name" to="." method="_set_name"]
+[connection signal="text_changed" from="VBoxContainer/TopRow/Name" to="." method="_set_name"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Gizmo" to="." method="_request_gizmo"]
