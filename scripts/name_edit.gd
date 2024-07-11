@@ -10,7 +10,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton && event.pressed:
 		var local = make_input_local(event) as InputEventMouseButton
 		if !Rect2(Vector2(0, 0), size).has_point(local.position):
-			reset_text()
+			set_reset_text(text)
 			release_focus()
 
 

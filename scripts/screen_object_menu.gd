@@ -3,6 +3,7 @@ class_name ScreenObjectMenu extends PanelContainer
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
 signal duplicate_object(ScreenObject)
+signal order_changed()
 # signal set_filter(ScreenObject, bool)
 
 @export var talkbox: CheckBox
@@ -83,6 +84,18 @@ func update_menu():
 
 func _duplicate():
 	duplicate_object.emit(object)
+	pass
+
+func _shift_up():
+	get_parent().move_child(self, get_index()-1)
+	# object.get_parent().move_child(object, get_index()-1)
+	order_changed.emit()
+	pass
+
+func _shift_down():
+	get_parent().move_child(self, get_index()+1)
+	# object.get_parent().move_child(object, get_index()+1)
+	order_changed.emit()
 	pass
 
 func _recenter():
