@@ -1,37 +1,34 @@
 class_name ScreenObject extends Node2D
 
+var visualsroot: Node2D = Node2D.new()
 var rng = RandomNumberGenerator.new()
-@export var texture: Texture2D:
+var texture: Texture2D:
 	set(value): 
 		texture = value
 		create_visual()
-
 var user_hidden: bool = false:
 	set(value):
 		user_hidden = value
 		if sprite:
 			sprite.visible = !user_hidden
-
 var filter: bool = true:
 	set(value):
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if value else TEXTURE_FILTER_NEAREST
 		filter = value
-
 var user_rotation: float = 0:
 	set(value):
-		global_rotation = value
+		if sprite:
+			sprite.global_rotation = value
 		user_rotation = value
-
-var id: String
-@export var blinking := true:
+var blinking := true:
 	set(value):
 		blinking = value
 		create_visual()
-@export var reactive := true:
+var reactive := true:
 	set(value):
 		reactive = value
 		create_visual()
-@export var talking := true:
+var talking := true:
 	set(value):
 		talking = value
 		create_visual()
@@ -74,6 +71,8 @@ var is_talking: bool:
 				bounce_animator.play("bounce")
 
 func _ready():
+	visualsroot.name = "VisualsRoot"
+	add_child(visualsroot)
 	create_visual()
 
 func create_visual():
@@ -116,7 +115,7 @@ func create_atlas():
 			atlas_texture.region = atlas_rect
 			sprite.sprite_frames.add_frame("default", atlas_texture)
 	sprite.name = "Sprite"
-	add_child(sprite)
+	visualsroot.add_child(sprite)
 	
 	if is_instance_valid(blink_timer):
 			blink_timer.queue_free()
@@ -126,7 +125,7 @@ func create_atlas():
 func _gentimer():
 	if blinking:
 		blink_timer = Timer.new()
-		add_child(blink_timer)
+		sprite.add_child(blink_timer)
 		blink_timer.timeout.connect(_on_blink_timer_timeout)
 		blink_timer.start(1)
 
@@ -138,11 +137,11 @@ func create_normal_sprite():
 	sprite.texture = texture
 	sprite.name = "Sprite"
 	sprite.scale = user_scale
-	add_child(sprite)
+	visualsroot.add_child(sprite)
 
 func generate_animation():
 	bounce_animator = AnimationPlayer.new()
-	sprite.add_child(bounce_animator)
+	visualsroot.add_child(bounce_animator)
 	var animation_lib = AnimationLibrary.new()
 	var animation = Animation.new()
 	var track_index = animation.add_track(Animation.TYPE_VALUE)

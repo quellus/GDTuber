@@ -321,6 +321,7 @@ func _connect_menu(smenu: ScreenObjectMenu):
 	smenu.duplicate_object.connect(_duplicate_object)
 	smenu.request_gizmo.connect(_on_drag_requested)
 	smenu.grab_gizmo.connect(_grab_gizmo)
+	smenu.order_changed.connect(_order_objects)
 
 func clear_gizmo():
 	gizmo.target = null
@@ -352,8 +353,14 @@ func _duplicate_object(obj: ScreenObject):
 	newobj.reactive = obj.reactive
 	newobj.talking = obj.talking
 	newobj.blinking = obj.blinking
+	newobj.user_name = obj.user_name
 	newobj.update_menu.emit()
 	pass
+
+func _order_objects():
+	for node:ScreenObjectMenu in MenusRoot.get_children():
+		ObjectsRoot.move_child(node.object, node.get_index())
+		pass
 
 
 
@@ -414,7 +421,7 @@ func _input(event):
 							rotation_center = drag_target.global_position
 							var rotvector = event.global_position-rotation_center
 							var rotangle = atan2(rotvector.y, rotvector.x)
-							starting_rotation = drag_target.global_rotation - rotangle
+							starting_rotation = drag_target.user_rotation - rotangle
 							rotating = true
 					else:
 						rotating = false
