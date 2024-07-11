@@ -8,7 +8,6 @@ func change_window_size(size: Vector2i):
 
 # NOTE: This function can be reused to toggle fullscreen mode
 func toggle_fullscreen():
-	printt("window mode:", DisplayServer.window_get_mode())
 	if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
