@@ -11,8 +11,11 @@ signal order_changed()
 @export var blinkbox: CheckBox
 @export var filterbox: CheckBox
 @export var visibilitytoggle: TextureButton
+@export var popupanchor: Control
 
 @export var name_field: LineEditReset
+
+@onready var colorpopup: ColorPopup = $HBoxContainer/Control/Popup
 
 var object: ScreenObject:
 	set(value):
@@ -80,6 +83,10 @@ func update_menu():
 		filterbox.button_pressed = object.filter
 	if name_field:
 		name_field.set_reset_text(object.user_name)
+	if colorpopup:
+		colorpopup.hueslider.value = object.user_hue
+		colorpopup.satslider.value = object.user_sat
+		colorpopup.valslider.value = object.user_val
 	pass
 
 func _duplicate():
@@ -107,3 +114,16 @@ func _recenter():
 
 func _togglevisibility(value):
 	object.user_hidden = value
+
+func _open_menu():
+	var popuprect = popupanchor.get_global_rect()
+	popuprect.size = Vector2(200, 150)
+	colorpopup.popup_on_parent(popuprect)
+
+func _update_hue(value):
+	object.user_hue = value
+func _update_sat(value):
+	object.user_sat = value
+func _update_val(value):
+	object.user_val = value
+	

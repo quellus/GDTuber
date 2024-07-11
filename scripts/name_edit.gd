@@ -14,5 +14,5 @@ func _input(event: InputEvent) -> void:
 			release_focus()
 
 
-func on_text_submitted(new_text: String):
+func on_text_submitted(_new_text: String):
 	release_focus()

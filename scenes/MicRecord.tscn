@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://dvjlkpjvjxn0h"]
 
-[ext_resource type="Script" path="res://scenes/LineEditReset.gd" id="2_4pwma"]
-[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_kgjae"]
-[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="3_lar1l"]
+[ext_resource type="Script" path="res://scripts/LineEditReset.gd" id="2_4pwma"]
+[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="3_kgjae"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="3_lar1l"]
 [ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_6j4ar"]
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
 
@@ -303,6 +303,7 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
+show_hidden_files = true
 use_native_dialog = true
 
 [node name="JSONSaveDialog" type="FileDialog" parent="."]

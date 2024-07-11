@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bam5fhr8naphp"
-path="res://.godot/imported/dupeicon.png-0f99285c7ee2e76447820ba231196a9c.ctex"
+uid="uid://fpqbctbhjl1a"
+path="res://.godot/imported/DefaultAvatar.png-a6365db4be1de8588fc632cc751d559a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dupeicon.png"
-dest_files=["res://.godot/imported/dupeicon.png-0f99285c7ee2e76447820ba231196a9c.ctex"]
+source_file="res://Assets/DefaultAvatar.png"
+dest_files=["res://.godot/imported/DefaultAvatar.png-a6365db4be1de8588fc632cc751d559a.ctex"]
 
 [params]
 

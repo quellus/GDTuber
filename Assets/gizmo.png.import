@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brwp8bimc75uu"
-path="res://.godot/imported/icon.webp-e94f9a68b0f625a567a797079e4d325f.ctex"
+uid="uid://c5fl4pf7cxwvc"
+path="res://.godot/imported/gizmo.png-aac10a1ddee0e5203bfe4c0347d9410b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icon.webp"
-dest_files=["res://.godot/imported/icon.webp-e94f9a68b0f625a567a797079e4d325f.ctex"]
+source_file="res://Assets/gizmo.png"
+dest_files=["res://.godot/imported/gizmo.png-aac10a1ddee0e5203bfe4c0347d9410b.ctex"]
 
 [params]
 

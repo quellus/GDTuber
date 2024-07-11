@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://0n5ic8wf06kq"]
+
+[ext_resource type="Shader" path="res://Resources/HSVShader.gdshader" id="1_mlu0d"]
+
+[resource]
+shader = ExtResource("1_mlu0d")
+shader_parameter/hue = 0.000410031
+shader_parameter/sat = 1.0
+shader_parameter/val = 0.5

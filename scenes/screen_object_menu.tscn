@@ -1,55 +1,61 @@
-[gd_scene load_steps=11 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=13 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
-[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="1_dxbbx"]
-[ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://up.png" id="2_ucx45"]
+[ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="2_jbsj1"]
 [ext_resource type="Script" path="res://scripts/name_edit.gd" id="2_wp1kw"]
-[ext_resource type="Texture2D" uid="uid://ca2ptc02v2xhb" path="res://down.png" id="3_fdjuv"]
-[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_nubdv"]
-[ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://contract.png" id="3_rgfwj"]
-[ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://Eyecon.png" id="4_bu76g"]
-[ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://dupeicon.png" id="5_esao5"]
-[ext_resource type="Texture2D" uid="uid://kjsgcuplqh0x" path="res://Eyecon2.png" id="5_nstd7"]
+[ext_resource type="Texture2D" uid="uid://ca2ptc02v2xhb" path="res://Assets/down.png" id="3_eme8m"]
+[ext_resource type="Texture2D" uid="uid://cepkujmoq60py" path="res://Assets/palette.png" id="5_alaq3"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="5_y7gat"]
+[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="6_uqw4k"]
+[ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://Assets/Eyecon.png" id="7_hlk38"]
+[ext_resource type="Texture2D" uid="uid://kjsgcuplqh0x" path="res://Assets/Eyecon2.png" id="8_efo5x"]
+[ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://Assets/contract.png" id="9_2la7e"]
+[ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://Assets/dupeicon.png" id="10_l0soc"]
+[ext_resource type="PackedScene" uid="uid://dy0vp3asckpdn" path="res://scenes/HueShiftPopup.tscn" id="11_tjm5f"]
 
-[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("talkbox", "bouncebox", "blinkbox", "filterbox", "visibilitytoggle", "name_field")]
+[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("talkbox", "bouncebox", "blinkbox", "filterbox", "visibilitytoggle", "popupanchor", "name_field")]
 offset_right = 159.0
 offset_bottom = 69.0
 size_flags_horizontal = 4
 size_flags_vertical = 2
 script = ExtResource("1_0piso")
-talkbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer/CheckBox")
-bouncebox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer/CheckBox")
-blinkbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox")
-filterbox = NodePath("VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox")
-visibilitytoggle = NodePath("VBoxContainer/HBoxContainer/Visible")
-name_field = NodePath("VBoxContainer/TopRow/Name")
+talkbox = NodePath("HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer/CheckBox")
+bouncebox = NodePath("HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer/CheckBox")
+blinkbox = NodePath("HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox")
+filterbox = NodePath("HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox")
+visibilitytoggle = NodePath("HBoxContainer/VBoxContainer/HBoxContainer/Visible")
+popupanchor = NodePath("HBoxContainer/Control")
+name_field = NodePath("HBoxContainer/VBoxContainer/TopRow/Name")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="TopRow" type="HBoxContainer" parent="VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="TopRow" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/TopRow"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/TopRow"]
 custom_minimum_size = Vector2(29.585, 0)
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="VBoxContainer/TopRow/VBoxContainer"]
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer/VBoxContainer/TopRow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("2_ucx45")
+texture_normal = ExtResource("2_jbsj1")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="TextureButton2" type="TextureButton" parent="VBoxContainer/TopRow/VBoxContainer"]
+[node name="TextureButton2" type="TextureButton" parent="HBoxContainer/VBoxContainer/TopRow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("3_fdjuv")
+texture_normal = ExtResource("3_eme8m")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Name" type="LineEdit" parent="VBoxContainer/TopRow"]
+[node name="Name" type="LineEdit" parent="HBoxContainer/VBoxContainer/TopRow"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -57,148 +63,165 @@ placeholder_text = "Name"
 alignment = 1
 script = ExtResource("2_wp1kw")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer/VBoxContainer/TopRow"]
+custom_minimum_size = Vector2(25.065, 0)
+layout_mode = 2
+texture_normal = ExtResource("5_alaq3")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 27.345)
 layout_mode = 2
 
-[node name="Close" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Close" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(21.48, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 text = "X"
 
-[node name="Change Image" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="Change Image" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 text = "Change Image"
 
-[node name="Gizmo" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+[node name="Gizmo" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
-texture_normal = ExtResource("3_nubdv")
+theme = ExtResource("5_y7gat")
+texture_normal = ExtResource("6_uqw4k")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Visible" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+[node name="Visible" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 toggle_mode = true
-texture_normal = ExtResource("4_bu76g")
-texture_pressed = ExtResource("5_nstd7")
+texture_normal = ExtResource("7_hlk38")
+texture_pressed = ExtResource("8_efo5x")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Recenter" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+[node name="Recenter" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
-texture_normal = ExtResource("3_rgfwj")
+theme = ExtResource("5_y7gat")
+texture_normal = ExtResource("9_2la7e")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Duplicate" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+[node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
-texture_normal = ExtResource("5_esao5")
+theme = ExtResource("5_y7gat")
+texture_normal = ExtResource("10_l0soc")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Booleans" type="PanelContainer" parent="VBoxContainer"]
+[node name="Booleans" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 29.025)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Booleans"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Booleans"]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "HasMouth"
 horizontal_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 button_pressed = true
 
-[node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
+[node name="PanelContainer2" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer2"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer2"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Bounce"
 horizontal_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 button_pressed = true
 
-[node name="PanelContainer3" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
+[node name="PanelContainer3" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer3"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer3"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Blinks"
 horizontal_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 button_pressed = true
 
-[node name="PanelContainer4" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
+[node name="PanelContainer4" type="PanelContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer4"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer4"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Filter"
 horizontal_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer"]
+[node name="CheckBox" type="CheckBox" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_y7gat")
 
-[connection signal="pressed" from="VBoxContainer/TopRow/VBoxContainer/TextureButton" to="." method="_shift_up"]
-[connection signal="pressed" from="VBoxContainer/TopRow/VBoxContainer/TextureButton2" to="." method="_shift_down"]
-[connection signal="text_changed" from="VBoxContainer/TopRow/Name" to="." method="_set_name"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Gizmo" to="." method="_request_gizmo"]
-[connection signal="toggled" from="VBoxContainer/HBoxContainer/Visible" to="." method="_togglevisibility"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Recenter" to="." method="_recenter"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/Duplicate" to="." method="_duplicate"]
-[connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer/CheckBox" to="." method="_set_talks"]
-[connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer/CheckBox" to="." method="_set_bounces"]
-[connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox" to="." method="_set_blinks"]
-[connection signal="toggled" from="VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox" to="." method="_set_filter"]
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="Popup" parent="HBoxContainer/Control" instance=ExtResource("11_tjm5f")]
+visible = false
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/VBoxContainer/TextureButton" to="." method="_shift_up"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/VBoxContainer/TextureButton2" to="." method="_shift_down"]
+[connection signal="text_changed" from="HBoxContainer/VBoxContainer/TopRow/Name" to="." method="_set_name"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/TextureButton" to="." method="_open_menu"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Gizmo" to="." method="_request_gizmo"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer/Visible" to="." method="_togglevisibility"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Recenter" to="." method="_recenter"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Duplicate" to="." method="_duplicate"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer/CheckBox" to="." method="_set_talks"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer/CheckBox" to="." method="_set_bounces"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer/CheckBox" to="." method="_set_blinks"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer/CheckBox" to="." method="_set_filter"]
+[connection signal="huechanged" from="HBoxContainer/Control/Popup" to="." method="_update_hue"]
+[connection signal="satchanged" from="HBoxContainer/Control/Popup" to="." method="_update_sat"]
+[connection signal="valchanged" from="HBoxContainer/Control/Popup" to="." method="_update_val"]
