@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dy0vp3asckpdn"]
 
-[ext_resource type="Script" path="res://scenes/HueShiftPopup.gd" id="1_y8q70"]
+[ext_resource type="Script" path="res://scripts/HueShiftPopup.gd" id="1_y8q70"]
 
 [node name="Popup" type="Popup" node_paths=PackedStringArray("hueslider", "satslider", "valslider")]
 size = Vector2i(200, 150)
