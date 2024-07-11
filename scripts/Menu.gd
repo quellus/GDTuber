@@ -27,7 +27,7 @@ var threshold = 0.5
 var input_gain: float
 
 # Screen Object Management
-const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
+const DEFAULT_IMAGE: String = "res://assets/DefaultAvatar.png"
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
 var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)

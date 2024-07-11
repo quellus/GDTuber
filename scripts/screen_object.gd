@@ -125,7 +125,7 @@ func create_atlas():
 func _gentimer():
 	if blinking:
 		blink_timer = Timer.new()
-		sprite.add_child(blink_timer)
+		add_child(blink_timer)
 		blink_timer.timeout.connect(_on_blink_timer_timeout)
 		blink_timer.start(1)
 

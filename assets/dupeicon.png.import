@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bam5fhr8naphp"
-path="res://.godot/imported/dupeicon.png-0f99285c7ee2e76447820ba231196a9c.ctex"
+path="res://.godot/imported/dupeicon.png-8b3407703b6e0ba91f898fb4b165a247.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://dupeicon.png"
-dest_files=["res://.godot/imported/dupeicon.png-0f99285c7ee2e76447820ba231196a9c.ctex"]
+source_file="res://assets/dupeicon.png"
+dest_files=["res://.godot/imported/dupeicon.png-8b3407703b6e0ba91f898fb4b165a247.ctex"]
 
 [params]
 

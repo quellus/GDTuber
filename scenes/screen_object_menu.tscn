@@ -1,15 +1,15 @@
 [gd_scene load_steps=11 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
-[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Menu Theme.tres" id="1_dxbbx"]
-[ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://up.png" id="2_ucx45"]
+[ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://assets/up.png" id="2_alh0m"]
 [ext_resource type="Script" path="res://scripts/name_edit.gd" id="2_wp1kw"]
-[ext_resource type="Texture2D" uid="uid://ca2ptc02v2xhb" path="res://down.png" id="3_fdjuv"]
-[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://gizmo.png" id="3_nubdv"]
-[ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://contract.png" id="3_rgfwj"]
-[ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://Eyecon.png" id="4_bu76g"]
-[ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://dupeicon.png" id="5_esao5"]
-[ext_resource type="Texture2D" uid="uid://kjsgcuplqh0x" path="res://Eyecon2.png" id="5_nstd7"]
+[ext_resource type="Texture2D" uid="uid://ca2ptc02v2xhb" path="res://assets/down.png" id="3_atq7w"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://resources/Menu Theme.tres" id="5_osfap"]
+[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://assets/gizmo.png" id="6_fvmg6"]
+[ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://assets/Eyecon.png" id="7_vu764"]
+[ext_resource type="Texture2D" uid="uid://kjsgcuplqh0x" path="res://assets/Eyecon2.png" id="8_4n01x"]
+[ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://assets/contract.png" id="9_be2g8"]
+[ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://assets/dupeicon.png" id="10_pe1i6"]
 
 [node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("talkbox", "bouncebox", "blinkbox", "filterbox", "visibilitytoggle", "name_field")]
 offset_right = 159.0
@@ -38,14 +38,14 @@ layout_mode = 2
 [node name="TextureButton" type="TextureButton" parent="VBoxContainer/TopRow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("2_ucx45")
+texture_normal = ExtResource("2_alh0m")
 ignore_texture_size = true
 stretch_mode = 5
 
 [node name="TextureButton2" type="TextureButton" parent="VBoxContainer/TopRow/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("3_fdjuv")
+texture_normal = ExtResource("3_atq7w")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -64,46 +64,46 @@ layout_mode = 2
 [node name="Close" type="Button" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(21.48, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 text = "X"
 
 [node name="Change Image" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 text = "Change Image"
 
 [node name="Gizmo" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
-texture_normal = ExtResource("3_nubdv")
+theme = ExtResource("5_osfap")
+texture_normal = ExtResource("6_fvmg6")
 ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Visible" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 toggle_mode = true
-texture_normal = ExtResource("4_bu76g")
-texture_pressed = ExtResource("5_nstd7")
+texture_normal = ExtResource("7_vu764")
+texture_pressed = ExtResource("8_4n01x")
 ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Recenter" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
-texture_normal = ExtResource("3_rgfwj")
+theme = ExtResource("5_osfap")
+texture_normal = ExtResource("9_be2g8")
 ignore_texture_size = true
 stretch_mode = 5
 
 [node name="Duplicate" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-theme = ExtResource("1_dxbbx")
-texture_normal = ExtResource("5_esao5")
+theme = ExtResource("5_osfap")
+texture_normal = ExtResource("10_pe1i6")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -130,7 +130,7 @@ horizontal_alignment = 1
 [node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 button_pressed = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
@@ -149,7 +149,7 @@ horizontal_alignment = 1
 [node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer2/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 button_pressed = true
 
 [node name="PanelContainer3" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
@@ -168,7 +168,7 @@ horizontal_alignment = 1
 [node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer3/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 button_pressed = true
 
 [node name="PanelContainer4" type="PanelContainer" parent="VBoxContainer/Booleans/HBoxContainer"]
@@ -187,7 +187,7 @@ horizontal_alignment = 1
 [node name="CheckBox" type="CheckBox" parent="VBoxContainer/Booleans/HBoxContainer/PanelContainer4/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("1_dxbbx")
+theme = ExtResource("5_osfap")
 
 [connection signal="pressed" from="VBoxContainer/TopRow/VBoxContainer/TextureButton" to="." method="_shift_up"]
 [connection signal="pressed" from="VBoxContainer/TopRow/VBoxContainer/TextureButton2" to="." method="_shift_down"]

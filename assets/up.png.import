@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kjsgcuplqh0x"
-path="res://.godot/imported/Eyecon2.png-b188fef5a4aea79939fb6e6d1101dc08.ctex"
+uid="uid://bum4c3am02n05"
+path="res://.godot/imported/up.png-205c82a426fafddbfd49566e37c03251.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Eyecon2.png"
-dest_files=["res://.godot/imported/Eyecon2.png-b188fef5a4aea79939fb6e6d1101dc08.ctex"]
+source_file="res://assets/up.png"
+dest_files=["res://.godot/imported/up.png-205c82a426fafddbfd49566e37c03251.ctex"]
 
 [params]
 
