@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-const VERSION = 0.6
+const VERSION = 0.7
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -27,7 +27,7 @@ var threshold = 0.5
 var input_gain: float
 
 # Screen Object Management
-const DEFAULT_IMAGE: String = "res://DefaultAvatar.png"
+const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
 var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
@@ -121,6 +121,9 @@ func _save_data():
 				"rotation": obj.user_rotation,
 				"hidden": obj.user_hidden,
 				"name": obj.user_name,
+				"hue": obj.user_hue,
+				"sat": obj.user_sat,
+				"val": obj.user_val,
 			})
 	savedata = JSON.stringify(savedict)
 	json_save_dialog.popup_centered()
@@ -172,6 +175,11 @@ func _validate_object_json(dict, v) -> bool:
 		},
 		0.6:{
 			"name":TYPE_STRING,
+		},
+		0.7:{
+			"hue":TYPE_FLOAT,
+			"sat":TYPE_FLOAT,
+			"val":TYPE_FLOAT,
 		}
 	}
 	for version in versions:
@@ -231,6 +239,11 @@ func _load_data(path):
 					# 0.6
 					if version >= 0.6:
 						newobj.user_name = obj["name"]
+					# 0.7
+					if version >= 0.7:
+						newobj.user_hue = obj["hue"]
+						newobj.user_sat = obj["sat"]
+						newobj.user_val = obj["val"]
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
@@ -354,6 +367,9 @@ func _duplicate_object(obj: ScreenObject):
 	newobj.talking = obj.talking
 	newobj.blinking = obj.blinking
 	newobj.user_name = obj.user_name
+	newobj.user_hue = obj.user_hue
+	newobj.user_sat = obj.user_sat
+	newobj.user_val = obj.user_val
 	newobj.update_menu.emit()
 	pass
 

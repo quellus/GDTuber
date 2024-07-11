@@ -14,10 +14,11 @@ config/name="GDTuber"
 run/main_scene="res://scenes/MicRecord.tscn"
 config/features=PackedStringArray("4.2")
 run/low_processor_mode=true
-config/icon="res://icon.webp"
+config/icon="res://Assets/icon.webp"
 
 [audio]
 
+buses/default_bus_layout="res://Resources/default_bus_layout.tres"
 driver/enable_input=true
 enable_audio_input=true
 

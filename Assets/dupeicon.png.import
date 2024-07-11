@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ca2ptc02v2xhb"
-path="res://.godot/imported/down.png-cc614b252f16b05b3fda921affbe9569.ctex"
+uid="uid://bam5fhr8naphp"
+path="res://.godot/imported/dupeicon.png-af7cf2f7c56996b3eecd23dae0bf89c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://down.png"
-dest_files=["res://.godot/imported/down.png-cc614b252f16b05b3fda921affbe9569.ctex"]
+source_file="res://Assets/dupeicon.png"
+dest_files=["res://.godot/imported/dupeicon.png-af7cf2f7c56996b3eecd23dae0bf89c6.ctex"]
 
 [params]
 

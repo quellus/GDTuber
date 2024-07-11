@@ -1,5 +1,6 @@
 class_name ScreenObject extends Node2D
 
+var mat = preload("res://Resources/HSVMat.tres")
 var visualsroot: Node2D = Node2D.new()
 var rng = RandomNumberGenerator.new()
 var texture: Texture2D:
@@ -11,6 +12,21 @@ var user_hidden: bool = false:
 		user_hidden = value
 		if sprite:
 			sprite.visible = !user_hidden
+var user_hue: float = 0:
+	set(value):
+		user_hue = value
+		if sprite:
+			sprite.material.set_shader_parameter("hue", remap(value, -0.5, 0.5, -PI, PI))
+var user_val: float = 0.5:
+	set(value):
+		user_val = value
+		if sprite:
+			sprite.material.set_shader_parameter("val", value)
+var user_sat: float = 1:
+	set(value):
+		user_sat = value
+		if sprite:
+			sprite.material.set_shader_parameter("sat", value)
 var filter: bool = true:
 	set(value):
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if value else TEXTURE_FILTER_NEAREST
@@ -95,7 +111,8 @@ func create_visual():
 				bounce_animator.queue_free()
 				bounce_animator = null
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if filter else TEXTURE_FILTER_NEAREST
-		
+		sprite.material = mat.duplicate()
+
 	
 func create_atlas():
 	var width = floor(float(texture.get_width())/2) if talking else texture.get_width()
@@ -160,10 +177,12 @@ func _on_animator_stopped(_anim_name):
 	if is_talking:
 		bounce_animator.play("bounce")
 
-
 func _on_blink_timer_timeout():
 	if is_blinking:
 		blink_timer.start(rng.randf_range(2, 4))
 	else:
 		blink_timer.start(0.2)
 	is_blinking = !is_blinking
+
+func _set_hue(value):
+	sprite.material.set_shader_parameter("hue", value)
