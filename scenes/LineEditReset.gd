@@ -1,4 +1,4 @@
-extends LineEdit
+class_name LineEditReset extends LineEdit
 
 var lastchange: String = ""
 

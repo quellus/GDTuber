@@ -42,6 +42,8 @@ var user_scale: Vector2  = Vector2(1, 1) :
 			sprite.scale = value
 			user_scale = value
 
+var user_name: String = ""
+
 signal update_menu
 
 var texturepath: String
