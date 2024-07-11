@@ -303,6 +303,7 @@ ok_button_text = "Open"
 file_mode = 0
 access = 2
 filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
+show_hidden_files = true
 use_native_dialog = true
 
 [node name="JSONSaveDialog" type="FileDialog" parent="."]

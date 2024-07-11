@@ -1,11 +1,11 @@
 [gd_scene load_steps=2 format=3 uid="uid://dy0vp3asckpdn"]
 
-[ext_resource type="Script" path="res://scripts/HueShiftPopup.gd" id="1_y8q70"]
+[ext_resource type="Script" path="res://scripts/HueShiftPopup.gd" id="1_yyc5q"]
 
 [node name="Popup" type="Popup" node_paths=PackedStringArray("hueslider", "satslider", "valslider")]
 size = Vector2i(200, 150)
 visible = true
-script = ExtResource("1_y8q70")
+script = ExtResource("1_yyc5q")
 hueslider = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/HSlider")
 satslider = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer2/HSlider")
 valslider = NodePath("Control/PanelContainer/MarginContainer/VBoxContainer/VBoxContainer3/HSlider")

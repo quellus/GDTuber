@@ -111,7 +111,11 @@ func create_visual():
 				bounce_animator.queue_free()
 				bounce_animator = null
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if filter else TEXTURE_FILTER_NEAREST
+		sprite.global_rotation = user_rotation
 		sprite.material = mat.duplicate()
+		sprite.material.set_shader_parameter("sat", user_sat)
+		sprite.material.set_shader_parameter("hue", remap(user_hue, -0.5, 0.5, -PI, PI))
+		sprite.material.set_shader_parameter("val", user_val)
 
 	
 func create_atlas():
@@ -142,7 +146,7 @@ func create_atlas():
 func _gentimer():
 	if blinking:
 		blink_timer = Timer.new()
-		sprite.add_child(blink_timer)
+		add_child(blink_timer)
 		blink_timer.timeout.connect(_on_blink_timer_timeout)
 		blink_timer.start(1)
 

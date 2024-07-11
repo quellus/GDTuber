@@ -17,11 +17,6 @@ signal order_changed()
 
 @onready var colorpopup: ColorPopup = $HBoxContainer/Control/Popup
 
-func _ready():
-	colorpopup.huechanged.connect(_update_hue)
-	colorpopup.satchanged.connect(_update_sat)
-	colorpopup.valchanged.connect(_update_val)
-
 var object: ScreenObject:
 	set(value):
 		if value:
