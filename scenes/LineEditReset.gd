@@ -14,7 +14,3 @@ func reset_text():
 func set_reset_text(value):
 	lastchange = value
 	release_focus()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

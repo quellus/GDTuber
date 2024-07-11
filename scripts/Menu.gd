@@ -192,7 +192,7 @@ func _load_data(path):
 			version = save_dict["version"]
 			# Version Check
 			if version > VERSION:
-				print("WARNING: save data is newer than current version, attempting to load data")
+				push_warning("WARNING: save data is newer than current version, attempting to load data")
 			
 			# Generate Objects from Objects Array
 			for obj in ObjectsRoot.get_children():
@@ -219,7 +219,7 @@ func _load_data(path):
 					if version >= 0.4:
 						newobj.user_rotation = obj["rotation"]
 				else:
-					print("ERROR: object does not contain required fields")
+					push_error("ERROR: object does not contain required fields")
 			# Load Program Settings
 			# 0.3
 			if version >= 0.3:
@@ -232,9 +232,9 @@ func _load_data(path):
 				titleedit.text = save_dict["profile_name"]
 				_set_profile_name(save_dict["profile_name"])
 		else:
-			print("ERROR: Required Fields for Save File Version not Found")
+			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:
-		print("ERROR: JSON file is invalid")
+		push_error("ERROR: JSON file is invalid")
 	
 func _on_file_button_button_down(requestor):
 	openingfor = requestor
@@ -245,7 +245,7 @@ func _request_image(path):
 		var image = Image.new()
 		var err = image.load(path)
 		if err != OK:
-			printerr("cannot load image.")
+			push_error("cannot load image.")
 			return
 		openingfor.texture = ImageTexture.create_from_image(image)
 		openingfor.texturepath = path
@@ -366,11 +366,9 @@ func _get_average() -> float:
 
 func update_amplifier(_new_input_gain : float):
 	if _new_input_gain <= -10.0 || _new_input_gain >= 24.1:
-		printt("Input gain out of range:",_new_input_gain)
 		return
 	if amplifier_effect.volume_db != _new_input_gain:
 		amplifier_effect.volume_db = _new_input_gain
-		printt("set amplify gain to:",_new_input_gain)
 
 func _on_v_slider_drag_ended(value_changed):
 	threshold = value_changed
@@ -394,7 +392,6 @@ func _input(event):
 			drag_target.user_rotation = targetrot
 
 	if event is InputEventMouseButton and drag_target:
-			print("mouse button pressed please help")
 			match event.button_index:
 				MOUSE_BUTTON_RIGHT:
 					if event.is_pressed():
