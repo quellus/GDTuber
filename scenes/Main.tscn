@@ -324,6 +324,10 @@ filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
 
+[node name="AutosaveTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
@@ -332,7 +336,7 @@ use_native_dialog = true
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Main Menu" to="." method="_close_settings"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Fullscreen" to="." method="_on_fullscreen_toggle"]
-[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_save_data"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_on_save_button"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Load Data" to="." method="_load_dialog"]
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/CheckBox" to="." method="_toggle_transparent"]
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
@@ -342,3 +346,4 @@ use_native_dialog = true
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]
 [connection signal="file_selected" from="JSONSaveDialog" to="." method="_save_file"]
 [connection signal="file_selected" from="JSONLoadDialog" to="." method="_load_data"]
+[connection signal="timeout" from="AutosaveTimer" to="." method="_on_autosave_timer_timeout"]
