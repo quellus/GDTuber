@@ -47,6 +47,7 @@ var starting_rotation: float = 0
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
 var openingfor: ScreenObject 
 var savedata: String
+const AUTOSAVE_PATH: String = "user://autosave.json"
 
 ### Ready
 func _ready():
@@ -65,6 +66,7 @@ func _ready():
 	# Initialize Menu
 	menu_shown = true
 
+	_load_data(AUTOSAVE_PATH)
 
 
 ### Process
@@ -88,7 +90,11 @@ func _process(_delta):
 
 	%VolumeVisual.value = magnitude_avg
 
-
+func _notification(what):
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_save_data()
+		_save_file(AUTOSAVE_PATH)
+		get_tree().quit() # default behavior
 
 ### File I/O
 func _save_file(path: String):
@@ -96,6 +102,13 @@ func _save_file(path: String):
 		path = path+".json"
 	var save_game = FileAccess.open(path, FileAccess.WRITE)
 	save_game.store_line(savedata)
+
+
+func _on_save_button():
+	_save_data()
+	json_save_dialog.popup_centered()
+	
+
 
 func _save_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
@@ -126,7 +139,6 @@ func _save_data():
 				"val": obj.user_val,
 			})
 	savedata = JSON.stringify(savedict)
-	json_save_dialog.popup_centered()
 
 func _validate_save_json(dict, v) -> bool:
 	pass
@@ -288,6 +300,8 @@ func _on_button_button_down():
 	menu_shown = false
 
 func _on_quit_button_button_down():
+	_save_data()
+	_save_file(AUTOSAVE_PATH)
 	get_tree().quit()
 
 func _on_fullscreen_toggle():
@@ -456,3 +470,4 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
+

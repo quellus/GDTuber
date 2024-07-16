@@ -332,7 +332,7 @@ use_native_dialog = true
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Main Menu" to="." method="_close_settings"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Fullscreen" to="." method="_on_fullscreen_toggle"]
-[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_save_data"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_on_save_button"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Load Data" to="." method="_load_dialog"]
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/CheckBox" to="." method="_toggle_transparent"]
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
