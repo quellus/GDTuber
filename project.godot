@@ -24,7 +24,6 @@ enable_audio_input=true
 
 [autoload]
 
-Save="*res://scripts/save.gd"
 WindowManager="*res://scripts/WindowManager.gd"
 
 [display]
