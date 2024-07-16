@@ -92,8 +92,7 @@ func _process(_delta):
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		_save_data()
-		_save_file(AUTOSAVE_PATH)
+		_autosave()
 		get_tree().quit() # default behavior
 
 ### File I/O
@@ -107,8 +106,11 @@ func _save_file(path: String):
 func _on_save_button():
 	_save_data()
 	json_save_dialog.popup_centered()
-	
 
+
+func _autosave():
+	_save_data()
+	_save_file(AUTOSAVE_PATH)
 
 func _save_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
@@ -268,7 +270,6 @@ func _load_data(path):
 				input_gain_slider.value = input_gain
 			#0.4
 			if version >= 0.4:
-				titleedit.text = save_dict["profile_name"]
 				_set_profile_name(save_dict["profile_name"])
 		else:
 			push_error("ERROR: Required Fields for Save File Version not Found")
@@ -290,8 +291,7 @@ func _request_image(path):
 		openingfor.texturepath = path
 		
 func _on_autosave_timer_timeout():
-	_save_data()
-	_save_file(AUTOSAVE_PATH)
+	_autosave()
 
 
 ### Window Management
@@ -326,6 +326,7 @@ func _change_background_color(color):
 	background.color = color
 
 func _set_profile_name(pname: String):
+	titleedit.text = pname
 	profilename = pname
 	get_tree().get_root().title = pname
 
