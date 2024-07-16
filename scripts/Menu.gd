@@ -288,7 +288,10 @@ func _request_image(path):
 			return
 		openingfor.texture = ImageTexture.create_from_image(image)
 		openingfor.texturepath = path
-
+		
+func _on_autosave_timer_timeout():
+	_save_data()
+	_save_file(AUTOSAVE_PATH)
 
 
 ### Window Management

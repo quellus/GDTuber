@@ -324,6 +324,10 @@ filters = PackedStringArray("*.json")
 show_hidden_files = true
 use_native_dialog = true
 
+[node name="AutosaveTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
@@ -342,3 +346,4 @@ use_native_dialog = true
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]
 [connection signal="file_selected" from="JSONSaveDialog" to="." method="_save_file"]
 [connection signal="file_selected" from="JSONLoadDialog" to="." method="_load_data"]
+[connection signal="timeout" from="AutosaveTimer" to="." method="_on_autosave_timer_timeout"]
