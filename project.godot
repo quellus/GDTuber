@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GDTuber"
-run/main_scene="res://scenes/MicRecord.tscn"
+run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.2")
 run/low_processor_mode=true
 config/icon="res://Assets/icon.webp"
@@ -24,7 +24,6 @@ enable_audio_input=true
 
 [autoload]
 
-Save="*res://scripts/save.gd"
 WindowManager="*res://scripts/WindowManager.gd"
 
 [display]

@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://dvjlkpjvjxn0h"]
 
-[ext_resource type="Script" path="res://scripts/LineEditReset.gd" id="2_4pwma"]
-[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="3_kgjae"]
-[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="3_lar1l"]
-[ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_6j4ar"]
-[ext_resource type="Script" path="res://scripts/Menu.gd" id="4_l3c8m"]
+[ext_resource type="Script" path="res://scripts/Menu.gd" id="1_6oykm"]
+[ext_resource type="Script" path="res://scripts/LineEditReset.gd" id="2_0ym8f"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="3_5cu1w"]
+[ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_7g88q"]
+[ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="5_lmu52"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
 
@@ -33,7 +33,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("4_l3c8m")
+script = ExtResource("1_6oykm")
 ObjectsRoot = NodePath("ObjectsRoot")
 MenusRoot = NodePath("Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/PanelContainer/MenusRoot")
 gizmo = NodePath("Menu/Gizmo")
@@ -90,7 +90,7 @@ layout_mode = 2
 placeholder_text = "[Profile Name]"
 alignment = 1
 caret_blink = true
-script = ExtResource("2_4pwma")
+script = ExtResource("2_0ym8f")
 
 [node name="DeviceDropdown" type="MenuButton" parent="Menu/PanelContainer/MainMenu"]
 unique_name_in_owner = true
@@ -184,7 +184,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
-theme = ExtResource("3_lar1l")
+theme = ExtResource("3_5cu1w")
 text = "Press any key to open this menu again"
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -242,7 +242,7 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.22
-theme = ExtResource("3_lar1l")
+theme = ExtResource("3_5cu1w")
 button_pressed = true
 alignment = 1
 icon_alignment = 1
@@ -284,7 +284,7 @@ visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("4_6j4ar")
+script = ExtResource("4_7g88q")
 
 [node name="Button" type="TextureButton" parent="Menu/Gizmo"]
 layout_mode = 0
@@ -292,7 +292,7 @@ offset_left = -62.5
 offset_top = -62.5
 offset_right = 62.5
 offset_bottom = 62.5
-texture_normal = ExtResource("3_kgjae")
+texture_normal = ExtResource("5_lmu52")
 
 [node name="ImageOpenDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
