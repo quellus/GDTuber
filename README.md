@@ -106,3 +106,4 @@ For any questions or additional help, feel free to open an issue or contact the 
 
 ## Attribution
 [Contract icon](https://game-icons.net/1x1/delapouite/contract.html) by [Delapouite](https://delapouite.com/) under CC BY 3.0
+[Cog icon](https://game-icons.net/1x1/lorc/cog.html) by [Lorc](https://lorcblog.blogspot.com/) under CC BY 3.0
