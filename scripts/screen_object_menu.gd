@@ -9,6 +9,7 @@ signal order_changed()
 @export var talkbox: CheckBox
 @export var bouncebox: CheckBox
 @export var blinkbox: CheckBox
+
 @export var filterbox: CheckBox
 @export var visibilitytoggle: TextureButton
 @export var popupanchor: Control
@@ -16,6 +17,8 @@ signal order_changed()
 @export var name_field: LineEditReset
 
 @onready var colorpopup: ColorPopup = $HBoxContainer/Control/Popup
+@onready var settingspopup: ObjectSettings = $HBoxContainer/Control/Popup2
+@onready var tweenpopup: TweenSettings = $HBoxContainer/Control/Popup3
 
 var object: ScreenObject:
 	set(value):
@@ -42,6 +45,24 @@ var user_name: String:
 
 signal request_file(ScreenObject)
 
+func _set_speed(speed):
+	object.user_speed = speed
+	pass
+
+func _set_height(height):
+	object.user_height = height
+
+func _ready():
+	settingspopup.blinkbox.toggled.connect(_set_blinks)
+	settingspopup.bouncebox.toggled.connect(_set_bounces)
+	settingspopup.mouthbox.toggled.connect(_set_talks)
+	settingspopup.filterbox.toggled.connect(_set_filter)
+	
+	tweenpopup.heightslider.value_changed.connect(_set_height)
+	tweenpopup.speedslider.value_changed.connect(_set_speed)
+	pass
+
+
 func _delete_object():
 	if object:
 		object.queue_free()
@@ -63,8 +84,7 @@ func _request_gizmo():
 	emit_signal("request_gizmo", object)
 
 func _set_filter(value):
-	if object:
-		object.filter = value
+	object.filter = value
 	# set_filter.emit(object, value)
 
 func _set_name(value: String):
@@ -87,6 +107,14 @@ func update_menu():
 		colorpopup.hueslider.value = object.user_hue
 		colorpopup.satslider.value = object.user_sat
 		colorpopup.valslider.value = object.user_val
+	if settingspopup:
+		settingspopup.blinkbox.button_pressed = object.blinking
+		settingspopup.bouncebox.button_pressed = object.reactive
+		settingspopup.filterbox.button_pressed = object.filter
+		settingspopup.mouthbox.button_pressed = object.talking
+	if tweenpopup:
+		tweenpopup.heightslider.value = object.user_height
+		tweenpopup.speedslider.value = object.user_speed
 	pass
 
 func _duplicate():
@@ -119,6 +147,16 @@ func _open_menu():
 	var popuprect = popupanchor.get_global_rect()
 	popuprect.size = Vector2(200, 150)
 	colorpopup.popup_on_parent(popuprect)
+
+func _open_settings():
+	var popuprect = popupanchor.get_global_rect()
+	popuprect.size = Vector2(200, 115)
+	settingspopup.popup_on_parent(popuprect)
+
+func _open_tween():
+	var popuprect = popupanchor.get_global_rect()
+	popuprect.size = Vector2(110, 175)
+	tweenpopup.popup_on_parent(popuprect)
 
 func _update_hue(value):
 	object.user_hue = value

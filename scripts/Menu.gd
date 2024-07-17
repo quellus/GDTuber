@@ -145,6 +145,8 @@ func _save_data():
 				"hue": obj.user_hue,
 				"sat": obj.user_sat,
 				"val": obj.user_val,
+				"height": obj.user_height,
+				"speed": obj.user_speed,
 			})
 	savedata = JSON.stringify(savedict)
 
@@ -204,6 +206,10 @@ func _validate_object_json(dict, v) -> bool:
 			"hue":TYPE_FLOAT,
 			"sat":TYPE_FLOAT,
 			"val":TYPE_FLOAT,
+		},
+		0.8:{
+			"height":TYPE_FLOAT,
+			"speed":TYPE_FLOAT
 		}
 	}
 	for version in versions:
@@ -268,6 +274,10 @@ func _load_data(path):
 						newobj.user_hue = obj["hue"]
 						newobj.user_sat = obj["sat"]
 						newobj.user_val = obj["val"]
+					# 0.8
+					if version >= 0.8:
+						newobj.user_height = obj["height"]
+						newobj.user_speed = obj["speed"]
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
@@ -407,6 +417,8 @@ func _duplicate_object(obj: ScreenObject):
 	newobj.user_hue = obj.user_hue
 	newobj.user_sat = obj.user_sat
 	newobj.user_val = obj.user_val
+	newobj.user_height = obj.user_height
+	newobj.user_speed = obj.user_speed
 	newobj.update_menu.emit()
 	pass
 
