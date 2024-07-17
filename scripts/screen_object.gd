@@ -97,11 +97,6 @@ var is_talking: bool:
 						restart_tween()
 				else:
 					restart_tween()
-		else:
-			if bounce_tween:
-				bounce_tween.kill()
-				bounce_tween = null
-				visualsroot.position = Vector2.ZERO
 
 func _ready():
 	visualsroot.name = "VisualsRoot"
@@ -130,9 +125,6 @@ func create_visual():
 				bounce_tween.kill()
 				bounce_tween = null
 				visualsroot.position = Vector2()
-			if bounce_animator:
-				bounce_animator.queue_free()
-				bounce_animator = null
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if filter else TEXTURE_FILTER_NEAREST
 		sprite.global_rotation = user_rotation
 		sprite.material = mat.duplicate()
@@ -184,7 +176,7 @@ func create_normal_sprite():
 	visualsroot.add_child(sprite)
 
 func restart_tween():
-	if is_talking:
+	if is_talking and reactive:
 		bounce_tween = visualsroot.create_tween()
 		bounce_tween.tween_property(visualsroot, "position", Vector2(0, -user_height), 0.2/user_speed)
 		bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2/user_speed)
