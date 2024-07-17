@@ -237,7 +237,8 @@ text = "Transparent BG"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CheckBox" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer"]
+[node name="BGTransparentToggle" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -269,6 +270,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ColorPickerButton" type="ColorPickerButton" parent="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.52
@@ -338,7 +340,7 @@ autostart = true
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Fullscreen" to="." method="_on_fullscreen_toggle"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Save Data" to="." method="_on_save_button"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Load Data" to="." method="_load_dialog"]
-[connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/CheckBox" to="." method="_toggle_transparent"]
+[connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/BGTransparentToggle" to="." method="_toggle_transparent"]
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]

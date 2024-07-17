@@ -9,6 +9,10 @@ const VERSION = 0.8
 @onready var settingsmenu: Control = %SettingsMenu
 @onready var background = %Background
 @onready var bgcolor = %BackgroundColor
+@onready var bgTransparentToggle = %BGTransparentToggle
+@onready var bgcolorPicker = %ColorPickerButton
+@onready var background_transparent: bool = !background.visible
+@onready var background_color: Color = background.color
 @onready var menu = %Menu
 var menu_shown = false:
 	set(value): _set_menu_shown( value )
@@ -119,6 +123,8 @@ func _save_data():
 		"threshold":threshold,
 		"input_gain":input_gain,
 		"profile_name":profilename,
+		"background_transparent":background_transparent,
+		"background_color":background_color.to_html(),
 		"objects":[]
 	}
 	for obj in ObjectsRoot.get_children():
@@ -157,6 +163,10 @@ func _validate_save_json(dict, v) -> bool:
 		},
 		0.4:{
 			"profile_name":TYPE_STRING,
+		},
+		0.8:{
+			"background_transparent":TYPE_BOOL,
+			"background_color":TYPE_STRING
 		}
 	}
 	for version in versions:
@@ -281,6 +291,13 @@ func _load_data(path):
 			#0.4
 			if version >= 0.4:
 				_set_profile_name(save_dict["profile_name"])
+			# 0.8
+			if version >= 0.8:
+				background_color = Color.from_string(save_dict["background_color"], background_color)
+				_change_background_color(background_color)
+				bgcolorPicker.color = background_color
+				_toggle_transparent(save_dict["background_transparent"])
+				bgTransparentToggle.button_pressed = save_dict["background_transparent"]
 		else:
 			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:
@@ -331,9 +348,11 @@ func _close_settings():
 func _toggle_transparent(value):
 	bgcolor.visible = !value
 	background.visible = !value
+	background_transparent = value
 	
 func _change_background_color(color):
 	background.color = color
+	background_color = color
 
 func _set_profile_name(pname: String):
 	titleedit.text = pname
