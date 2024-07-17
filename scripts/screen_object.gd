@@ -91,11 +91,17 @@ var is_talking: bool:
 			else:
 				sprite.frame -= 1
 		if value:
-			if bounce_tween:
-				if !bounce_tween.is_valid():
+			if talking:
+				if bounce_tween:
+					if !bounce_tween.is_valid():
+						restart_tween()
+				else:
 					restart_tween()
-			else:
-				restart_tween()
+		else:
+			if bounce_tween:
+				bounce_tween.kill()
+				bounce_tween = null
+				visualsroot.position = Vector2.ZERO
 
 func _ready():
 	visualsroot.name = "VisualsRoot"
