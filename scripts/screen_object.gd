@@ -3,12 +3,9 @@ class_name ScreenObject extends Node2D
 var user_height: float = 5:
 	set(value):
 		user_height = value
-		generate_animation()
-		print("height changed to "+str(value))
 var user_speed: float = 1:
 	set(value):
 		user_speed = value
-		generate_animation()
 var mat = preload("res://Resources/HSVMat.tres")
 var visualsroot: Node2D = Node2D.new()
 var rng = RandomNumberGenerator.new()
@@ -56,6 +53,7 @@ var reactive := true:
 		create_visual()
 var talking := true:
 	set(value):
+				
 		talking = value
 		create_visual()
 
@@ -92,9 +90,12 @@ var is_talking: bool:
 				sprite.frame += 1
 			else:
 				sprite.frame -= 1
-		if is_instance_valid(bounce_animator):
-			if !bounce_animator.is_playing():
-				bounce_animator.play("bounce")
+		if value:
+			if bounce_tween:
+				if !bounce_tween.is_valid():
+					restart_tween()
+			else:
+				restart_tween()
 
 func _ready():
 	visualsroot.name = "VisualsRoot"
@@ -116,8 +117,13 @@ func create_visual():
 			create_normal_sprite()
 		if reactive:
 			if is_visible_in_tree():
-				generate_animation()
+				if !bounce_tween:
+					generate_animation()
 		else:
+			if bounce_tween:
+				bounce_tween.kill()
+				bounce_tween = null
+				visualsroot.position = Vector2()
 			if bounce_animator:
 				bounce_animator.queue_free()
 				bounce_animator = null
@@ -171,14 +177,21 @@ func create_normal_sprite():
 	sprite.scale = user_scale
 	visualsroot.add_child(sprite)
 
+func restart_tween():
+	if is_talking:
+		bounce_tween = visualsroot.create_tween()
+		bounce_tween.tween_property(visualsroot, "position", Vector2(0, -user_height), 0.2/user_speed)
+		bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2/user_speed)
+		bounce_tween.tween_callback(restart_tween)
+
 func generate_animation():
-	if bounce_tween:
-		bounce_tween.kill()
-	bounce_tween = visualsroot.create_tween()
 	visualsroot.position = Vector2()
-	bounce_tween.set_loops()
-	bounce_tween.tween_property(visualsroot, "position", Vector2(0, -user_height), 0.2/user_speed)
-	bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2/user_speed)
+	restart_tween()
+	# bounce_tween.set_loops()
+	# bounce_tween.tween_property(visualsroot, "position", Vector2(0, -user_height), 0.2/user_speed)
+	# bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2/user_speed)
+	# bounce_tween.tween_callback(restart_tween)
+	
 	# bounce_animator = AnimationPlayer.new()
 	# visualsroot.add_child(bounce_animator)
 	# var animation_lib = AnimationLibrary.new()
