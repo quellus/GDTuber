@@ -1,10 +1,12 @@
-# GDTuber
+# GDTuber <img src="/Assets/GDTuber.png" width="48">
 Made by Quellus and [Code807](https://github.com/code807)
 
 GDTuber is a dynamic PNGTuber software made in Godot. It supports voice-reactive avatars, accessories, and a save/load system for multiple profiles. 
 
 ## Features
+- Support for voice reactive on-screen objects with visual changes or movement (bouncing)
 - Support for several individual on-screen objects
+- Support for dynamic position, scale, and rotation of on-screen objects
 - Audio threshold/sensitivity settings
 - Designed for simple OBS integration using transparency or chroma key
 
@@ -12,10 +14,13 @@ GDTuber is a dynamic PNGTuber software made in Godot. It supports voice-reactive
 1. Select your microphone from the `Input Device` drop down menu at the top.
 3. Press the `+` button to create a new avatar
 4. Use the `Change Image` button to set an image for the avatar/object (more information in the **Image Setup** section)
-6. Press the gizmo icon to activate the gizmo. With the gizmo active, click to drag the object on the screen or scroll to scale the object
-7. Add additional avatars or accessories with the `+` button
+6. Use the bottom row of icons to activate the gizmo
+    - left click to move the object on screen
+    - right click to rotate the object on screen
+    - scroll to scale the object on screen
+8. Add additional avatars or accessories with the `+` button
 
-#### To setup OBS
+### OBS instructions
 1. Create a `Game Capture` source
 2. Set `Mode` to "Capture specific window"
 3. Set `Window` to the GDTuber window
@@ -24,7 +29,7 @@ GDTuber is a dynamic PNGTuber software made in Godot. It supports voice-reactive
 ## Image Setup
 Currently, GDTuber supports single-image avatars. If an avatar has a blinking animation, it should take up the bottom half of the image. If an avatar has a talking animation, it should take up the right half of the image. Below is an example avatar featuring both a talking and blinking animation.
 
-![ScreenShot](https://raw.github.com/quellus/GDTuber/main/DefaultAvatar.png)
+<img src="/Assets/DefaultAvatar.png" width="128">
 
 ---
 
@@ -102,8 +107,9 @@ Your pull request will be reviewed by one of our team members. We may ask for ch
 
 Thank you for your contributions!
 
-For any questions or additional help, feel free to open an issue or contact the maintainers.
+For any questions or additional help, feel free to open an issue or contact us on our [Discord server](https://discord.com/invite/RzaVWjPU8s).
 
 ## Attribution
 [Contract icon](https://game-icons.net/1x1/delapouite/contract.html) by [Delapouite](https://delapouite.com/) under CC BY 3.0
+
 [Cog icon](https://game-icons.net/1x1/lorc/cog.html) by [Lorc](https://lorcblog.blogspot.com/) under CC BY 3.0
