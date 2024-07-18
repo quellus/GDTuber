@@ -151,7 +151,7 @@ func _save_data():
 	savedata = JSON.stringify(savedict)
 
 func _validate_save_json(dict, v) -> bool:
-	pass
+	var valid = true
 	var versions = {
 		0.1:{
 			"objects":TYPE_ARRAY,
@@ -173,12 +173,15 @@ func _validate_save_json(dict, v) -> bool:
 		if version <= v:
 			for field in versions[version]:
 				if field not in dict:
-					return false
-				if !is_instance_of(dict[field], versions[version][field]):
-					return false
-	return true
+					push_error("FIELD NOT FOUND: " + field)
+					valid = false
+				elif !is_instance_of(dict[field], versions[version][field]):
+					push_error("FIELD TYPE INCORRECT: " + field)
+					valid = false
+	return valid
 
 func _validate_object_json(dict, v) -> bool:
+	var valid = true
 	var versions = {
 		0.1:{
 			"scale.x":TYPE_FLOAT,
@@ -216,10 +219,12 @@ func _validate_object_json(dict, v) -> bool:
 		if version <= v:
 			for field in versions[version]:
 				if field not in dict:
-					return false
-				if !is_instance_of(dict[field], versions[version][field]):
-					return false
-	return true
+					push_error("FIELD NOT FOUND: " + field)
+					valid = false
+				elif !is_instance_of(dict[field], versions[version][field]):
+					push_error("FIELD TYPE INCORRECT: " + field)
+					valid = false
+	return valid
 
 func _load_dialog():
 	json_load_dialog.popup_centered()

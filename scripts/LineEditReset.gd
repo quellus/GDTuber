@@ -13,4 +13,5 @@ func reset_text():
 
 func set_reset_text(value):
 	lastchange = value
+	text = value
 	release_focus()
