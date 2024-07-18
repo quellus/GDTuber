@@ -91,7 +91,7 @@ var is_talking: bool:
 			else:
 				sprite.frame -= 1
 		if value:
-			if talking:
+			if reactive:
 				if bounce_tween:
 					if !bounce_tween.is_valid():
 						restart_tween()
