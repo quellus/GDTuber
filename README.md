@@ -4,12 +4,23 @@ Made by Quellus and [Code807](https://github.com/code807)
 GDTuber is a dynamic PNGTuber software made in Godot. It supports voice-reactive avatars, accessories, and a save/load system for multiple profiles. 
 
 ## Features
-- Avatars bounce up and down and open their mouths in reaction to voice activity
-- Support for independently scaling and rotating multiple on screen objects
+- Support for voice reactive on-screen objects with visual changes or movement (bouncing)
+- Support for several individual on-screen objects
+- Support for dynamic position, scale, and rotation of on-screen objects
 - Audio threshold/sensitivity settings
 - Designed for simple OBS integration using transparency or chroma key
 
-## OBS instructions
+## Instructions
+1. Select your microphone from the `Input Device` drop down menu at the top.
+3. Press the `+` button to create a new avatar
+4. Use the `Change Image` button to set an image for the avatar/object (more information in the **Image Setup** section)
+6. Use the bottom row of icons to activate the gizmo
+    - left click to move the object on screen
+    - right click to rotate the object on screen
+    - scroll to scale the object on screen
+8. Add additional avatars or accessories with the `+` button
+
+### OBS instructions
 1. Create a `Game Capture` source
 2. Set `Mode` to "Capture specific window"
 3. Set `Window` to the GDTuber window
