@@ -47,11 +47,13 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Mouth/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Has Mouth"
+tooltip_text = "Sprite sheet has talking texture"
+text = "Has Talking Texture"
 horizontal_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Mouth/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Sprite sheet has talking texture"
 theme = ExtResource("2_aw53g")
 
 [node name="Blinks" type="PanelContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
@@ -63,11 +65,13 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Blinks/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Has Blink Animation"
+tooltip_text = "Sprite sheet has blinking texture"
+text = "Has Blinking Texture"
 horizontal_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Blinks/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Sprite sheet has blinking texture"
 theme = ExtResource("2_aw53g")
 
 [node name="Bounces" type="PanelContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
@@ -79,11 +83,13 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Bounces/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Bounces on voice activity"
 text = "Bounces"
 horizontal_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Bounces/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Bounces on voice activity"
 theme = ExtResource("2_aw53g")
 
 [node name="Filter" type="PanelContainer" parent="Control/PanelContainer/MarginContainer/VBoxContainer"]
@@ -95,9 +101,11 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Filter/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Reduces hard edges"
 text = "Linear Filter"
 horizontal_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="Control/PanelContainer/MarginContainer/VBoxContainer/Filter/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Reduces hard edges"
 theme = ExtResource("2_aw53g")

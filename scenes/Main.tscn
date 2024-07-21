@@ -172,6 +172,7 @@ size_flags_horizontal = 3
 [node name="Button" type="Button" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.555)
 layout_mode = 2
+tooltip_text = "Create a new screen object"
 text = "+"
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer"]
