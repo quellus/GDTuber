@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dvjlkpjvjxn0h"]
+[gd_scene load_steps=8 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_6oykm"]
 [ext_resource type="Script" path="res://scripts/LineEditReset.gd" id="2_0ym8f"]
@@ -19,12 +19,6 @@ border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0, 0, 0, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_34a71"]
-font_size = 12
-
-[sub_resource type="LabelSettings" id="LabelSettings_f3f2x"]
-font_size = 12
 
 [node name="Main" type="Control" node_paths=PackedStringArray("ObjectsRoot", "MenusRoot", "gizmo")]
 layout_mode = 3
@@ -102,67 +96,54 @@ item_count = 1
 popup/item_0/text = ""
 popup/item_0/id = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu"]
-custom_minimum_size = Vector2(89.705, 104.755)
+[node name="HBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu"]
+custom_minimum_size = Vector2(115.075, 0)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.7
+size_flags_vertical = 2
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="ThresholdSlider" type="VSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
+[node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_5cu1w")
+text = "Threshold"
+
+[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(15, 12.49)
+layout_mode = 2
+size_flags_vertical = 1
+max_value = 1.0
+show_percentage = false
+
+[node name="ThresholdSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(15, 0)
+[node name="Label2" type="Label" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 1
-max_value = 1.0
-fill_mode = 3
-show_percentage = false
+theme = ExtResource("3_5cu1w")
+text = "Loudness"
 
-[node name="Input Gain" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu"]
+[node name="VBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain"]
-layout_mode = 2
-text = "Input Gain"
-horizontal_alignment = 1
-
-[node name="VBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu/Input Gain"]
-layout_mode = 2
-
-[node name="BottomDbLabel" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
-layout_mode = 2
-text = "0db"
-label_settings = SubResource("LabelSettings_34a71")
-vertical_alignment = 1
-
-[node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
+[node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 10)
 layout_mode = 2
+size_flags_horizontal = 3
 max_value = 24.0
 step = 0.1
-
-[node name="CeilingDbLabel" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
-layout_mode = 2
-text = "+24db"
-label_settings = SubResource("LabelSettings_f3f2x")
-horizontal_alignment = 2
-vertical_alignment = 1
-justification_flags = 0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Menu/PanelContainer/MainMenu"]
 custom_minimum_size = Vector2(0, 130.82)
 layout_mode = 2
 size_flags_vertical = 3
+size_flags_stretch_ratio = 20.0
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu/ScrollContainer"]
@@ -333,7 +314,7 @@ autostart = true
 
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
-[connection signal="value_changed" from="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
+[connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/Settings" to="." method="_open_settings"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
