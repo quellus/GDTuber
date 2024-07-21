@@ -131,6 +131,8 @@ func create_visual():
 		sprite.material.set_shader_parameter("sat", user_sat)
 		sprite.material.set_shader_parameter("hue", remap(user_hue, -0.5, 0.5, -PI, PI))
 		sprite.material.set_shader_parameter("val", user_val)
+		if user_hidden:
+			sprite.visible = false
 
 	
 func create_atlas():
