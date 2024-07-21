@@ -107,7 +107,7 @@ custom_minimum_size = Vector2(89.705, 104.755)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.7
+size_flags_stretch_ratio = 0.46
 theme_override_constants/separation = 0
 alignment = 1
 
@@ -130,13 +130,14 @@ show_percentage = false
 [node name="Input Gain" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain"]
-layout_mode = 2
-text = "Input Gain"
-horizontal_alignment = 1
-
 [node name="VBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu/Input Gain"]
 layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Input Gain"
+horizontal_alignment = 1
 
 [node name="BottomDbLabel" type="Label" parent="Menu/PanelContainer/MainMenu/Input Gain/VBoxContainer"]
 layout_mode = 2
