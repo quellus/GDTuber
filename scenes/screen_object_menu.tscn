@@ -1,10 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=14 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="2_jbsj1"]
 [ext_resource type="Script" path="res://scripts/name_edit.gd" id="2_wp1kw"]
 [ext_resource type="Texture2D" uid="uid://ca2ptc02v2xhb" path="res://Assets/down.png" id="3_eme8m"]
-[ext_resource type="Texture2D" uid="uid://cepkujmoq60py" path="res://Assets/palette.png" id="5_alaq3"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="5_y7gat"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="6_uqw4k"]
 [ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://Assets/Eyecon.png" id="7_hlk38"]
@@ -12,19 +11,15 @@
 [ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://Assets/contract.png" id="9_2la7e"]
 [ext_resource type="Texture2D" uid="uid://b2q476rsnqalh" path="res://Assets/trash-can.png" id="9_6xn6r"]
 [ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://Assets/dupeicon.png" id="10_l0soc"]
-[ext_resource type="Texture2D" uid="uid://b0o8s8rswfj55" path="res://Assets/bounc-icon.png" id="11_tbrr7"]
-[ext_resource type="PackedScene" uid="uid://dy0vp3asckpdn" path="res://scenes/HueShiftPopup.tscn" id="11_tjm5f"]
 [ext_resource type="Texture2D" uid="uid://ddsqw3n6dvqm4" path="res://Assets/cog.png" id="12_ftpaf"]
-[ext_resource type="PackedScene" uid="uid://d0kmoa51h52xb" path="res://scenes/ObjectSettingsPopup.tscn" id="13_0c75x"]
-[ext_resource type="PackedScene" uid="uid://clmaef5fg4wb2" path="res://scenes/TweenSettings.tscn" id="16_cj3ga"]
+[ext_resource type="PackedScene" uid="uid://c12oguamole0m" path="res://scenes/ScreenObjectSettingsPopup.tscn" id="18_ej5mx"]
 
-[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("visibilitytoggle", "popupanchor", "name_field")]
-offset_right = 135.0
-offset_bottom = 96.0
+[node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("popupanchor", "name_field")]
+offset_right = 189.0
+offset_bottom = 53.0
 size_flags_horizontal = 4
 size_flags_vertical = 2
 script = ExtResource("1_0piso")
-visibilitytoggle = NodePath("HBoxContainer/VBoxContainer/TopRow/Visible")
 popupanchor = NodePath("HBoxContainer/Control")
 name_field = NodePath("HBoxContainer/VBoxContainer/TopRow/Name")
 
@@ -35,36 +30,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="TopRow" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 3
-
-[node name="Visible" type="TextureButton" parent="HBoxContainer/VBoxContainer/TopRow"]
-custom_minimum_size = Vector2(26, 0)
-layout_mode = 2
-tooltip_text = "Show/hide object"
-theme = ExtResource("5_y7gat")
-toggle_mode = true
-texture_normal = ExtResource("7_hlk38")
-texture_pressed = ExtResource("8_efo5x")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Name" type="LineEdit" parent="HBoxContainer/VBoxContainer/TopRow"]
-custom_minimum_size = Vector2(123.51, 32)
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Name"
-alignment = 1
-script = ExtResource("2_wp1kw")
-
-[node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/TopRow"]
-custom_minimum_size = Vector2(26, 0)
-layout_mode = 2
-tooltip_text = "Duplicate"
-theme = ExtResource("5_y7gat")
-texture_normal = ExtResource("10_l0soc")
-ignore_texture_size = true
-stretch_mode = 5
 
 [node name="Z Order" type="VBoxContainer" parent="HBoxContainer/VBoxContainer/TopRow"]
 custom_minimum_size = Vector2(29.585, 0)
@@ -86,77 +54,50 @@ texture_normal = ExtResource("3_eme8m")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 27.345)
-layout_mode = 2
-
-[node name="Close" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(21.48, 0)
-layout_mode = 2
-theme = ExtResource("5_y7gat")
-text = "X"
-
-[node name="Delete" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(26, 0)
-layout_mode = 2
-tooltip_text = "Delete"
-theme = ExtResource("5_y7gat")
-texture_normal = ExtResource("9_6xn6r")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Change Image" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Name" type="LineEdit" parent="HBoxContainer/VBoxContainer/TopRow"]
+custom_minimum_size = Vector2(123.51, 32)
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("5_y7gat")
-text = "Change Image"
+placeholder_text = "Name"
+alignment = 1
+script = ExtResource("2_wp1kw")
 
-[node name="Settings Button" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="Settings Button" type="TextureButton" parent="HBoxContainer/VBoxContainer/TopRow"]
 custom_minimum_size = Vector2(25.065, 0)
 layout_mode = 2
 tooltip_text = "Settings"
 texture_normal = ExtResource("12_ftpaf")
 ignore_texture_size = true
-stretch_mode = 4
+stretch_mode = 5
 
-[node name="Booleans" type="PanelContainer" parent="HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 29.025)
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/Booleans"]
-layout_mode = 2
+size_flags_vertical = 3
 alignment = 1
 
-[node name="BounceButton" type="TextureButton" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
-modulate = Color(1, 1, 0, 1)
-custom_minimum_size = Vector2(25.065, 0)
-layout_mode = 2
-tooltip_text = "Animation settings"
-texture_normal = ExtResource("11_tbrr7")
-ignore_texture_size = true
-stretch_mode = 4
-
-[node name="HSV Button" type="TextureButton" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
-modulate = Color(1, 0.372549, 1, 1)
-custom_minimum_size = Vector2(25.065, 0)
-layout_mode = 2
-tooltip_text = "HSV adjustment"
-texture_normal = ExtResource("5_alaq3")
-ignore_texture_size = true
-stretch_mode = 4
-
-[node name="Recenter" type="TextureButton" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
-modulate = Color(0, 1, 1, 1)
+[node name="VisibilityToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-tooltip_text = "Recenter"
+tooltip_text = "Show/hide object"
 theme = ExtResource("5_y7gat")
-texture_normal = ExtResource("9_2la7e")
+toggle_mode = true
+texture_normal = ExtResource("7_hlk38")
+texture_pressed = ExtResource("8_efo5x")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Gizmo" type="TextureButton" parent="HBoxContainer/VBoxContainer/Booleans/HBoxContainer"]
+[node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+tooltip_text = "Duplicate"
+theme = ExtResource("5_y7gat")
+texture_normal = ExtResource("10_l0soc")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Gizmo" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "Move, scale, rotate"
@@ -165,31 +106,36 @@ texture_normal = ExtResource("6_uqw4k")
 ignore_texture_size = true
 stretch_mode = 5
 
+[node name="Recenter" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+tooltip_text = "Recenter"
+theme = ExtResource("5_y7gat")
+texture_normal = ExtResource("9_2la7e")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Delete" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(26, 0)
+layout_mode = 2
+tooltip_text = "Delete"
+theme = ExtResource("5_y7gat")
+texture_normal = ExtResource("9_6xn6r")
+ignore_texture_size = true
+stretch_mode = 5
+
 [node name="Control" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 
-[node name="Popup" parent="HBoxContainer/Control" instance=ExtResource("11_tjm5f")]
+[node name="Popup4" parent="HBoxContainer/Control" instance=ExtResource("18_ej5mx")]
 visible = false
 
-[node name="Popup2" parent="HBoxContainer/Control" instance=ExtResource("13_0c75x")]
-visible = false
-
-[node name="Popup3" parent="HBoxContainer/Control" instance=ExtResource("16_cj3ga")]
-visible = false
-
-[connection signal="toggled" from="HBoxContainer/VBoxContainer/TopRow/Visible" to="." method="_togglevisibility"]
-[connection signal="text_changed" from="HBoxContainer/VBoxContainer/TopRow/Name" to="." method="_set_name"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Duplicate" to="." method="_duplicate"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton" to="." method="_shift_up"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton2" to="." method="_shift_down"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Close" to="." method="_delete_object"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Delete" to="." method="_delete_object"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Change Image" to="." method="_request_file"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/Settings Button" to="." method="_open_settings"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/BounceButton" to="." method="_open_tween"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/HSV Button" to="." method="_open_menu"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/Recenter" to="." method="_recenter"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/Booleans/HBoxContainer/Gizmo" to="." method="_request_gizmo"]
-[connection signal="huechanged" from="HBoxContainer/Control/Popup" to="." method="_update_hue"]
-[connection signal="satchanged" from="HBoxContainer/Control/Popup" to="." method="_update_sat"]
-[connection signal="valchanged" from="HBoxContainer/Control/Popup" to="." method="_update_val"]
+[connection signal="text_changed" from="HBoxContainer/VBoxContainer/TopRow/Name" to="." method="_set_name"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Settings Button" to="." method="_open_menu"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer2/VisibilityToggle" to="." method="_togglevisibility"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Duplicate" to="." method="_duplicate"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Gizmo" to="." method="_request_gizmo"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Recenter" to="." method="_recenter"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Delete" to="." method="_delete_object"]

@@ -8,8 +8,11 @@ signal huechanged(float)
 signal satchanged(float)
 signal valchanged(float)
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var signaltest: Signal = huechanged
 	pass # Replace with function body.
 
 
