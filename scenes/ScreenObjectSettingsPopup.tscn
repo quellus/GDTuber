@@ -1,0 +1,242 @@
+[gd_scene load_steps=3 format=3 uid="uid://c12oguamole0m"]
+
+[ext_resource type="Script" path="res://Settings Menu.gd" id="1_ay34f"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="2_ves45"]
+
+[node name="Popup" type="Popup"]
+size = Vector2i(256, 256)
+visible = true
+script = ExtResource("1_ay34f")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
+layout_mode = 2
+
+[node name="Image" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image"]
+layout_mode = 2
+
+[node name="ImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ves45")
+text = "Change Image"
+
+[node name="Mouth" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Mouth"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Mouth/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+text = "Has Talking Texture"
+horizontal_alignment = 1
+
+[node name="MouthBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Mouth/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Sprite sheet has talking texture"
+theme = ExtResource("2_ves45")
+
+[node name="Blinks" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Blinks"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Blinks/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has blinking texture"
+text = "Has Blinking Texture"
+horizontal_alignment = 1
+
+[node name="BlinkBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Blinks/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Sprite sheet has blinking texture"
+theme = ExtResource("2_ves45")
+
+[node name="Filter" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Filter"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Filter/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Reduces hard edges"
+text = "Linear Filter"
+horizontal_alignment = 1
+
+[node name="FilterBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Filter/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Reduces hard edges"
+theme = ExtResource("2_ves45")
+
+[node name="Color" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color"]
+layout_mode = 2
+
+[node name="Hue" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Hue"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Hue"
+horizontal_alignment = 1
+
+[node name="HueSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Hue"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = -0.5
+max_value = 0.5
+step = 0.01
+value = 0.01
+
+[node name="Saturation" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Saturation"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Saturation"
+horizontal_alignment = 1
+
+[node name="SatSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Saturation"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 2.0
+step = 0.01
+value = 1.0
+
+[node name="Value" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Value"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Value"
+horizontal_alignment = 1
+
+[node name="ValSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Value"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 0.5
+
+[node name="Alpha" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Alpha"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Alpha"
+horizontal_alignment = 1
+
+[node name="AlpSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Alpha"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Animation"]
+layout_mode = 2
+
+[node name="Bounces" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Bounces"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Bounces/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Bounces on voice activity"
+text = "Animate Object"
+horizontal_alignment = 1
+
+[node name="BounceBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Bounces/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Bounces on voice activity"
+theme = ExtResource("2_ves45")
+
+[node name="Height" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Height"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Height"
+horizontal_alignment = 1
+
+[node name="HeightSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Height"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 50.0
+value = 5.0
+
+[node name="Speed" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Speed"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Speed"
+horizontal_alignment = 1
+
+[node name="SpeedSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Speed"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.02
+max_value = 2.0
+step = 0.01
+value = 1.0
