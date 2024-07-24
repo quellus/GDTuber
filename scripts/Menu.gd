@@ -51,6 +51,7 @@ var starting_rotation: float = 0
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
 var openingfor: ScreenObject 
 var savedata: String
+var autosave_enabled: bool
 const AUTOSAVE_PATH: String = "user://autosave.json"
 
 ### Ready
@@ -111,10 +112,13 @@ func _on_save_button():
 	_save_data()
 	json_save_dialog.popup_centered()
 
+func _toggle_autosave(toggled_on):
+	autosave_enabled = toggled_on
 
 func _autosave():
-	_save_data()
-	_save_file(AUTOSAVE_PATH)
+	if autosave_enabled:
+		_save_data()
+		_save_file(AUTOSAVE_PATH)
 
 func _save_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
@@ -331,14 +335,17 @@ func _set_menu_shown(value: bool):
 	menu.visible = value
 	set_process_input(value)
 
-func _on_button_button_down():
+func _on_hide_menu_button_pressed():
 	menu_shown = false
 
-func _on_quit_button_button_down():
+func _on_quit_button_pressed():
 	_save_data()
 	_save_file(AUTOSAVE_PATH)
 	get_tree().quit()
 
+func _on_quit_without_saving_button_pressed():
+	get_tree().quit()
+	
 func _on_fullscreen_toggle():
 	WindowManager.toggle_fullscreen()
 	
@@ -510,4 +517,6 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
+
+
 
