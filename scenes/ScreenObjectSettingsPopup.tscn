@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c12oguamole0m"]
 
-[ext_resource type="Script" path="res://Settings Menu.gd" id="1_ay34f"]
+[ext_resource type="Script" path="res://scripts/Settings Menu.gd" id="1_ay34f"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="2_ves45"]
 
 [node name="Popup" type="Popup"]

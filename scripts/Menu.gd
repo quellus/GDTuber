@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-const VERSION = 0.8
+const VERSION = 0.9
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -114,6 +114,8 @@ func _on_save_button():
 
 func _toggle_autosave(toggled_on):
 	autosave_enabled = toggled_on
+	_save_data()
+	_save_file(AUTOSAVE_PATH)
 
 func _autosave():
 	if autosave_enabled:
@@ -129,6 +131,7 @@ func _save_data():
 		"profile_name":profilename,
 		"background_transparent":background_transparent,
 		"background_color":background_color.to_html(),
+		"autosave_enabled":autosave_enabled,
 		"objects":[]
 	}
 	for obj in ObjectsRoot.get_children():
@@ -171,6 +174,9 @@ func _validate_save_json(dict, v) -> bool:
 		0.8:{
 			"background_transparent":TYPE_BOOL,
 			"background_color":TYPE_STRING
+		},
+		0.9:{
+			"autosave_enabled":TYPE_BOOL
 		}
 	}
 	for version in versions:
@@ -217,6 +223,9 @@ func _validate_object_json(dict, v) -> bool:
 		0.8:{
 			"height":TYPE_FLOAT,
 			"speed":TYPE_FLOAT
+		}, 
+		0.9:{
+			"autosave_enabled":TYPE_BOOL
 		}
 	}
 	for version in versions:
@@ -307,6 +316,10 @@ func _load_data(path):
 				bgcolorPicker.color = background_color
 				_toggle_transparent(save_dict["background_transparent"])
 				bgTransparentToggle.button_pressed = save_dict["background_transparent"]
+			if version >= 0.9:
+				autosave_enabled = save_dict["autosave_enabled"]
+				%AutosaveToggle.button_pressed = save_dict["autosave_enabled"]
+				print(save_dict["autosave_enabled"])
 		else:
 			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:
@@ -341,9 +354,6 @@ func _on_hide_menu_button_pressed():
 func _on_quit_button_pressed():
 	_save_data()
 	_save_file(AUTOSAVE_PATH)
-	get_tree().quit()
-
-func _on_quit_without_saving_button_pressed():
 	get_tree().quit()
 	
 func _on_fullscreen_toggle():

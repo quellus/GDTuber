@@ -75,7 +75,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_qbb78")
 
 [node name="MainMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_constants/separation = 6
 
@@ -184,6 +183,7 @@ text = "Hide Menu"
 
 [node name="SettingsMenu" type="VBoxContainer" parent="Menu/PanelContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="Main Menu" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
@@ -224,6 +224,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AutosaveToggle" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/Autosave/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -296,11 +297,6 @@ layout_mode = 2
 size_flags_vertical = 8
 text = "Quit"
 
-[node name="QuitWithoutSavingButton" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
-layout_mode = 2
-size_flags_vertical = 8
-text = "Quit Without Saving"
-
 [node name="Gizmo" type="Control" parent="Menu"]
 visible = false
 anchors_preset = 0
@@ -362,8 +358,7 @@ autostart = true
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/Autosave/HBoxContainer/AutosaveToggle" to="." method="_toggle_autosave"]
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/Transparent BG/HBoxContainer/BGTransparentToggle" to="." method="_toggle_transparent"]
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
-[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
-[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitWithoutSavingButton" to="." method="_on_quit_without_saving_button_pressed"]
+[connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]
