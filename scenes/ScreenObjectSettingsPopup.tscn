@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c12oguamole0m"]
+[gd_scene load_steps=5 format=3 uid="uid://c12oguamole0m"]
 
 [ext_resource type="Script" path="res://Settings Menu.gd" id="1_ay34f"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="2_ves45"]
+[ext_resource type="Texture2D" uid="uid://u737seevwwgp" path="res://icon.svg" id="3_db3l8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88shl"]
+bg_color = Color(0.290196, 0.290196, 0.290196, 1)
 
 [node name="Popup" type="Popup"]
 size = Vector2i(256, 256)
@@ -34,10 +38,57 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/TabContainer/Image"]
+layout_mode = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Combined_Separate" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="ImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Combined_Separate"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Combined_Separate/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Reduces hard edges"
+theme_override_font_sizes/font_size = 11
+text = "Combined Avatar Image"
+horizontal_alignment = 1
+
+[node name="SingleMultiToggle" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Combined_Separate/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Reduces hard edges"
+theme = ExtResource("2_ves45")
+
+[node name="SelectSingleImage" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+theme_override_font_sizes/font_size = 13
+text = "Avatar"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer"]
+layout_mode = 2
+
+[node name="ImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -45,58 +96,230 @@ size_flags_horizontal = 3
 theme = ExtResource("2_ves45")
 text = "Change Image"
 
-[node name="Mouth" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("3_db3l8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="SelectSeparateImages" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Mouth"]
+[node name="Select Neutral Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Mouth/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+theme_override_font_sizes/font_size = 13
+text = "Neutral Image"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="NeutralImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ves45")
+text = "Change Image"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NeutralImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("3_db3l8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Blinking Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+theme_override_font_sizes/font_size = 13
+text = "Blinking Image"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="BlinkingImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ves45")
+text = "Change Image"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BlinkingImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("3_db3l8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Talking Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+theme_override_font_sizes/font_size = 13
+text = "Talking Image"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="TalkingImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ves45")
+text = "Change Image"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TalkingImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("3_db3l8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Talking + Blinking Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+theme_override_font_sizes/font_size = 13
+text = "Talking + Blinking Image"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer"]
+layout_mode = 2
+
+[node name="TalkingAndBlinkingImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_ves45")
+text = "Change Image"
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TalkingAndBlinkingImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer/PanelContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("3_db3l8")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Mouth" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Mouth"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Mouth/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
 text = "Has Talking Texture"
 horizontal_alignment = 1
 
-[node name="MouthBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Mouth/HBoxContainer"]
+[node name="MouthBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Mouth/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Sprite sheet has talking texture"
 theme = ExtResource("2_ves45")
 
-[node name="Blinks" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+[node name="Blinks" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Blinks"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Blinks"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Blinks/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Blinks/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has blinking texture"
 text = "Has Blinking Texture"
 horizontal_alignment = 1
 
-[node name="BlinkBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Blinks/HBoxContainer"]
+[node name="BlinkBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Blinks/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Sprite sheet has blinking texture"
 theme = ExtResource("2_ves45")
 
-[node name="Filter" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer"]
+[node name="Filter" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Filter"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Filter"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Filter/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Filter/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
 text = "Linear Filter"
 horizontal_alignment = 1
 
-[node name="FilterBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/VBoxContainer/Filter/HBoxContainer"]
+[node name="FilterBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Filter/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Reduces hard edges"

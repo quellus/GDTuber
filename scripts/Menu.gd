@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-const VERSION = 0.8
+const VERSION = 0.9
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -50,6 +50,8 @@ var starting_rotation: float = 0
 @onready var json_save_dialog : FileDialog = %JSONSaveDialog
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
 var openingfor: ScreenObject 
+var objectimagefield: String
+var objectimagepathfield: String
 var savedata: String
 const AUTOSAVE_PATH: String = "user://autosave.json"
 
@@ -147,6 +149,11 @@ func _save_data():
 				"val": obj.user_val,
 				"height": obj.user_height,
 				"speed": obj.user_speed,
+				"neutralpath": obj.neutralpath,
+				"blinkingpath": obj.blinkingpath,
+				"talkingpath": obj.talkingpath,
+				"talkingandblinkingpath": obj.talkingandblinkingpath,
+				"usesingleimage": obj.usesingleimage
 			})
 	savedata = JSON.stringify(savedict)
 
@@ -213,6 +220,13 @@ func _validate_object_json(dict, v) -> bool:
 		0.8:{
 			"height":TYPE_FLOAT,
 			"speed":TYPE_FLOAT
+		},
+		0.9:{			
+			"neutralpath":TYPE_STRING,
+			"blinkingpath":TYPE_STRING,
+			"talkingpath":TYPE_STRING,
+			"talkingandblinkingpath":TYPE_STRING,
+			"usesingleimage":TYPE_BOOL
 		}
 	}
 	for version in versions:
@@ -261,7 +275,9 @@ func _load_data(path):
 					newobj.talking = obj["talking"]
 					if obj["texturepath"] != "":
 						openingfor = newobj
-						_request_image(obj["texturepath"])
+						objectimagefield = "texture"
+						objectimagepathfield = "texturepath"
+						_open_image(obj["texturepath"])
 					# 0.2
 					if version >= 0.2:
 						newobj.filter = obj["filter"]
@@ -283,6 +299,22 @@ func _load_data(path):
 					if version >= 0.8:
 						newobj.user_height = obj["height"]
 						newobj.user_speed = obj["speed"]
+					newobj.update_menu.emit()
+					# 0.9
+					if version >= 0.9:
+						newobj.usesingleimage = obj["usesingleimage"]
+						
+						for imgload in [
+							["neutralpath", "neutral_texture", obj["neutralpath"]], 
+							["blinkingpath", "blinking_texture", obj["blinkingpath"]], 
+							["talkingpath", "talking_texture", obj["talkingpath"]], 
+							["talkingandblinkingpath", "talking_and_blinking_texture", obj["talkingandblinkingpath"]]
+						]:
+							if imgload[2] != "":
+								openingfor = newobj
+								objectimagefield = imgload[1]
+								objectimagepathfield = imgload[0]
+								_open_image(imgload[2])
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
@@ -308,19 +340,22 @@ func _load_data(path):
 	else:
 		push_error("ERROR: JSON file is invalid")
 	
-func _on_file_button_button_down(requestor):
+func _request_image(requestor, imageproperty, pathproperty):
 	openingfor = requestor
+	objectimagefield = imageproperty
+	objectimagepathfield = pathproperty
 	file_dialog.popup_centered()
 
-func _request_image(path):
+func _open_image(path):
 	if openingfor:
 		var image = Image.new()
 		var err = image.load(path)
 		if err != OK:
 			push_error("cannot load image.")
 			return
-		openingfor.texture = ImageTexture.create_from_image(image)
-		openingfor.texturepath = path
+		
+		openingfor.set(objectimagefield, ImageTexture.create_from_image(image))
+		openingfor.set(objectimagepathfield, path)
 		
 func _on_autosave_timer_timeout():
 	_autosave()
@@ -381,7 +416,7 @@ func _create_new_object():
 		return newobject
 
 func _connect_menu(smenu: ScreenObjectMenu):
-	smenu.request_file.connect(_on_file_button_button_down)
+	smenu.request_image.connect(_request_image)
 	smenu.tree_exiting.connect(clear_gizmo)
 	smenu.duplicate_object.connect(_duplicate_object)
 	smenu.request_gizmo.connect(_on_drag_requested)
@@ -408,22 +443,9 @@ func _on_drag_requested(object: ScreenObject):
 
 func _duplicate_object(obj: ScreenObject):
 	var newobj = _create_new_object()
-	newobj.user_position = obj.user_position
-	newobj.user_hidden = obj.user_hidden
-	newobj.user_rotation = obj.user_rotation
-	newobj.user_scale = obj.user_scale
-	newobj.texturepath = obj.texturepath
-	newobj.texture = obj.texture
-	newobj.filter = obj.filter
-	newobj.reactive = obj.reactive
-	newobj.talking = obj.talking
-	newobj.blinking = obj.blinking
-	newobj.user_name = obj.user_name
-	newobj.user_hue = obj.user_hue
-	newobj.user_sat = obj.user_sat
-	newobj.user_val = obj.user_val
-	newobj.user_height = obj.user_height
-	newobj.user_speed = obj.user_speed
+	
+	for property in obj.copy_properties:
+		newobj.set(property, obj.get(property))
 	newobj.update_menu.emit()
 	pass
 
