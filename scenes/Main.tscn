@@ -329,7 +329,7 @@ autostart = true
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
-[connection signal="file_selected" from="ImageOpenDialog" to="." method="_request_image"]
+[connection signal="file_selected" from="ImageOpenDialog" to="." method="_open_image"]
 [connection signal="file_selected" from="JSONSaveDialog" to="." method="_save_file"]
 [connection signal="file_selected" from="JSONLoadDialog" to="." method="_load_data"]
 [connection signal="timeout" from="AutosaveTimer" to="." method="_on_autosave_timer_timeout"]

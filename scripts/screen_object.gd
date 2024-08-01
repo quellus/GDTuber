@@ -1,5 +1,34 @@
 class_name ScreenObject extends Node2D
 
+var copy_properties = [
+	"user_position",
+	"user_hidden",
+	"user_rotation",
+	"user_scale",
+	"texturepath",
+	"texture",
+	"filter",
+	"reactive",
+	"talking",
+	"blinking",
+	"user_name",
+	"user_hue",
+	"user_sat",
+	"user_val",
+	"user_height",
+	"user_speed",
+	"blinking_texture",
+	"blinkingpath",
+	"neutralpath",
+	"neutral_texture",
+	"talkingpath",
+	"talking_texture",
+	"talkingandblinkingpath",
+	"talking_and_blinking_texture",
+	"usesingleimage"
+]
+
+
 var user_height: float = 5:
 	set(value):
 		user_height = value
@@ -14,6 +43,28 @@ var texture: Texture2D:
 	set(value): 
 		texture = value
 		create_visual()
+		
+var neutral_texture: Texture2D:
+	set(value): 
+		neutral_texture = value
+		update_menu.emit()
+		create_visual()
+var talking_texture: Texture2D:
+	set(value): 
+		talking_texture = value
+		update_menu.emit()
+		create_visual()
+var blinking_texture: Texture2D:
+	set(value): 
+		blinking_texture = value
+		update_menu.emit()
+		create_visual()
+var talking_and_blinking_texture: Texture2D:
+	set(value): 
+		talking_and_blinking_texture = value
+		update_menu.emit()
+		create_visual()
+		
 var user_hidden: bool = false:
 	set(value):
 		user_hidden = value
@@ -68,6 +119,15 @@ var user_name: String = ""
 signal update_menu
 
 var texturepath: String
+var neutralpath: String
+var talkingpath: String
+var blinkingpath: String
+var talkingandblinkingpath: String
+var usesingleimage: bool = true:
+	set(value):
+		usesingleimage = value
+		create_visual()
+
 var user_position: Vector2:
 	set(value):
 		user_position = value
@@ -136,22 +196,29 @@ func create_visual():
 
 	
 func create_atlas():
-	var width = floor(float(texture.get_width())/2) if talking else texture.get_width()
-	var height = floor(float(texture.get_height())/2) if blinking else texture.get_height()
 	sprite = AnimatedSprite2D.new()
 	sprite.scale = user_scale
 	sprite.sprite_frames = SpriteFrames.new()
+	var width = floor(float(texture.get_width())/2) if talking else texture.get_width()
+	var height = floor(float(texture.get_height())/2) if blinking else texture.get_height()
 	var voffset = -height
-	for i in range(2 if blinking else 1):
-		voffset += height
-		var hoffset = -width
-		for d in range(2 if talking else 1):
-			hoffset += width
-			var atlas_texture = AtlasTexture.new()
-			var atlas_rect = Rect2(hoffset, voffset, width, height)
-			atlas_texture.atlas = texture
-			atlas_texture.region = atlas_rect
-			sprite.sprite_frames.add_frame("default", atlas_texture)
+	if usesingleimage:
+		for i in range(2 if blinking else 1):
+			voffset += height
+			var hoffset = -width
+			for d in range(2 if talking else 1):
+				hoffset += width
+				var atlas_texture = AtlasTexture.new()
+				var atlas_rect = Rect2(hoffset, voffset, width, height)
+				atlas_texture.atlas = texture
+				atlas_texture.region = atlas_rect
+				sprite.sprite_frames.add_frame("default", atlas_texture)
+	else:
+		sprite.sprite_frames.add_frame("default", neutral_texture)
+		sprite.sprite_frames.add_frame("default", talking_texture)
+		sprite.sprite_frames.add_frame("default", blinking_texture)
+		sprite.sprite_frames.add_frame("default", talking_and_blinking_texture)
+
 	sprite.name = "Sprite"
 	visualsroot.add_child(sprite)
 	
@@ -172,7 +239,10 @@ func _enter_tree():
 
 func create_normal_sprite():
 	sprite = Sprite2D.new()
-	sprite.texture = texture
+	if usesingleimage:
+		sprite.texture = texture
+	else:
+		sprite.texture = neutral_texture
 	sprite.name = "Sprite"
 	sprite.scale = user_scale
 	visualsroot.add_child(sprite)
