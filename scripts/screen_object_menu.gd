@@ -1,6 +1,7 @@
 class_name ScreenObjectMenu extends PanelContainer
 
-signal request_file(ScreenObject)
+signal request_image(obj:ScreenObject, img:String, prop:String)
+
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
 signal duplicate_object(ScreenObject)
@@ -27,15 +28,36 @@ func _ready():
 	settingsmenu.valslider.value_changed.connect(_set_val)
 	settingsmenu.heightslider.value_changed.connect(_set_height)
 	settingsmenu.speedslider.value_changed.connect(_set_speed)
-	settingsmenu.requestimage.connect(_request_file)
+	
+	settingsmenu.togglemultiimage.connect(_toggle_multi_image)
+	
+	settingsmenu.requestimage.connect(_request_image)
+	settingsmenu.requestneutral.connect(_request_neutral)
+	settingsmenu.requestblinking.connect(_request_blinking)
+	settingsmenu.requesttalking.connect(_request_talking)
+	settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
+
+func _toggle_multi_image(value):
+	object.usesingleimage = value
+	settingsmenu.singleimageselect.visible = value
+	settingsmenu.multiimageselect.visible = !value
+	pass
 
 
 func _set_name(value: String):
 	object.user_name = value
 
 
-func _request_file():
-	emit_signal("request_file", object)
+func _request_image():
+	emit_signal("request_image", object, "texture", "texturepath")
+func _request_neutral():
+	emit_signal("request_image", object, "neutral_texture", "neutralpath")
+func _request_blinking():
+	emit_signal("request_image", object, "blinking_texture", "blinkingpath")
+func _request_talking():
+	emit_signal("request_image", object, "talking_texture", "talkingpath")
+func _request_talking_and_blinking():
+	emit_signal("request_image", object, "talking_and_blinking_texture", "talkingandblinkingpath")
 
 
 func _request_gizmo():
@@ -85,7 +107,12 @@ func update_menu():
 		settingsmenu.valslider.value = object.user_val
 		settingsmenu.heightslider.value = object.user_height
 		settingsmenu.speedslider.value = object.user_speed
-
+		settingsmenu.imagepreview.texture = object.texture
+		settingsmenu.neutralpreview.texture = object.neutral_texture
+		settingsmenu.blinkingpreview.texture = object.blinking_texture
+		settingsmenu.talkingpreview.texture = object.talking_texture
+		settingsmenu.talkingandblinkingpreview.texture = object.talking_and_blinking_texture
+		settingsmenu.singleimagetoggle.button_pressed = object.usesingleimage
 
 func _shift_up():
 	get_parent().move_child(self, get_index()-1)

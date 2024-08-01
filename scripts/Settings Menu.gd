@@ -14,3 +14,23 @@ class_name ScreenObjectSettingsPopup extends Popup
 @onready var heightslider: Slider = %HeightSlider
 
 @onready var requestimage: Signal = %ImageButton.pressed
+@onready var requestneutral: Signal = %NeutralImageButton.pressed
+@onready var requestblinking: Signal = %BlinkingImageButton.pressed
+@onready var requesttalking: Signal = %TalkingImageButton.pressed
+@onready var requesttalkingandblinking: Signal = %TalkingAndBlinkingImageButton.pressed
+@onready var togglemultiimage: Signal = %SingleMultiToggle.toggled
+
+@onready var imagepreview: TextureRect = %ImagePreview
+@onready var neutralpreview: TextureRect = %NeutralImagePreview
+@onready var blinkingpreview: TextureRect = %BlinkingImagePreview
+@onready var talkingpreview: TextureRect = %TalkingImagePreview
+@onready var talkingandblinkingpreview: TextureRect = %TalkingAndBlinkingImagePreview
+
+@onready var singleimageselect = %SelectSingleImage
+@onready var multiimageselect = %SelectSeparateImages
+
+@onready var neutralimageselect = %"Select Neutral Image"
+@onready var blinkingimageselect = %"Blinking Image"
+@onready var talkingimageselect = %"Talking Image"
+@onready var talkingandblinkingimageselect = %"Talking + Blinking Image"
+@onready var singleimagetoggle = %SingleMultiToggle
