@@ -356,8 +356,6 @@ func _open_image(path):
 		
 		openingfor.set(objectimagefield, ImageTexture.create_from_image(image))
 		openingfor.set(objectimagepathfield, path)
-		# openingfor.texture = ImageTexture.create_from_image(image)
-		# openingfor.texturepath = path
 		
 func _on_autosave_timer_timeout():
 	_autosave()

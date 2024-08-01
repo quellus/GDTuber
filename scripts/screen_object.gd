@@ -257,25 +257,6 @@ func restart_tween():
 func generate_animation():
 	visualsroot.position = Vector2()
 	restart_tween()
-	# bounce_tween.set_loops()
-	# bounce_tween.tween_property(visualsroot, "position", Vector2(0, -user_height), 0.2/user_speed)
-	# bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2/user_speed)
-	# bounce_tween.tween_callback(restart_tween)
-	
-	# bounce_animator = AnimationPlayer.new()
-	# visualsroot.add_child(bounce_animator)
-	# var animation_lib = AnimationLibrary.new()
-	# var animation = Animation.new()
-	# var track_index = animation.add_track(Animation.TYPE_VALUE)
-	# animation_lib.add_animation("bounce", animation)
-	# bounce_animator.add_animation_library("", animation_lib)
-	
-	# animation.track_set_path(track_index, ".:position")
-	# animation.track_insert_key(track_index, 0.0, Vector2(0,0))
-	# animation.track_insert_key(track_index, 0.2, Vector2(0,-20))
-	# animation.track_insert_key(track_index, 0.4, Vector2(0,0))
-	# animation.length = 0.4
-	# bounce_animator.animation_finished.connect(_on_animator_stopped)
 
 
 func _on_animator_stopped(_anim_name):
