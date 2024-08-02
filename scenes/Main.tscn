@@ -296,6 +296,7 @@ icon_alignment = 2
 
 [node name="WindowSize" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
 unique_name_in_owner = true
+visible = false
 custom_minimum_size = Vector2(0, 85)
 layout_mode = 2
 
