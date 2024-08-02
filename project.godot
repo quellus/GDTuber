@@ -35,6 +35,10 @@ window/size/transparent=true
 window/per_pixel_transparency/allowed=true
 window/vsync/vsync_mode=0
 
+[dotnet]
+
+project/assembly_name="GDTuber"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

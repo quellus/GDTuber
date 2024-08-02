@@ -14,6 +14,10 @@ const VERSION = 0.9
 @onready var background_transparent: bool = !background.visible
 @onready var background_color: Color = background.color
 @onready var menu = %Menu
+@onready var lockwindowsizeToggle = %LockButton
+@onready var windowsizecontainer = %WindowSize
+@onready var wslockwidth = %ws_lock_Width
+@onready var wslockheight = %ws_lock_Height
 var menu_shown = false:
 	set(value):
 		menu_shown = value
@@ -376,6 +380,20 @@ func _on_quit_button_button_down():
 	_save_file(AUTOSAVE_PATH)
 	get_tree().quit()
 
+func _on_lock_button_toggled(value):
+	var size = Vector2i(wslockwidth.value, wslockheight.value)
+	WindowManager.toggle_lock_screen_size(size,value)
+	if value == true:
+		windowsizecontainer.show()
+	else:
+		windowsizecontainer.hide()
+	
+func _on_ws_lock_width_value_changed(value):
+	_on_lock_button_toggled(true)
+	
+func _on_ws_lock_height_value_changed(value):
+	_on_lock_button_toggled(true)
+	
 func _on_fullscreen_toggle():
 	WindowManager.toggle_fullscreen()
 	
@@ -534,4 +552,9 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
+
+
+
+
+
 

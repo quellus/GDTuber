@@ -271,17 +271,13 @@ custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/Lock Window Size"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-tooltip_text = "Locks window size to prevent unwanted resizing"
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/Lock Window Size/HBoxContainer"]
 layout_mode = 2
-text = "W. Size lock "
+text = "Lock Windowsize"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -292,7 +288,8 @@ size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = ExtResource("3_5cu1w")
 button_pressed = true
-icon_alignment = 2
+alignment = 1
+icon_alignment = 1
 
 [node name="WindowSize" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
 unique_name_in_owner = true
@@ -313,39 +310,18 @@ offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer"]
-layout_mode = 2
-tooltip_text = "Locks window size to prevent unwanted resizing"
-
-[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Width"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ws_lock_Width" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2"]
+[node name="ws_lock_Width" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-min_value = 600.0
+min_value = 200.0
 max_value = 5000.0
 value = 1200.0
 alignment = 1
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer"]
-layout_mode = 2
-tooltip_text = "Locks window size to prevent unwanted resizing"
-
-[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3"]
-layout_mode = 2
-text = "Height
-"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ws_lock_Height" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3"]
+[node name="ws_lock_Height" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-min_value = 600.0
+min_value = 200.0
 max_value = 5000.0
 value = 800.0
 alignment = 1
@@ -413,8 +389,6 @@ autostart = true
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/Lock Window Size/HBoxContainer/LockButton" to="." method="_on_lock_button_toggled"]
-[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2/ws_lock_Width" to="." method="_on_ws_lock_width_value_changed"]
-[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3/ws_lock_Height" to="." method="_on_ws_lock_height_value_changed"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_open_image"]
