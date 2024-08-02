@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-const VERSION = 0.9
+const VERSION = 1.0
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -182,7 +182,7 @@ func _validate_save_json(dict, v) -> bool:
 			"background_transparent":TYPE_BOOL,
 			"background_color":TYPE_STRING
 		},
-		0.9:{
+		1.0:{
 			"autosave_enabled":TYPE_BOOL
 		}
 	}
@@ -349,7 +349,7 @@ func _load_data(path):
 				bgcolorPicker.color = background_color
 				_toggle_transparent(save_dict["background_transparent"])
 				bgTransparentToggle.button_pressed = save_dict["background_transparent"]
-			if version >= 0.9:
+			if version >= 1.0:
 				autosave_enabled = save_dict["autosave_enabled"]
 				%AutosaveToggle.button_pressed = save_dict["autosave_enabled"]
 				print(save_dict["autosave_enabled"])
