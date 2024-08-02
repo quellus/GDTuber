@@ -194,7 +194,7 @@ func create_visual():
 		if user_hidden:
 			sprite.visible = false
 
-	
+
 func create_atlas():
 	sprite = AnimatedSprite2D.new()
 	sprite.scale = user_scale
@@ -246,6 +246,8 @@ func create_normal_sprite():
 	sprite.name = "Sprite"
 	sprite.scale = user_scale
 	visualsroot.add_child(sprite)
+	if is_instance_valid(blink_timer):
+		blink_timer.queue_free()
 
 func restart_tween():
 	if is_talking and reactive:
