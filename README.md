@@ -109,6 +109,11 @@ Thank you for your contributions!
 
 For any questions or additional help, feel free to open an issue or contact us on our [Discord server](https://discord.com/invite/RzaVWjPU8s).
 
+### Contributers
+- (Quellus)[https://github.com/quellus]
+- (Code807)[https://github.com/code807]
+- (Thefunguy-Github)[https://github.com/Thefunguy-Github]
+  
 ## Attribution
 [Contract icon](https://game-icons.net/1x1/delapouite/contract.html) by [Delapouite](https://delapouite.com/) under CC BY 3.0
 
