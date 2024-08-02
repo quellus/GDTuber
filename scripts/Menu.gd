@@ -17,7 +17,11 @@ const VERSION = 0.9
 @onready var lockwindowsizeToggle = %LockButton
 @onready var windowsizecontainer = %WindowSize
 @onready var wslockwidth = %ws_lock_Width
+@onready var window_width: int = 1200
 @onready var wslockheight = %ws_lock_Height
+@onready var window_height: int = 800
+@onready var wslockckeckbox = %LockButton
+@onready var window_size_locked: bool = false
 var menu_shown = false:
 	set(value):
 		menu_shown = value
@@ -133,6 +137,9 @@ func _save_data():
 		"profile_name":profilename,
 		"background_transparent":background_transparent,
 		"background_color":background_color.to_html(),
+		"window_width":window_width,
+		"window_height":window_height,
+		"window_size_locked":window_size_locked,
 		"objects":[]
 	}
 	for obj in ObjectsRoot.get_children():
@@ -320,7 +327,7 @@ func _load_data(path):
 								openingfor = newobj
 								objectimagefield = imgload[1]
 								objectimagepathfield = imgload[0]
-								_open_image(imgload[2])
+								_open_image(imgload[2])					
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
@@ -381,18 +388,24 @@ func _on_quit_button_button_down():
 	get_tree().quit()
 
 func _on_lock_button_toggled(value):
-	var size = Vector2i(wslockwidth.value, wslockheight.value)
+	var size = DisplayServer.window_get_size()	
+	wslockwidth.value = size.x
+	wslockheight.value = size.y	
 	WindowManager.toggle_lock_screen_size(size,value)
 	if value == true:
 		windowsizecontainer.show()
 	else:
 		windowsizecontainer.hide()
 	
-func _on_ws_lock_width_value_changed(value):
-	_on_lock_button_toggled(true)
+func _on_ws_lock_width_value_changed(value):	
+	if wslockckeckbox.button_pressed and window_width != value:
+		window_width = value
+		_on_lock_button_toggled(true)
 	
-func _on_ws_lock_height_value_changed(value):
-	_on_lock_button_toggled(true)
+func _on_ws_lock_height_value_changed(value):	
+	if wslockckeckbox.button_pressed and window_height != value:
+		window_height = value
+		_on_lock_button_toggled(true)
 	
 func _on_fullscreen_toggle():
 	WindowManager.toggle_fullscreen()

@@ -291,7 +291,6 @@ layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
 theme = ExtResource("3_5cu1w")
-button_pressed = true
 icon_alignment = 2
 
 [node name="WindowSize" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
