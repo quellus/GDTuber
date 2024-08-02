@@ -179,8 +179,8 @@ func _validate_save_json(dict: Dictionary, version: String) -> bool:
 			"background_color":TYPE_STRING
 		}
 	}
-	for v in versions:
-		if v <= version:
+	for v: String in versions:
+		if version.naturalnocasecmp_to(v) >= 0:
 			for field in versions[v]:
 				if field not in dict:
 					push_error("FIELD NOT FOUND: " + field)
@@ -233,7 +233,7 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 		}
 	}
 	for v in versions:
-		if v <= version:
+		if version.naturalnocasecmp_to(v) >= 0:
 			for field in versions[v]:
 				if field not in dict:
 					push_error("FIELD NOT FOUND: " + field)
@@ -260,7 +260,7 @@ func _load_data(path):
 		if _validate_save_json(save_dict, version):
 			version = save_dict["version"]
 			# Version Check
-			if version > project_version:
+			if version.naturalnocasecmp_to(project_version) > 0:
 				push_warning("WARNING: save data is newer than current version, attempting to load data")
 			
 			# Generate Objects from Objects Array
@@ -333,7 +333,7 @@ func _load_data(path):
 			if version.naturalnocasecmp_to("0.4") >= 0:
 				_set_profile_name(save_dict["profile_name"])
 			# 0.8
-			if version.naturalnocasecmp_to("0.8"):
+			if version.naturalnocasecmp_to("0.8") >= 0:
 				background_color = Color.from_string(save_dict["background_color"], background_color)
 				_change_background_color(background_color)
 				bgcolorPicker.color = background_color
