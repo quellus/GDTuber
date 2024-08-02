@@ -1,6 +1,7 @@
 class_name Menu extends Control
 
-const VERSION = 0.9
+# The project version is stored in Project Settings->Config->Version 
+var project_version = ProjectSettings.get_setting("application/config/version")
 
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
@@ -123,7 +124,7 @@ func _autosave():
 func _save_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	var savedict = {
-		"version":VERSION, 
+		"version":project_version, 
 		"threshold":threshold,
 		"input_gain":input_gain,
 		"profile_name":profilename,
@@ -159,40 +160,40 @@ func _save_data():
 			})
 	savedata = JSON.stringify(savedict)
 
-func _validate_save_json(dict, v) -> bool:
+func _validate_save_json(dict: Dictionary, version: String) -> bool:
 	var valid = true
 	var versions = {
-		0.1:{
+		"0.1":{
 			"objects":TYPE_ARRAY,
-			"version":TYPE_FLOAT
+			"version":TYPE_STRING
 		},
-		0.3:{
+		"0.3":{
 			"threshold":TYPE_FLOAT,
 			"input_gain":TYPE_FLOAT
 		},
-		0.4:{
+		"0.4":{
 			"profile_name":TYPE_STRING,
 		},
-		0.8:{
+		"0.8":{
 			"background_transparent":TYPE_BOOL,
 			"background_color":TYPE_STRING
 		}
 	}
-	for version in versions:
-		if version <= v:
-			for field in versions[version]:
+	for v in versions:
+		if v <= version:
+			for field in versions[v]:
 				if field not in dict:
 					push_error("FIELD NOT FOUND: " + field)
 					valid = false
-				elif !is_instance_of(dict[field], versions[version][field]):
+				elif !is_instance_of(dict[field], versions[v][field]):
 					push_error("FIELD TYPE INCORRECT: " + field)
 					valid = false
 	return valid
 
-func _validate_object_json(dict, v) -> bool:
+func _validate_object_json(dict: Dictionary, version: String) -> bool:
 	var valid = true
 	var versions = {
-		0.1:{
+		"0.1":{
 			"scale.x":TYPE_FLOAT,
 			"scale.y":TYPE_FLOAT,
 			"position.x":TYPE_FLOAT,
@@ -202,28 +203,28 @@ func _validate_object_json(dict, v) -> bool:
 			"reactive":TYPE_BOOL,
 			"talking":TYPE_BOOL
 		},
-		0.2:{
+		"0.2":{
 			"filter":TYPE_BOOL
 		},
-		0.4:{
+		"0.4":{
 			"rotation":TYPE_FLOAT
 		},
-		0.5:{
+		"0.5":{
 			"hidden":TYPE_BOOL
 		},
-		0.6:{
+		"0.6":{
 			"name":TYPE_STRING,
 		},
-		0.7:{
+		"0.7":{
 			"hue":TYPE_FLOAT,
 			"sat":TYPE_FLOAT,
 			"val":TYPE_FLOAT,
 		},
-		0.8:{
+		"0.8":{
 			"height":TYPE_FLOAT,
 			"speed":TYPE_FLOAT
 		},
-		0.9:{			
+		"0.9":{			
 			"neutralpath":TYPE_STRING,
 			"blinkingpath":TYPE_STRING,
 			"talkingpath":TYPE_STRING,
@@ -231,13 +232,13 @@ func _validate_object_json(dict, v) -> bool:
 			"usesingleimage":TYPE_BOOL
 		}
 	}
-	for version in versions:
-		if version <= v:
-			for field in versions[version]:
+	for v in versions:
+		if v <= version:
+			for field in versions[v]:
 				if field not in dict:
 					push_error("FIELD NOT FOUND: " + field)
 					valid = false
-				elif !is_instance_of(dict[field], versions[version][field]):
+				elif !is_instance_of(dict[field], versions[v][field]):
 					push_error("FIELD TYPE INCORRECT: " + field)
 					valid = false
 	return valid
@@ -250,15 +251,16 @@ func _load_data(path):
 	if save_json == "":
 		return
 	var save_dict = JSON.parse_string(save_json)
-	var version = 0.1
+	var version : String = "0.1.0"
 	if save_dict:
 		if "version" in save_dict:
 			if save_dict["version"] is float:
+				save_dict["version"] = str(save_dict["version"])
 				version = save_dict["version"]
 		if _validate_save_json(save_dict, version):
 			version = save_dict["version"]
 			# Version Check
-			if version > VERSION:
+			if version > project_version:
 				push_warning("WARNING: save data is newer than current version, attempting to load data")
 			
 			# Generate Objects from Objects Array
@@ -281,29 +283,29 @@ func _load_data(path):
 						objectimagepathfield = "texturepath"
 						_open_image(obj["texturepath"])
 					# 0.2
-					if version >= 0.2:
+					if version.naturalnocasecmp_to("0.2") >= 0:
 						newobj.filter = obj["filter"]
 					# 0.4
-					if version >= 0.4:
+					if version.naturalnocasecmp_to("0.4") >= 0:
 						newobj.user_rotation = obj["rotation"]
 					# 0.5
-					if version >= 0.5:
+					if version.naturalnocasecmp_to("0.5") >= 0:
 						newobj.user_hidden = obj["hidden"]
 					# 0.6
-					if version >= 0.6:
+					if version.naturalnocasecmp_to("0.6") >= 0:
 						newobj.user_name = obj["name"]
 					# 0.7
-					if version >= 0.7:
+					if version.naturalnocasecmp_to("0.7") >= 0:
 						newobj.user_hue = obj["hue"]
 						newobj.user_sat = obj["sat"]
 						newobj.user_val = obj["val"]
 					# 0.8
-					if version >= 0.8:
+					if version.naturalnocasecmp_to("0.8") >= 0:
 						newobj.user_height = obj["height"]
 						newobj.user_speed = obj["speed"]
 					newobj.update_menu.emit()
 					# 0.9
-					if version >= 0.9:
+					if version.naturalnocasecmp_to("0.9") >= 0:
 						newobj.usesingleimage = obj["usesingleimage"]
 						
 						for imgload in [
@@ -322,16 +324,16 @@ func _load_data(path):
 					push_error("ERROR: object does not contain required fields")
 			# Load Program Settings
 			# 0.3
-			if version >= 0.3:
+			if version.naturalcasecmp_to("0.3") >= 0:
 				threshold = save_dict["threshold"]
 				threshold_slider.value = threshold
 				input_gain = save_dict["input_gain"]
 				input_gain_slider.value = input_gain
 			#0.4
-			if version >= 0.4:
+			if version.naturalnocasecmp_to("0.4") >= 0:
 				_set_profile_name(save_dict["profile_name"])
 			# 0.8
-			if version >= 0.8:
+			if version.naturalnocasecmp_to("0.8"):
 				background_color = Color.from_string(save_dict["background_color"], background_color)
 				_change_background_color(background_color)
 				bgcolorPicker.color = background_color
