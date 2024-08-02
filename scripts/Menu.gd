@@ -15,7 +15,9 @@ const VERSION = 0.9
 @onready var background_color: Color = background.color
 @onready var menu = %Menu
 var menu_shown = false:
-	set(value): _set_menu_shown( value )
+	set(value):
+		menu_shown = value
+		_set_menu_shown(value)
 
 # Audio Management
 const MAX_SAMPLES = 20
@@ -364,7 +366,7 @@ func _on_autosave_timer_timeout():
 ### Window Management
 func _set_menu_shown(value: bool):
 	menu.visible = value
-	set_process_input(value)
+	# set_process_input(value)
 
 func _on_button_button_down():
 	menu_shown = false
