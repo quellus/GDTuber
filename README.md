@@ -1,4 +1,4 @@
-[On Itch.io!](https://code807.itch.io/gdtuber)
+<a href="https://code807.itch.io/gdtuber"><img src="http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png" width="200"></a>
 
 # GDTuber <img src="/Assets/GDTuber.png" width="48">
 Made by Quellus and [Code807](https://github.com/code807)
