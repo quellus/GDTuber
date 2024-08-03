@@ -1,5 +1,3 @@
-
-
 # GDTuber <img src="/Assets/GDTuber.png" width="48">
 Made by Quellus and [Code807](https://github.com/code807)
 
