@@ -260,17 +260,12 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.52
 color = Color(0, 1, 0, 1)
 
-[node name="QuitButton" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
-layout_mode = 2
-size_flags_vertical = 8
-text = "Quit"
-
-[node name="Lock Window Size" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
+[node name="Fixed Window Size" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 45)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/Lock Window Size"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/Fixed Window Size"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -279,19 +274,30 @@ grow_horizontal = 2
 grow_vertical = 2
 tooltip_text = "Locks window size to prevent unwanted resizing"
 
-[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/Lock Window Size/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Menu/PanelContainer/SettingsMenu/Fixed Window Size/HBoxContainer"]
 layout_mode = 2
-text = "W. Size lock "
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/Fixed Window Size/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "Fixed  
+Window Size"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LockButton" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/Lock Window Size/HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="Menu/PanelContainer/SettingsMenu/Fixed Window Size/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="FixedWindowSizeToggle" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/Fixed Window Size/HBoxContainer/CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 6
+size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("3_5cu1w")
-icon_alignment = 2
 
 [node name="WindowSize" type="Panel" parent="Menu/PanelContainer/SettingsMenu"]
 unique_name_in_owner = true
@@ -317,13 +323,21 @@ grow_vertical = 2
 layout_mode = 2
 tooltip_text = "Locks window size to prevent unwanted resizing"
 
-[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer2" type="CenterContainer" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2/CenterContainer2"]
 layout_mode = 2
 text = "Width"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ws_lock_Width" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2"]
+[node name="CenterContainer" type="CenterContainer" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="fixedWindowWidthSpinbox" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2/CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 600.0
@@ -335,20 +349,33 @@ alignment = 1
 layout_mode = 2
 tooltip_text = "Locks window size to prevent unwanted resizing"
 
-[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer" type="CenterContainer" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3/CenterContainer"]
 layout_mode = 2
 text = "Height
 "
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ws_lock_Height" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3"]
+[node name="CenterContainer2" type="CenterContainer" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="fixedWindowHeightSpinbox" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3/CenterContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 600.0
 max_value = 5000.0
 value = 800.0
 alignment = 1
+
+[node name="QuitButton" type="Button" parent="Menu/PanelContainer/SettingsMenu"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Quit"
 
 [node name="Gizmo" type="Control" parent="Menu"]
 visible = false
@@ -411,10 +438,10 @@ autostart = true
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/Load Data" to="." method="_load_dialog"]
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/FullScreen Toggle/HBoxContainer/BGTransparentToggle" to="." method="_toggle_transparent"]
 [connection signal="color_changed" from="Menu/PanelContainer/SettingsMenu/BackgroundColor/HBoxContainer/ColorPickerButton" to="." method="_change_background_color"]
+[connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/Fixed Window Size/HBoxContainer/CenterContainer/FixedWindowSizeToggle" to="." method="_on_fixed_window_button_toggled"]
+[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2/CenterContainer/fixedWindowWidthSpinbox" to="." method="_on_ws_lock_width_value_changed"]
+[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3/CenterContainer2/fixedWindowHeightSpinbox" to="." method="_on_ws_lock_height_value_changed"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/QuitButton" to="." method="_on_quit_button_button_down"]
-[connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/Lock Window Size/HBoxContainer/LockButton" to="." method="_on_lock_button_toggled"]
-[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer2/ws_lock_Width" to="." method="_on_ws_lock_width_value_changed"]
-[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/WindowSize/VBoxContainer/HBoxContainer3/ws_lock_Height" to="." method="_on_ws_lock_height_value_changed"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
 [connection signal="file_selected" from="ImageOpenDialog" to="." method="_open_image"]

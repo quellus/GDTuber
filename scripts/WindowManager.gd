@@ -17,10 +17,11 @@ func toggle_fullscreen():
 	return DisplayServer.window_get_mode()
 	
 # NOTE: this function can be used to disable rezizing the window and sets it to specific size	
-func toggle_lock_screen_size(size: Vector2i, lock: bool):
+func toggle_fixed_window_size(size: Vector2i, lock: bool):
 	if lock:
-		change_window_size(size)
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_RESIZE_DISABLED, true)
+		change_window_size(size)
 	else:
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_RESIZE_DISABLED, false)
+		change_window_size(size)
 	return

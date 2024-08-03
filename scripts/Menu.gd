@@ -15,14 +15,13 @@ var project_version = ProjectSettings.get_setting("application/config/version")
 @onready var background_transparent: bool = !background.visible
 @onready var background_color: Color = background.color
 @onready var menu = %Menu
-@onready var lockwindowsizeToggle = %LockButton
 @onready var windowsizecontainer = %WindowSize
-@onready var wslockwidth = %ws_lock_Width
-@onready var window_width: int = 1200
-@onready var wslockheight = %ws_lock_Height
-@onready var window_height: int = 800
-@onready var wslockckeckbox = %LockButton
-@onready var window_size_locked: bool = false
+@onready var fixedWindowWidthSpinbox = %fixedWindowWidthSpinbox
+@onready var fixedWindowWidth: int 
+@onready var fixedWindowHeightSpinbox = %fixedWindowHeightSpinbox
+@onready var fixedWindowHeight: int 
+@onready var fixedWindowSizeToggle = %FixedWindowSizeToggle
+@onready var fixedWindowSize: bool = false
 var menu_shown = false:
 	set(value):
 		menu_shown = value
@@ -138,9 +137,9 @@ func _save_data():
 		"profile_name":profilename,
 		"background_transparent":background_transparent,
 		"background_color":background_color.to_html(),
-		"window_width":window_width,
-		"window_height":window_height,
-		"window_size_locked":window_size_locked,
+		"fixedWindowWidth":fixedWindowWidth,
+		"fixedWindowHeight":fixedWindowHeight,
+		"fixedWindowSize":fixedWindowSize,
 		"objects":[]
 	}
 	for obj in ObjectsRoot.get_children():
@@ -188,6 +187,11 @@ func _validate_save_json(dict: Dictionary, version: String) -> bool:
 		"0.8":{
 			"background_transparent":TYPE_BOOL,
 			"background_color":TYPE_STRING
+		},
+		"0.10":{
+			"fixedWindowHeight":TYPE_INT,
+			"fixedWindowWidth": TYPE_INT,
+			"fixedWindowSize":TYPE_BOOL
 		}
 	}
 	for v: String in versions:
@@ -241,7 +245,7 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 			"talkingpath":TYPE_STRING,
 			"talkingandblinkingpath":TYPE_STRING,
 			"usesingleimage":TYPE_BOOL
-		}
+		}		
 	}
 	for v in versions:
 		if version.naturalnocasecmp_to(v) >= 0:
@@ -329,7 +333,7 @@ func _load_data(path):
 								openingfor = newobj
 								objectimagefield = imgload[1]
 								objectimagepathfield = imgload[0]
-								_open_image(imgload[2])					
+								_open_image(imgload[2])										
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
@@ -350,6 +354,10 @@ func _load_data(path):
 				bgcolorPicker.color = background_color
 				_toggle_transparent(save_dict["background_transparent"])
 				bgTransparentToggle.button_pressed = save_dict["background_transparent"]
+			if version.naturalnocasecmp_to("0.10") >= 0:
+				fixedWindowSizeToggle.button_pressed = save_dict["fixedWindowSize"]
+				fixedWindowWidthSpinbox.value = save_dict["fixedWindowWidth"]
+				fixedWindowHeightSpinbox.value = save_dict["fixedWindowHeight"]
 		else:
 			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:
@@ -389,25 +397,28 @@ func _on_quit_button_button_down():
 	_save_file(AUTOSAVE_PATH)
 	get_tree().quit()
 
-func _on_lock_button_toggled(value):
-	var size = DisplayServer.window_get_size()	
-	wslockwidth.value = size.x
-	wslockheight.value = size.y	
-	WindowManager.toggle_lock_screen_size(size,value)
-	if value == true:
+
+
+func _on_fixed_window_button_toggled(value):
+	var windowsize = DisplayServer.window_get_size()
+	fixedWindowSize = value
+	WindowManager.toggle_fixed_window_size(windowsize,value)
+	if value == true:		
+		fixedWindowWidthSpinbox.value = windowsize.x
+		fixedWindowHeightSpinbox.value = windowsize.y
 		windowsizecontainer.show()
 	else:
 		windowsizecontainer.hide()
 	
-func _on_ws_lock_width_value_changed(value):	
-	if wslockckeckbox.button_pressed and window_width != value:
-		window_width = value
-		_on_lock_button_toggled(true)
+func _on_ws_lock_width_value_changed(value):
+	if fixedWindowSizeToggle.button_pressed and fixedWindowWidth != value:
+		fixedWindowWidth = value
+		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth,fixedWindowHeight),value)
 	
-func _on_ws_lock_height_value_changed(value):	
-	if wslockckeckbox.button_pressed and window_height != value:
-		window_height = value
-		_on_lock_button_toggled(true)
+func _on_ws_lock_height_value_changed(value):
+	if fixedWindowSizeToggle.button_pressed and fixedWindowHeight != value:
+		fixedWindowHeight = value
+		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth,fixedWindowHeight),value)
 	
 func _on_fullscreen_toggle():
 	WindowManager.toggle_fullscreen()
@@ -567,6 +578,7 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
+
 
 
 
