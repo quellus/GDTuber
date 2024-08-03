@@ -28,9 +28,9 @@ func _ready():
 	settingsmenu.valslider.value_changed.connect(_set_val)
 	settingsmenu.heightslider.value_changed.connect(_set_height)
 	settingsmenu.speedslider.value_changed.connect(_set_speed)
-	
+
 	settingsmenu.togglemultiimage.connect(_toggle_multi_image)
-	
+
 	settingsmenu.requestimage.connect(_request_image)
 	settingsmenu.requestneutral.connect(_request_neutral)
 	settingsmenu.requestblinking.connect(_request_blinking)
