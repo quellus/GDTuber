@@ -1,4 +1,4 @@
-<a href="https://code807.itch.io/gdtuber"><img src="http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png" width="200"></a>
+
 
 # GDTuber <img src="/Assets/GDTuber.png" width="48">
 Made by Quellus and [Code807](https://github.com/code807)
@@ -115,3 +115,6 @@ For any questions or additional help, feel free to open an issue or contact us o
 [Contract icon](https://game-icons.net/1x1/delapouite/contract.html) by [Delapouite](https://delapouite.com/) under CC BY 3.0
 
 [Cog icon](https://game-icons.net/1x1/lorc/cog.html) by [Lorc](https://lorcblog.blogspot.com/) under CC BY 3.0
+
+# Download
+<a href="https://code807.itch.io/gdtuber"><img src="http://jessemillar.github.io/available-on-itchio-badge/badge-bw.png" width="200"></a>
