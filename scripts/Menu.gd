@@ -1,6 +1,6 @@
 class_name Menu extends Control
 
-# The project version is stored in Project Settings->Config->Version 
+# The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
 
 # Window Management
@@ -17,9 +17,9 @@ var project_version = ProjectSettings.get_setting("application/config/version")
 @onready var menu = %Menu
 @onready var windowsizecontainer = %WindowSize
 @onready var fixedWindowWidthSpinbox = %fixedWindowWidthSpinbox
-@onready var fixedWindowWidth: int 
+@onready var fixedWindowWidth: int
 @onready var fixedWindowHeightSpinbox = %fixedWindowHeightSpinbox
-@onready var fixedWindowHeight: int 
+@onready var fixedWindowHeight: int
 @onready var fixedWindowSizeToggle = %FixedWindowSizeToggle
 @onready var fixedWindowSize: bool = false
 var menu_shown = false:
@@ -59,17 +59,17 @@ var starting_rotation: float = 0
 @onready var file_dialog := %ImageOpenDialog
 @onready var json_save_dialog : FileDialog = %JSONSaveDialog
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
-var openingfor: ScreenObject 
+var openingfor: ScreenObject
 var objectimagefield: String
 var objectimagepathfield: String
 var savedata: String
-const AUTOSAVE_PATH: String = "user://autosave.json"
+const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
 
 ### Ready
 func _ready():
 	# Set Window Properties
 	get_tree().get_root().set_transparent_background(true)
-	
+
 	# Set Audio Properties
 	bus_index = AudioServer.get_bus_index("Record")
 	amplifier_effect = AudioServer.get_bus_effect(bus_index, 1)
@@ -78,7 +78,7 @@ func _ready():
 	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	for device_name in devices:
 		popup_menu.add_item(device_name)
-	
+
 	# Initialize Menu
 	menu_shown = true
 
@@ -90,11 +90,11 @@ func _process(_delta):
 	# Audio Processing
 	var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
 	var magnitude = db_to_linear(current_db)
-	
+
 	if samples.size() >= MAX_SAMPLES:
 		samples.pop_front()
 	samples.append(magnitude)
-	
+
 	var magnitude_avg = _get_average()
 
 	if magnitude_avg > threshold:
@@ -114,7 +114,7 @@ func _notification(what):
 ### File I/O
 func _save_file(path: String):
 	if path.get_extension() == "":
-		path = path+".json"
+		path = path+".gdtuber"
 	var save_game = FileAccess.open(path, FileAccess.WRITE)
 	save_game.store_line(savedata)
 
@@ -131,7 +131,7 @@ func _autosave():
 func _save_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	var savedict = {
-		"version":project_version, 
+		"version":project_version,
 		"threshold":threshold,
 		"input_gain":input_gain,
 		"profile_name":profilename,
@@ -239,13 +239,13 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 			"height":TYPE_FLOAT,
 			"speed":TYPE_FLOAT
 		},
-		"0.9":{			
+		"0.9":{
 			"neutralpath":TYPE_STRING,
 			"blinkingpath":TYPE_STRING,
 			"talkingpath":TYPE_STRING,
 			"talkingandblinkingpath":TYPE_STRING,
 			"usesingleimage":TYPE_BOOL
-		}		
+		}
 	}
 	for v in versions:
 		if version.naturalnocasecmp_to(v) >= 0:
@@ -277,7 +277,7 @@ func _load_data(path):
 			# Version Check
 			if version.naturalnocasecmp_to(project_version) > 0:
 				push_warning("WARNING: save data is newer than current version, attempting to load data")
-			
+
 			# Generate Objects from Objects Array
 			for obj in ObjectsRoot.get_children():
 				obj.queue_free()
@@ -322,18 +322,18 @@ func _load_data(path):
 					# 0.9
 					if version.naturalnocasecmp_to("0.9") >= 0:
 						newobj.usesingleimage = obj["usesingleimage"]
-						
+
 						for imgload in [
-							["neutralpath", "neutral_texture", obj["neutralpath"]], 
-							["blinkingpath", "blinking_texture", obj["blinkingpath"]], 
-							["talkingpath", "talking_texture", obj["talkingpath"]], 
+							["neutralpath", "neutral_texture", obj["neutralpath"]],
+							["blinkingpath", "blinking_texture", obj["blinkingpath"]],
+							["talkingpath", "talking_texture", obj["talkingpath"]],
 							["talkingandblinkingpath", "talking_and_blinking_texture", obj["talkingandblinkingpath"]]
 						]:
 							if imgload[2] != "":
 								openingfor = newobj
 								objectimagefield = imgload[1]
 								objectimagepathfield = imgload[0]
-								_open_image(imgload[2])										
+								_open_image(imgload[2])
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
@@ -362,7 +362,7 @@ func _load_data(path):
 			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:
 		push_error("ERROR: JSON file is invalid")
-	
+
 func _request_image(requestor, imageproperty, pathproperty):
 	openingfor = requestor
 	objectimagefield = imageproperty
@@ -376,10 +376,10 @@ func _open_image(path):
 		if err != OK:
 			push_error("cannot load image.")
 			return
-		
+
 		openingfor.set(objectimagefield, ImageTexture.create_from_image(image))
 		openingfor.set(objectimagepathfield, path)
-		
+
 func _on_autosave_timer_timeout():
 	_autosave()
 
@@ -403,26 +403,26 @@ func _on_fixed_window_button_toggled(value):
 	var windowsize = DisplayServer.window_get_size()
 	fixedWindowSize = value
 	WindowManager.toggle_fixed_window_size(windowsize,value)
-	if value == true:		
+	if value == true:
 		fixedWindowWidthSpinbox.value = windowsize.x
 		fixedWindowHeightSpinbox.value = windowsize.y
 		windowsizecontainer.show()
 	else:
 		windowsizecontainer.hide()
-	
+
 func _on_ws_lock_width_value_changed(value):
 	if fixedWindowSizeToggle.button_pressed and fixedWindowWidth != value:
 		fixedWindowWidth = value
 		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth,fixedWindowHeight),value)
-	
+
 func _on_ws_lock_height_value_changed(value):
 	if fixedWindowSizeToggle.button_pressed and fixedWindowHeight != value:
 		fixedWindowHeight = value
 		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth,fixedWindowHeight),value)
-	
+
 func _on_fullscreen_toggle():
 	WindowManager.toggle_fullscreen()
-	
+
 func _open_settings():
 	settingsmenu.visible = true
 	mainmenu.visible = false
@@ -435,7 +435,7 @@ func _toggle_transparent(value):
 	bgcolor.visible = !value
 	background.visible = !value
 	background_transparent = value
-	
+
 func _change_background_color(color):
 	background.color = color
 	background_color = color
@@ -489,7 +489,7 @@ func _on_drag_requested(object: ScreenObject):
 
 func _duplicate_object(obj: ScreenObject):
 	var newobj = _create_new_object()
-	
+
 	for property in obj.copy_properties:
 		newobj.set(property, obj.get(property))
 	newobj.update_menu.emit()
@@ -532,7 +532,7 @@ func update_amplifier(_new_input_gain : float):
 
 func _on_v_slider_drag_ended(value_changed):
 	threshold = value_changed
-	
+
 func _on_input_gain_change(_new_input_gain : float):
 	input_gain = _new_input_gain
 	update_amplifier(_new_input_gain)
@@ -565,7 +565,7 @@ func _input(event):
 						rotating = false
 
 func _unhandled_input(event):
-		
+
 	# Scroll to zoom
 	if event is InputEventMouseButton and drag_target:
 		if is_instance_valid(drag_target):
@@ -578,10 +578,3 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
-
-
-
-
-
-
-

@@ -40,31 +40,31 @@ var visualsroot: Node2D = Node2D.new()
 var rng = RandomNumberGenerator.new()
 var bounce_tween: Tween
 var texture: Texture2D:
-	set(value): 
+	set(value):
 		texture = value
 		create_visual()
-		
+
 var neutral_texture: Texture2D:
-	set(value): 
+	set(value):
 		neutral_texture = value
 		update_menu.emit()
 		create_visual()
 var talking_texture: Texture2D:
-	set(value): 
+	set(value):
 		talking_texture = value
 		update_menu.emit()
 		create_visual()
 var blinking_texture: Texture2D:
-	set(value): 
+	set(value):
 		blinking_texture = value
 		update_menu.emit()
 		create_visual()
 var talking_and_blinking_texture: Texture2D:
-	set(value): 
+	set(value):
 		talking_and_blinking_texture = value
 		update_menu.emit()
 		create_visual()
-		
+
 var user_hidden: bool = false:
 	set(value):
 		user_hidden = value
@@ -104,7 +104,7 @@ var reactive := true:
 		create_visual()
 var talking := true:
 	set(value):
-				
+
 		talking = value
 		create_visual()
 
@@ -221,7 +221,7 @@ func create_atlas():
 
 	sprite.name = "Sprite"
 	visualsroot.add_child(sprite)
-	
+
 	if is_instance_valid(blink_timer):
 			blink_timer.queue_free()
 	if is_inside_tree():

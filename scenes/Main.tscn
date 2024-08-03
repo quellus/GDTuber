@@ -418,7 +418,7 @@ size = Vector2i(312, 154)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("*.json")
+filters = PackedStringArray("*.gdtuber", "*.json")
 show_hidden_files = true
 use_native_dialog = true
 
