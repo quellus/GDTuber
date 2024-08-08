@@ -28,33 +28,58 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer"]
 layout_mode = 2
 
-[node name="Image" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/TabContainer/Image"]
+[node name="ScreenObjectName" type="Label" parent="Control/PanelContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+text = "ScreenObjectName"
+
+[node name="TabContainer" type="TabContainer" parent="Control/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Image" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image"]
 layout_mode = 2
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Combined_Separate" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+[node name="Combined_Separate" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Combined_Separate"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Combined_Separate"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Combined_Separate/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Combined_Separate/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
@@ -62,22 +87,22 @@ theme_override_font_sizes/font_size = 11
 text = "Combined Avatar Image"
 horizontal_alignment = 1
 
-[node name="SingleMultiToggle" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Combined_Separate/HBoxContainer"]
+[node name="SingleMultiToggle" type="CheckBox" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Combined_Separate/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Reduces hard edges"
 theme = ExtResource("2_ves45")
 
-[node name="SelectSingleImage" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+[node name="SelectSingleImage" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSingleImage"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSingleImage/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
@@ -85,10 +110,10 @@ theme_override_font_sizes/font_size = 13
 text = "Avatar"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSingleImage/VBoxContainer"]
 layout_mode = 2
 
-[node name="ImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer"]
+[node name="ImageButton" type="Button" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -96,11 +121,11 @@ size_flags_horizontal = 3
 theme = ExtResource("2_ves45")
 text = "Change Image"
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="ImagePreview" type="TextureRect" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSingleImage/VBoxContainer/HBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -108,19 +133,19 @@ texture = ExtResource("3_db3l8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="SelectSeparateImages" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+[node name="SelectSeparateImages" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Select Neutral Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+[node name="Select Neutral Image" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
@@ -128,10 +153,10 @@ theme_override_font_sizes/font_size = 13
 text = "Neutral Image"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer"]
 layout_mode = 2
 
-[node name="NeutralImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer"]
+[node name="NeutralImageButton" type="Button" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -139,11 +164,11 @@ size_flags_horizontal = 3
 theme = ExtResource("2_ves45")
 text = "Change Image"
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="NeutralImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="NeutralImagePreview" type="TextureRect" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Select Neutral Image/VBoxContainer/HBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -151,15 +176,15 @@ texture = ExtResource("3_db3l8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Blinking Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+[node name="Blinking Image" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Blinking Image"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
@@ -167,10 +192,10 @@ theme_override_font_sizes/font_size = 13
 text = "Blinking Image"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer"]
 layout_mode = 2
 
-[node name="BlinkingImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer"]
+[node name="BlinkingImageButton" type="Button" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -178,11 +203,11 @@ size_flags_horizontal = 3
 theme = ExtResource("2_ves45")
 text = "Change Image"
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BlinkingImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="BlinkingImagePreview" type="TextureRect" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Blinking Image/VBoxContainer/HBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -190,15 +215,15 @@ texture = ExtResource("3_db3l8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Talking Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+[node name="Talking Image" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking Image"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
@@ -206,10 +231,10 @@ theme_override_font_sizes/font_size = 13
 text = "Talking Image"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer"]
 layout_mode = 2
 
-[node name="TalkingImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer"]
+[node name="TalkingImageButton" type="Button" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -217,11 +242,11 @@ size_flags_horizontal = 3
 theme = ExtResource("2_ves45")
 text = "Change Image"
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TalkingImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="TalkingImagePreview" type="TextureRect" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking Image/VBoxContainer/HBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -229,15 +254,15 @@ texture = ExtResource("3_db3l8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Talking + Blinking Image" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages"]
+[node name="Talking + Blinking Image" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
@@ -245,10 +270,10 @@ theme_override_font_sizes/font_size = 13
 text = "Talking + Blinking Image"
 horizontal_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer"]
 layout_mode = 2
 
-[node name="TalkingAndBlinkingImageButton" type="Button" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer"]
+[node name="TalkingAndBlinkingImageButton" type="Button" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
@@ -256,11 +281,11 @@ size_flags_horizontal = 3
 theme = ExtResource("2_ves45")
 text = "Change Image"
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="TalkingAndBlinkingImagePreview" type="TextureRect" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="TalkingAndBlinkingImagePreview" type="TextureRect" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/SelectSeparateImages/Talking + Blinking Image/VBoxContainer/HBoxContainer/PanelContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
@@ -268,64 +293,64 @@ texture = ExtResource("3_db3l8")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="Mouth" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+[node name="Mouth" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Mouth"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Mouth"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Mouth/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Mouth/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
 text = "Has Talking Texture"
 horizontal_alignment = 1
 
-[node name="MouthBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Mouth/HBoxContainer"]
+[node name="MouthBox" type="CheckBox" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Mouth/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Sprite sheet has talking texture"
 theme = ExtResource("2_ves45")
 
-[node name="Blinks" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+[node name="Blinks" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Blinks"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Blinks"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Blinks/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Blinks/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has blinking texture"
 text = "Has Blinking Texture"
 horizontal_alignment = 1
 
-[node name="BlinkBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Blinks/HBoxContainer"]
+[node name="BlinkBox" type="CheckBox" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Blinks/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Sprite sheet has blinking texture"
 theme = ExtResource("2_ves45")
 
-[node name="Filter" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+[node name="Filter" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Filter"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Filter"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Filter/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Filter/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
 text = "Linear Filter"
 horizontal_alignment = 1
 
-[node name="FilterBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Filter/HBoxContainer"]
+[node name="FilterBox" type="CheckBox" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer/MarginContainer/VBoxContainer/Filter/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Reduces hard edges"
 theme = ExtResource("2_ves45")
 
-[node name="Color" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+[node name="Color" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -333,19 +358,26 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer"]
 layout_mode = 2
 
-[node name="Hue" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+[node name="Hue" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Hue"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Hue"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Hue"
 horizontal_alignment = 1
 
-[node name="HueSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Hue"]
+[node name="HueSlider" type="HSlider" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Hue"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = -0.5
@@ -353,56 +385,56 @@ max_value = 0.5
 step = 0.01
 value = 0.01
 
-[node name="Saturation" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+[node name="Saturation" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Saturation"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Saturation"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Saturation"
 horizontal_alignment = 1
 
-[node name="SatSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Saturation"]
+[node name="SatSlider" type="HSlider" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Saturation"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 2.0
 step = 0.01
 value = 1.0
 
-[node name="Value" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+[node name="Value" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Value"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Value"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Value"
 horizontal_alignment = 1
 
-[node name="ValSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Value"]
+[node name="ValSlider" type="HSlider" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Value"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="Alpha" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
+[node name="Alpha" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Alpha"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Alpha"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Alpha"
 horizontal_alignment = 1
 
-[node name="AlpSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Alpha"]
+[node name="AlpSlider" type="HSlider" parent="Control/PanelContainer/VBoxContainer/TabContainer/Color/MarginContainer/VBoxContainer/Alpha"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+[node name="Animation" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer"]
 visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -410,53 +442,60 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Animation"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer"]
 layout_mode = 2
 
-[node name="Bounces" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+[node name="Bounces" type="PanelContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Bounces"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Bounces"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Bounces/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Bounces/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Bounces on voice activity"
 text = "Animate Object"
 horizontal_alignment = 1
 
-[node name="BounceBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Bounces/HBoxContainer"]
+[node name="BounceBox" type="CheckBox" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Bounces/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Bounces on voice activity"
 theme = ExtResource("2_ves45")
 
-[node name="Height" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+[node name="Height" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Height"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Height"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Height"
 horizontal_alignment = 1
 
-[node name="HeightSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Height"]
+[node name="HeightSlider" type="HSlider" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Height"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 50.0
 value = 5.0
 
-[node name="Speed" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+[node name="Speed" type="VBoxContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Speed"]
+[node name="Label" type="Label" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Speed"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "Speed"
 horizontal_alignment = 1
 
-[node name="SpeedSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Speed"]
+[node name="SpeedSlider" type="HSlider" parent="Control/PanelContainer/VBoxContainer/TabContainer/Animation/MarginContainer/VBoxContainer/Speed"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 0.02
