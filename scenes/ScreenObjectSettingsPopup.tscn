@@ -57,7 +57,6 @@ theme_override_constants/margin_bottom = 10
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image"]
 layout_mode = 2
-horizontal_scroll_mode = 3
 vertical_scroll_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/VBoxContainer/TabContainer/Image/ScrollContainer"]

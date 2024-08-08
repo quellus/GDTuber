@@ -29,15 +29,13 @@ func _ready():
 	settingsmenu.heightslider.value_changed.connect(_set_height)
 	settingsmenu.speedslider.value_changed.connect(_set_speed)
 
-	settingsmenu.togglemultiimage.connect(_toggle_multi_image)	
+	settingsmenu.togglemultiimage.connect(_toggle_multi_image)
 
 	settingsmenu.requestimage.connect(_request_image)
 	settingsmenu.requestneutral.connect(_request_neutral)
 	settingsmenu.requestblinking.connect(_request_blinking)
 	settingsmenu.requesttalking.connect(_request_talking)
 	settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
-	
-	
 
 func _toggle_multi_image(value):
 	object.usesingleimage = value
@@ -72,8 +70,7 @@ func _open_menu():
 	var width = windowssize.x / 3
 	if(width < 300):
 		width = 300
-	popuprect.size = Vector2(width, windowssize.y)
-	
+	popuprect.size = Vector2(width, windowssize.y)	
 	settingsmenu.popup_on_parent(popuprect)
 
 
