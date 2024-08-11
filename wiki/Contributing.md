@@ -22,17 +22,19 @@ if you are a linux user you can also install Git through your package manager
 1. Fork the repository: Click the 'Fork' button at the top right corner of the repository page.
 
 2. Clone your forked repository:
-
-> git clone https://github.com/quellus/GDTuber.git
+   ```sh
+   git clone https://github.com/quellus/GDTuber.git
+   ```
 
 3. Navigate to the project directory:
-
-> cd REPO_NAME
+   ```sh
+   cd REPO_NAME
+   ```
 
 4. Create a new branch for your feature or bugfix:
-
-> git checkout -b feature-or-bugfix-name
-
+   ```sh
+   git checkout -b feature-or-bugfix-name
+   ```
 
 ### Making Changes
 
@@ -45,26 +47,30 @@ if you are a linux user you can also install Git through your package manager
 ### Committing Your Changes
 
 1. Add your changes:
-
-> git add .
-
+   ```sh
+   git add .
+   ```
+   
 2. Commit your changes with a descriptive commit message:
-
-> git commit -m "Description of changes"
+   ```sh
+   git commit -m "Description of changes"
+   ```
 
 ### Pushing Your Changes
 
 1. Push to your forked repository:
 
-> git push origin feature-or-bugfix-name
+   ```sh
+   git push origin feature-or-bugfix-name
+   ```
 
 2. Create a Pull Request:
 
-1. Go to the [GDTuber](https://github.com/quellus/GDTuber/) repository.
-2. Click on the 'Pull requests' tab.
-3. Click the 'New pull request' button.
-4. Select the branch you pushed your changes to in your forked repository.
-5. Click 'Create pull request' and fill out the required information.
+   1. Go to the [GDTuber](https://github.com/quellus/GDTuber/) repository.
+   2. Click on the 'Pull requests' tab.
+   3. Click the 'New pull request' button.
+   4. Select the branch you pushed your changes to in your forked repository.
+   5. Click 'Create pull request' and fill out the required information.
 
 ## Insight
 
@@ -72,15 +78,19 @@ if you are a linux user you can also install Git through your package manager
 
 Your pull request will be reviewed by one of our team members. We may ask for changes or clarifications. Please be responsive and address any feedback as soon as possible.
 
-### Aditional Ntoes
+### Additional Notes
 
 - Adhere to the existing code style and conventions.
 - Write clear, concise commit messages.
 - Include comments and documentation as necessary.
 - Ensure your changes do not break existing functionality.
 
-### Guidlines
+### Guidelines
 
 - Be respectful and considerate of others.
 - Provide constructive feedback.
 - Keep discussions focused and on topic.
+
+Thank you for your contributions!
+
+For any questions or additional help, feel free to open an issue or contact us on our [Discord server](https://discord.com/invite/RzaVWjPU8s).
