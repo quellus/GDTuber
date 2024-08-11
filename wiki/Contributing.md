@@ -5,7 +5,7 @@ Thank you for considering contributing to our project! We appreciate your intere
 ## Requirements
 
 - You must have [Godot version 4.2.2](https://godotengine.org/download/archive/4.2.2-stable/) installed as this project is made in godot (Windows, Linux, Mac)
-- Git installed on you computer. Install git by [clicking here](https://git-scm.com/) (Windows, Linux, Mac)
+- Git installed on your computer. Install git by [clicking here](https://git-scm.com/) (Windows, Linux, Mac)
 
 if you are a linux user you can also install Git through your package manager
 - Debian-based: 'sudo apt install git'
