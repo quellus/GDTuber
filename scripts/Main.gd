@@ -122,7 +122,6 @@ func _save_file(path: String):
 
 
 func _on_save_button():
-	_save_profile_data()
 	json_save_dialog.popup_centered()
 
 
@@ -532,7 +531,6 @@ func _on_popup_menu_index_pressed(index: int):
 	var popup_menu = device_dropdown.get_popup()
 	input_device = popup_menu.get_item_text(index)
 	AudioServer.set_input_device(input_device)
-	_save_profile_data()
 
 
 var is_talking := false:
