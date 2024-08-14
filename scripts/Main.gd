@@ -156,8 +156,6 @@ func _save_profile_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	var savedict = {
 		"version":project_version,
-		"threshold":threshold,
-		"input_gain":input_gain,
 		"profile_name":profilename,
 		"background_transparent":background_transparent,
 		"background_color":background_color.to_html(),
@@ -200,10 +198,6 @@ func _validate_save_json(dict: Dictionary, version: String) -> bool:
 		"0.1":{
 			"objects":TYPE_ARRAY,
 			"version":TYPE_STRING
-		},
-		"0.3":{
-			"threshold":TYPE_FLOAT,
-			"input_gain":TYPE_FLOAT
 		},
 		"0.4":{
 			"profile_name":TYPE_STRING,
@@ -362,12 +356,6 @@ func _load_data(path):
 				else:
 					push_error("ERROR: object does not contain required fields")
 			# Load Program Settings
-			# 0.3
-			if version.naturalcasecmp_to("0.3") >= 0:
-				threshold = save_dict["threshold"]
-				threshold_slider.value = threshold
-				input_gain = save_dict["input_gain"]
-				input_gain_slider.value = input_gain
 			#0.4
 			if version.naturalnocasecmp_to("0.4") >= 0:
 				_set_profile_name(save_dict["profile_name"])
