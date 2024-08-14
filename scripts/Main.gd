@@ -122,6 +122,7 @@ func _save_file(path: String):
 
 
 func _on_save_button():
+	_save_profile_data()
 	json_save_dialog.popup_centered()
 
 
@@ -405,6 +406,7 @@ func _on_button_button_down():
 	menu_shown = false
 
 func _on_quit_button_button_down():
+	_save_system_data()
 	_save_profile_data()
 	_save_file(AUTOSAVE_PATH)
 	get_tree().quit()
