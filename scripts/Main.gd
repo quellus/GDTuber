@@ -39,6 +39,7 @@ var samples: Array[float] = []
 var amplifier_effect = AudioEffectAmplify
 var threshold = 0.5
 var input_gain: float
+var input_device: String
 
 # Screen Object Management
 const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
@@ -64,6 +65,7 @@ var objectimagefield: String
 var objectimagepathfield: String
 var savedata: String
 const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
+const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
 
 ### Ready
 func _ready():
@@ -81,8 +83,8 @@ func _ready():
 
 	# Initialize Menu
 	menu_shown = true
-
 	_load_data(AUTOSAVE_PATH)
+	_load_system_data()
 
 
 ### Process
@@ -120,20 +122,41 @@ func _save_file(path: String):
 
 
 func _on_save_button():
-	_save_data()
+	_save_profile_data()
 	json_save_dialog.popup_centered()
 
 
 func _autosave():
-	_save_data()
+	_save_profile_data()
+	_save_system_data()
 	_save_file(AUTOSAVE_PATH)
 
-func _save_data():
+
+func _save_system_data():
+	var config = ConfigFile.new()
+	config.set_value("Audio", "input_device", input_device)
+	config.set_value("Audio", "threshold", threshold)
+	config.set_value("Audio", "input_gain", input_gain)
+	
+	config.save(SYSTEM_CONFIG_PATH)
+
+
+func _load_system_data():
+	var config = ConfigFile.new()
+	var err: Error = config.load(SYSTEM_CONFIG_PATH)
+	if err == OK:
+		input_device = config.get_value("Audio", "input_device", input_device)
+		AudioServer.set_input_device(input_device)
+		threshold = config.get_value("Audio", "threshold", threshold)
+		threshold_slider.value = threshold
+		input_gain = config.get_value("Audio", "input_gain", input_gain)
+		input_gain_slider.value = input_gain
+
+
+func _save_profile_data():
 	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
 	var savedict = {
 		"version":project_version,
-		"threshold":threshold,
-		"input_gain":input_gain,
 		"profile_name":profilename,
 		"background_transparent":background_transparent,
 		"background_color":background_color.to_html(),
@@ -176,10 +199,6 @@ func _validate_save_json(dict: Dictionary, version: String) -> bool:
 		"0.1":{
 			"objects":TYPE_ARRAY,
 			"version":TYPE_STRING
-		},
-		"0.3":{
-			"threshold":TYPE_FLOAT,
-			"input_gain":TYPE_FLOAT
 		},
 		"0.4":{
 			"profile_name":TYPE_STRING,
@@ -338,12 +357,6 @@ func _load_data(path):
 				else:
 					push_error("ERROR: object does not contain required fields")
 			# Load Program Settings
-			# 0.3
-			if version.naturalcasecmp_to("0.3") >= 0:
-				threshold = save_dict["threshold"]
-				threshold_slider.value = threshold
-				input_gain = save_dict["input_gain"]
-				input_gain_slider.value = input_gain
 			#0.4
 			if version.naturalnocasecmp_to("0.4") >= 0:
 				_set_profile_name(save_dict["profile_name"])
@@ -393,7 +406,8 @@ func _on_button_button_down():
 	menu_shown = false
 
 func _on_quit_button_button_down():
-	_save_data()
+	_save_system_data()
+	_save_profile_data()
 	_save_file(AUTOSAVE_PATH)
 	get_tree().quit()
 
@@ -505,8 +519,9 @@ func _order_objects():
 ### Audio Management
 func _on_popup_menu_index_pressed(index: int):
 	var popup_menu = device_dropdown.get_popup()
-	AudioServer.set_input_device(popup_menu.get_item_text(index))
-	pass
+	input_device = popup_menu.get_item_text(index)
+	AudioServer.set_input_device(input_device)
+
 
 var is_talking := false:
 	set(value):
