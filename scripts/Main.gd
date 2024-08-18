@@ -395,6 +395,12 @@ func _open_image(path):
 
 func _on_autosave_timer_timeout():
 	_autosave()
+	print("resetting input device")
+	var orig_device = AudioServer.input_device
+	var devices = AudioServer.get_input_device_list()
+	AudioServer.input_device = devices[randi() % devices.size()]
+	await get_tree().create_timer(0.2).timeout
+	AudioServer.input_device = orig_device
 
 
 ### Window Management
