@@ -93,8 +93,6 @@ size_flags_horizontal = 4
 text = "Input Device"
 flat = false
 item_count = 1
-popup/item_0/text = ""
-popup/item_0/id = 0
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu"]
 custom_minimum_size = Vector2(115.075, 0)
@@ -414,7 +412,7 @@ use_native_dialog = true
 [node name="JSONLoadDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
 title = "Open a File"
-size = Vector2i(312, 154)
+size = Vector2i(312, 175)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
