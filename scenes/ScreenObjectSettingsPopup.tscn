@@ -35,6 +35,7 @@ layout_mode = 2
 text = "ScreenObjectName"
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 3
 current_tab = 0
@@ -282,7 +283,6 @@ stretch_mode = 5
 
 [node name="Mouth" type="PanelContainer" parent="VBoxContainer/TabContainer/Image/MarginContainer/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/TabContainer/Image/MarginContainer/VBoxContainer/Mouth"]
 layout_mode = 2
