@@ -66,11 +66,11 @@ func _request_gizmo():
 
 func _open_menu():
 	var popuprect = popupanchor.get_global_rect()
-	var windowssize =  DisplayServer.window_get_size()
-	var width = windowssize.x / 3
-	if(width < 300):
-		width = 300
-	popuprect.size = Vector2(width, windowssize.y)	
+	#var windowssize =  DisplayServer.window_get_size()
+	#var width = windowssize.x / 3
+	#if(width < 300):
+		#width = 300
+	#popuprect.size = Vector2(width, windowssize.y)
 	settingsmenu.popup_on_parent(popuprect)
 
 
