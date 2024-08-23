@@ -10,6 +10,7 @@ bg_color = Color(0.290196, 0.290196, 0.290196, 1)
 [node name="Popup" type="Popup"]
 size = Vector2i(256, 524)
 visible = true
+borderless = false
 content_scale_mode = 2
 content_scale_aspect = 4
 script = ExtResource("1_ay34f")
