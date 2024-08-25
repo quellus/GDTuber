@@ -1,0 +1,97 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwjn5m547ldti"]
+
+[ext_resource type="Script" path="res://scripts/shortcut_image.gd" id="1_bgxsp"]
+[ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="2_gat5q"]
+[ext_resource type="Texture2D" uid="uid://b2q476rsnqalh" path="res://Assets/trash-can.png" id="4_wemg8"]
+[ext_resource type="Texture2D" uid="uid://cng61h7frpnic" path="res://Assets/yayAvatar.png" id="4_xw4xc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88shl"]
+bg_color = Color(0.290196, 0.290196, 0.290196, 1)
+
+[node name="sortcutImage" type="PanelContainer"]
+offset_right = 325.0
+offset_bottom = 76.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_88shl")
+script = ExtResource("1_bgxsp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+icon = ExtResource("4_wemg8")
+flat = true
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+
+[node name="imageName" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Sprite sheet has talking texture"
+mouse_filter = 0
+theme_override_font_sizes/font_size = 13
+text = "image
+"
+horizontal_alignment = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+bbcode_enabled = true
+text = "shortcut key: [color=lime]y[/color]"
+fit_content = true
+scroll_active = false
+autowrap_mode = 1
+tab_size = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="changeImage" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_gat5q")
+action_mode = 0
+text = "Change Image"
+
+[node name="changeShortcut" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_gat5q")
+action_mode = 0
+text = "Change Shortcut"
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="image" type="TextureRect" parent="VBoxContainer/HBoxContainer/PanelContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+texture = ExtResource("4_xw4xc")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+size = Vector2i(303, 180)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png, *.jpg, *.jpeg, *.bmp, *.dds, *.ktx, *.exr, *.hdr, *.tga, *.svg, *.webp")
+use_native_dialog = true
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer2/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/changeImage" to="." method="_on_change_image_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/changeShortcut" to="." method="_on_change_shortcut_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

@@ -15,9 +15,9 @@ GDTuber is a dynamic PNGTuber software made in Godot. It supports voice-reactive
 3. Press the `+` button to create a new avatar
 4. Use the `Change Image` button to set an image for the avatar/object (more information in the **Image Setup** section)
 6. Use the bottom row of icons to activate the gizmo
-    - left click to move the object on screen
-    - right click to rotate the object on screen
-    - scroll to scale the object on screen
+	- left click to move the object on screen
+	- right click to rotate the object on screen
+	- scroll to scale the object on screen
 8. Add additional avatars or accessories with the `+` button
 
 ### OBS instructions
@@ -45,17 +45,17 @@ Thank you for considering contributing to our project! We appreciate your intere
 
 1. **Fork the repository**: Click the 'Fork' button at the top right corner of the repository page.
 2. **Clone your forked repository**: 
-    ```sh
-    git clone https://github.com/quellus/GDTuber.git
-    ```
+	```sh
+	git clone https://github.com/quellus/GDTuber.git
+	```
 3. **Navigate to the project directory**:
-    ```sh
-    cd REPO_NAME
-    ```
+	```sh
+	cd REPO_NAME
+	```
 4. **Create a new branch** for your feature or bugfix:
-    ```sh
-    git checkout -b feature-or-bugfix-name
-    ```
+	```sh
+	git checkout -b feature-or-bugfix-name
+	```
 
 ### Making Changes
 
@@ -66,26 +66,26 @@ Thank you for considering contributing to our project! We appreciate your intere
 ### Committing Your Changes
 
 1. **Add your changes**:
-    ```sh
-    git add .
-    ```
+	```sh
+	git add .
+	```
 2. **Commit your changes** with a descriptive commit message:
-    ```sh
-    git commit -m "Description of changes"
-    ```
+	```sh
+	git commit -m "Description of changes"
+	```
 
 ### Pushing Your Changes
 
 1. **Push to your forked repository**:
-    ```sh
-    git push origin feature-or-bugfix-name
-    ```
+	```sh
+	git push origin feature-or-bugfix-name
+	```
 2. **Create a Pull Request**:
-    - Go to the [GDTuber repository](https://github.com/quellus/GDTuber).
-    - Click on the 'Pull requests' tab.
-    - Click the 'New pull request' button.
-    - Select the branch you pushed your changes to in your forked repository.
-    - Click 'Create pull request' and fill out the required information.
+	- Go to the [GDTuber repository](https://github.com/quellus/GDTuber).
+	- Click on the 'Pull requests' tab.
+	- Click the 'New pull request' button.
+	- Select the branch you pushed your changes to in your forked repository.
+	- Click 'Create pull request' and fill out the required information.
 
 
 ### Code Review

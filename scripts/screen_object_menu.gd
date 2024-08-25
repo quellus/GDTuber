@@ -16,6 +16,7 @@ var object: ScreenObject:
 		if value:
 			value.update_menu.connect(update_menu)
 		object = value
+		
 
 
 func _ready():
