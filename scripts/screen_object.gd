@@ -123,7 +123,7 @@ var neutralpath: String
 var talkingpath: String
 var blinkingpath: String
 var talkingandblinkingpath: String
-var usesingleimage: bool = true:
+var usesingleimage: bool = false:
 	set(value):
 		usesingleimage = value
 		create_visual()
