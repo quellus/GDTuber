@@ -160,7 +160,8 @@ var is_talking: bool:
 
 func _ready():
 	visualsroot.name = "VisualsRoot"
-	add_child(visualsroot)
+	if not visualsroot.get_parent():
+		add_child(visualsroot)
 	create_visual()
 
 func create_visual():

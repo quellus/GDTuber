@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=15 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="2_jbsj1"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://b2q476rsnqalh" path="res://Assets/trash-can.png" id="9_6xn6r"]
 [ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://Assets/dupeicon.png" id="10_l0soc"]
 [ext_resource type="Texture2D" uid="uid://ddsqw3n6dvqm4" path="res://Assets/cog.png" id="12_ftpaf"]
+[ext_resource type="Script" path="res://scenes/eventListening.gd" id="13_2w6si"]
 [ext_resource type="PackedScene" uid="uid://c12oguamole0m" path="res://scenes/ScreenObjectSettingsPopup.tscn" id="18_ej5mx"]
 
 [node name="ScreenObjectMenu" type="PanelContainer" node_paths=PackedStringArray("popupanchor", "name_field")]
@@ -126,12 +127,15 @@ stretch_mode = 5
 
 [node name="Control" type="Control" parent="HBoxContainer"]
 layout_mode = 2
+script = ExtResource("13_2w6si")
 
 [node name="Popup4" parent="HBoxContainer/Control" instance=ExtResource("18_ej5mx")]
 visible = false
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton" to="." method="_shift_up"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton" to="HBoxContainer/Control/Popup4" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton2" to="." method="_shift_down"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton2" to="HBoxContainer/Control/Popup4" method="_on_texture_button_2_pressed"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/TopRow/Name" to="." method="_set_name"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Settings Button" to="." method="_open_menu"]
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer2/VisibilityToggle" to="." method="_togglevisibility"]
