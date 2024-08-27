@@ -33,14 +33,14 @@ body:
     validations:
       required: false
   - type: input
-    id: version
+    id: gdtuber-version
     attributes:
       label: GDTuber Version
       placeholder: 1.2.3 (USE AN ACTUAL VERSION NUMBER)
     validations:
       required: true
   - type: input
-    id: version
+    id: godot-version
     attributes:
       label: Godot Version (if running in debug)
       placeholder: 1.2.3 (USE AN ACTUAL VERSION NUMBER)
