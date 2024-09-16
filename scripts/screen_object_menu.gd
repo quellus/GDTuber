@@ -65,10 +65,8 @@ func _request_gizmo():
 
 
 func _open_menu():
-	var popuprect = popupanchor.get_global_rect()
-	popuprect.size = Vector2(256, 256)
+	var popuprect: Rect2 = popupanchor.get_global_rect()
 	settingsmenu.popup_on_parent(popuprect)
-
 
 func _set_blinks(value):
 	object.blinking = value
@@ -113,6 +111,7 @@ func update_menu():
 		settingsmenu.talkingpreview.texture = object.talking_texture
 		settingsmenu.talkingandblinkingpreview.texture = object.talking_and_blinking_texture
 		settingsmenu.singleimagetoggle.button_pressed = object.usesingleimage
+		settingsmenu.screenobjectname.text = object.user_name
 
 func _shift_up():
 	get_parent().move_child(self, get_index()-1)

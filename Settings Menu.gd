@@ -34,3 +34,5 @@ class_name ScreenObjectSettingsPopup extends Popup
 @onready var talkingimageselect = %"Talking Image"
 @onready var talkingandblinkingimageselect = %"Talking + Blinking Image"
 @onready var singleimagetoggle = %SingleMultiToggle
+
+@onready var screenobjectname: Label = %ScreenObjectName
