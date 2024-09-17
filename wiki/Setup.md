@@ -14,3 +14,7 @@ You must check the Single Image to true to use single image. One image must cont
 ## Multiple Images
 
 You must uncheck the Single Image checkbox, it will be multimage by default. For each seprate avatar visual state it would be an image.
+
+## Pixel Art
+
+If you have pixel art or a low res image as your avatar go under the sprite settings and image then uncheck linear filter, the linear filter makes that fuss in the pixel art.
