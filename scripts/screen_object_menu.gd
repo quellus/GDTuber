@@ -11,6 +11,7 @@ signal order_changed()
 @export var name_field: LineEditReset
 @onready var visibilitytoggle: BaseButton = %VisibilityToggle
 @onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
+@onready var timmedToggle = $HBoxContainer/VBoxContainer/HBoxContainer2/TimedToggle
 var object: ScreenObject:
 	set(value):
 		if value:
@@ -19,23 +20,24 @@ var object: ScreenObject:
 
 
 func _ready():
-	settingsmenu.blinktoggle.toggled.connect(_set_blinks)
-	settingsmenu.bouncetoggle.toggled.connect(_set_bounce)
-	settingsmenu.mouthtoggle.toggled.connect(_set_mouth)
-	settingsmenu.filtertoggle.toggled.connect(_set_filter)
-	settingsmenu.hueslider.value_changed.connect(_set_hue)
-	settingsmenu.satslider.value_changed.connect(_set_sat)
-	settingsmenu.valslider.value_changed.connect(_set_val)
-	settingsmenu.heightslider.value_changed.connect(_set_height)
-	settingsmenu.speedslider.value_changed.connect(_set_speed)
+	if settingsmenu:
+		settingsmenu.blinktoggle.toggled.connect(_set_blinks)
+		settingsmenu.bouncetoggle.toggled.connect(_set_bounce)
+		settingsmenu.mouthtoggle.toggled.connect(_set_mouth)
+		settingsmenu.filtertoggle.toggled.connect(_set_filter)
+		settingsmenu.hueslider.value_changed.connect(_set_hue)
+		settingsmenu.satslider.value_changed.connect(_set_sat)
+		settingsmenu.valslider.value_changed.connect(_set_val)
+		settingsmenu.heightslider.value_changed.connect(_set_height)
+		settingsmenu.speedslider.value_changed.connect(_set_speed)
 
-	settingsmenu.togglemultiimage.connect(_toggle_multi_image)
+		settingsmenu.togglemultiimage.connect(_toggle_multi_image)
 
-	settingsmenu.requestimage.connect(_request_image)
-	settingsmenu.requestneutral.connect(_request_neutral)
-	settingsmenu.requestblinking.connect(_request_blinking)
-	settingsmenu.requesttalking.connect(_request_talking)
-	settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
+		settingsmenu.requestimage.connect(_request_image)
+		settingsmenu.requestneutral.connect(_request_neutral)
+		settingsmenu.requestblinking.connect(_request_blinking)
+		settingsmenu.requesttalking.connect(_request_talking)
+		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
 
 func _toggle_multi_image(value):
 	object.usesingleimage = value
@@ -147,3 +149,8 @@ func _delete_object():
 	if object:
 		object.queue_free()
 	queue_free()
+
+func _on_timed_toggle_pressed() -> void:
+	object.user_hidden = 1
+	await get_tree().create_timer(600).timeout
+	object.user_hidden = 0

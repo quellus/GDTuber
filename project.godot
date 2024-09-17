@@ -27,6 +27,7 @@ enable_audio_input=true
 [autoload]
 
 WindowManager="*res://scripts/WindowManager.gd"
+SOM="*res://scripts/screen_object_menu.gd"
 
 [display]
 
