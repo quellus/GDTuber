@@ -154,7 +154,7 @@ func _delete_object():
 func _on_auto_toggle_pressed() -> void:
 	object.user_hidden = !object.user_hidden
 	if autoToggleTimer.is_stopped():
-		autoToggleTimer.start(10)
+		autoToggleTimer.start(600)
 	else:
 		autoToggleTimer.stop()
 
