@@ -89,8 +89,7 @@ texture_pressed = ExtResource("8_efo5x")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="TimedToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
-unique_name_in_owner = true
+[node name="AutoToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "Hide the object for 10 min"
@@ -99,6 +98,11 @@ toggle_mode = true
 texture_normal = ExtResource("9_1nrss")
 ignore_texture_size = true
 stretch_mode = 5
+
+[node name="AutoToggleTimer" type="Timer" parent="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle"]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
 
 [node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
@@ -147,7 +151,8 @@ visible = false
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/TopRow/Name" to="." method="_set_name"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Settings Button" to="." method="_open_menu"]
 [connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer2/VisibilityToggle" to="." method="_togglevisibility"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/TimedToggle" to="." method="_on_timed_toggle_pressed"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle" to="." method="_on_auto_toggle_pressed"]
+[connection signal="timeout" from="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle/AutoToggleTimer" to="." method="_auto_toggle_timer_timeout"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Duplicate" to="." method="_duplicate"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Gizmo" to="." method="_request_gizmo"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Recenter" to="." method="_recenter"]

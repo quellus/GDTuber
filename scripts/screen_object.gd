@@ -68,6 +68,7 @@ var talking_and_blinking_texture: Texture2D:
 var user_hidden: bool = false:
 	set(value):
 		user_hidden = value
+		update_menu.emit()
 		if sprite:
 			sprite.visible = !user_hidden
 var user_hue: float = 0:
