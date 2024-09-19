@@ -462,7 +462,7 @@ func _set_profile_name(pname: String):
 
 
 ### Screen Object Management
-func _create_new_object():
+func _create_new_object() -> ScreenObject:
 	if MenusRoot and ObjectsRoot:
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
@@ -474,6 +474,8 @@ func _create_new_object():
 		newobject.user_position = get_viewport_rect().size/2
 		newmenu.update_menu()
 		return newobject
+	else:
+		return null
 
 func _connect_menu(smenu: ScreenObjectMenu):
 	smenu.request_image.connect(_request_image)
