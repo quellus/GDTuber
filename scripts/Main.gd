@@ -46,6 +46,10 @@ const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
 var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
+var default_neutral_texture: Texture2D = preload("res://Assets/DefaultAvatar-Neutral.png")
+var default_talking_texture: Texture2D = preload("res://Assets/DefaultAvatar-Talking.png")
+var default_blinking_texture: Texture2D = preload("res://Assets/DefaultAvatar-Blinking.png")
+var default_talking_and_blinking_texture: Texture2D = preload("res://Assets/DefaultAvatar-TalkingBlinking.png")
 var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
 # Screen Object Editing
@@ -467,6 +471,10 @@ func _create_new_object() -> ScreenObject:
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
 		newobject.texture = default_avatar_texture
+		newobject.neutral_texture = default_neutral_texture
+		newobject.talking_texture = default_talking_texture
+		newobject.blinking_texture = default_blinking_texture
+		newobject.talking_and_blinking_texture = default_talking_and_blinking_texture
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
 		newmenu.object = newobject
