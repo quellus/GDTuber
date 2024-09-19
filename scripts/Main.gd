@@ -320,6 +320,7 @@ func _load_data(path):
 						objectimagefield = "texture"
 						objectimagepathfield = "texturepath"
 						_open_image(obj["texturepath"])
+					newobj.usesingleimage = true
 					# 0.2
 					if version.naturalnocasecmp_to("0.2") >= 0:
 						newobj.filter = obj["filter"]
