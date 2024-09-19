@@ -30,9 +30,10 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="Image" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -60,6 +61,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
+mouse_filter = 1
 theme_override_font_sizes/font_size = 11
 text = "Combined Avatar Image"
 horizontal_alignment = 1
@@ -83,6 +85,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
+mouse_filter = 1
 theme_override_font_sizes/font_size = 13
 text = "Avatar"
 horizontal_alignment = 1
@@ -280,6 +283,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
+mouse_filter = 1
 text = "Has Talking Texture"
 horizontal_alignment = 1
 
@@ -299,6 +303,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has blinking texture"
+mouse_filter = 1
 text = "Has Blinking Texture"
 horizontal_alignment = 1
 
@@ -318,6 +323,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
+mouse_filter = 1
 text = "Linear Filter"
 horizontal_alignment = 1
 
@@ -406,7 +412,6 @@ step = 0.01
 value = 1.0
 
 [node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -427,6 +432,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Bounces on voice activity"
+mouse_filter = 1
 text = "Animate Object"
 horizontal_alignment = 1
 

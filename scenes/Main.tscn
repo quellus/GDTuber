@@ -103,6 +103,8 @@ alignment = 1
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Cutoff volume for avatar reactions"
+mouse_filter = 1
 theme = ExtResource("3_5cu1w")
 text = "Threshold"
 
@@ -117,23 +119,24 @@ show_percentage = false
 [node name="ThresholdSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+tooltip_text = "Cutoff volume for avatar reactions"
 max_value = 1.0
 step = 0.01
 value = 0.5
 
 [node name="Label2" type="Label" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "Mic gain"
+mouse_filter = 1
 theme = ExtResource("3_5cu1w")
 text = "Loudness"
 
-[node name="VBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
-layout_mode = 2
-
-[node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer/VBoxContainer"]
+[node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 10)
 layout_mode = 2
 size_flags_horizontal = 3
+tooltip_text = "Mic gain"
 max_value = 24.0
 step = 0.1
 
@@ -447,7 +450,7 @@ autostart = true
 
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
-[connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/VBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
+[connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/Settings" to="." method="_open_settings"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
