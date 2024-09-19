@@ -84,7 +84,7 @@ func _ready():
 	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	for device_name in devices:
 		popup_menu.add_item(device_name)
-
+	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
 	# Initialize Menu
 	menu_shown = true
 	_load_data(AUTOSAVE_PATH)
