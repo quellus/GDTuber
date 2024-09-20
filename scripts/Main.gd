@@ -189,7 +189,8 @@ func _save_profile_data():
 				"blinkingpath": obj.blinkingpath,
 				"talkingpath": obj.talkingpath,
 				"talkingandblinkingpath": obj.talkingandblinkingpath,
-				"usesingleimage": obj.usesingleimage
+				"usesingleimage": obj.usesingleimage,
+				"auto_toggle_enabled": obj.auto_toggle_enabled
 			})
 	savedata = JSON.stringify(savedict)
 
@@ -264,6 +265,9 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 			"talkingpath":TYPE_STRING,
 			"talkingandblinkingpath":TYPE_STRING,
 			"usesingleimage":TYPE_BOOL
+		},
+		"0.11":{
+			"auto_toggle_enabled":TYPE_BOOL
 		}
 	}
 	for v in versions:
@@ -341,7 +345,6 @@ func _load_data(path):
 					# 0.9
 					if version.naturalnocasecmp_to("0.9") >= 0:
 						newobj.usesingleimage = obj["usesingleimage"]
-
 						for imgload in [
 							["neutralpath", "neutral_texture", obj["neutralpath"]],
 							["blinkingpath", "blinking_texture", obj["blinkingpath"]],
@@ -353,6 +356,9 @@ func _load_data(path):
 								objectimagefield = imgload[1]
 								objectimagepathfield = imgload[0]
 								_open_image(imgload[2])
+					# 0.11
+					if version.naturalnocasecmp_to("0.11") >= 0:
+						newobj.auto_toggle_enabled = obj["auto_toggle_enabled"]
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")

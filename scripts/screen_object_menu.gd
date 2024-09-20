@@ -25,6 +25,7 @@ func _ready():
 		settingsmenu.bouncetoggle.toggled.connect(_set_bounce)
 		settingsmenu.mouthtoggle.toggled.connect(_set_mouth)
 		settingsmenu.filtertoggle.toggled.connect(_set_filter)
+		settingsmenu.timertoggle.toggled.connect(_auto_toggle_enabled)
 		settingsmenu.hueslider.value_changed.connect(_set_hue)
 		settingsmenu.satslider.value_changed.connect(_set_sat)
 		settingsmenu.valslider.value_changed.connect(_set_val)
@@ -78,6 +79,9 @@ func _set_mouth(value):
 	object.talking = value
 func _set_filter(value):
 	object.filter = value
+func _auto_toggle_enabled(value):
+	object.auto_toggle_enabled = value
+	%AutoToggle.visible = value
 
 func _set_bounce(value):
 	object.reactive = value
@@ -95,6 +99,7 @@ func _set_val(value):
 
 
 func update_menu():
+	%AutoToggle.visible = object.auto_toggle_enabled
 	if visibilitytoggle:
 		visibilitytoggle.button_pressed = object.user_hidden
 	if name_field:

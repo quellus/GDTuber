@@ -327,6 +327,24 @@ layout_mode = 2
 tooltip_text = "Reduces hard edges"
 theme = ExtResource("2_ves45")
 
+[node name="Timer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Timer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Timer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Timer"
+horizontal_alignment = 1
+
+[node name="TimerBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Timer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Reduces hard edges"
+theme = ExtResource("2_ves45")
+
 [node name="Color" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false
 layout_mode = 2

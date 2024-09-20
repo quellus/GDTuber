@@ -25,7 +25,8 @@ var copy_properties = [
 	"talking_texture",
 	"talkingandblinkingpath",
 	"talking_and_blinking_texture",
-	"usesingleimage"
+	"usesingleimage",
+	"auto_toggle_enabled"
 ]
 
 
@@ -90,6 +91,9 @@ var filter: bool = true:
 	set(value):
 		sprite.texture_filter = TEXTURE_FILTER_LINEAR if value else TEXTURE_FILTER_NEAREST
 		filter = value
+var auto_toggle_enabled: bool = false:
+	set(value):
+		auto_toggle_enabled = value
 var user_rotation: float = 0:
 	set(value):
 		if sprite:
