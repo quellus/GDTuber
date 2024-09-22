@@ -11,6 +11,7 @@ signal order_changed()
 @export var name_field: LineEditReset
 @onready var visibilitytoggle: BaseButton = %VisibilityToggle
 @onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
+@onready var autoToggleButton = %AutoToggle
 @onready var autoToggleTimer = %AutoToggleTimer
 var object: ScreenObject:
 	set(value):
@@ -159,10 +160,13 @@ func _delete_object():
 func _on_auto_toggle_pressed() -> void:
 	object.user_hidden = !object.user_hidden
 	if autoToggleTimer.is_stopped():
+		autoToggleButton.button_pressed = true
 		autoToggleTimer.start(600)
 	else:
+		autoToggleButton.button_pressed = false
 		autoToggleTimer.stop()
 
 
 func _auto_toggle_timer_timeout() -> void:
+	autoToggleButton.button_pressed = false
 	object.user_hidden = !object.user_hidden

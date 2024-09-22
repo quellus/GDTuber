@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=16 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="2_jbsj1"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://Assets/contract.png" id="9_2la7e"]
 [ext_resource type="Texture2D" uid="uid://b2q476rsnqalh" path="res://Assets/trash-can.png" id="9_6xn6r"]
 [ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://Assets/dupeicon.png" id="10_l0soc"]
+[ext_resource type="Texture2D" uid="uid://6eqbpm12ry6o" path="res://Assets/clock-alt.png" id="10_mopo5"]
 [ext_resource type="Texture2D" uid="uid://ddsqw3n6dvqm4" path="res://Assets/cog.png" id="12_ftpaf"]
 [ext_resource type="PackedScene" uid="uid://c12oguamole0m" path="res://scenes/ScreenObjectSettingsPopup.tscn" id="18_ej5mx"]
 
@@ -96,7 +97,8 @@ layout_mode = 2
 tooltip_text = "Hide the object for 10 min"
 theme = ExtResource("5_y7gat")
 toggle_mode = true
-texture_normal = ExtResource("9_1nrss")
+texture_normal = ExtResource("10_mopo5")
+texture_pressed = ExtResource("9_1nrss")
 ignore_texture_size = true
 stretch_mode = 5
 
