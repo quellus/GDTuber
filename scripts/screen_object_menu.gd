@@ -12,7 +12,7 @@ signal order_changed()
 @onready var visibilitytoggle: BaseButton = %VisibilityToggle
 @onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
 @onready var autoToggleButton = %AutoToggle
-@onready var autoToggleTimer = %AutoToggleTimer
+@onready var autoToggleTimer: Timer = %AutoToggleTimer
 var object: ScreenObject:
 	set(value):
 		if value:
@@ -41,6 +41,11 @@ func _ready():
 		settingsmenu.requestblinking.connect(_request_blinking)
 		settingsmenu.requesttalking.connect(_request_talking)
 		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
+
+func _process(delta: float) -> void:
+	if !autoToggleTimer.is_stopped():
+		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
+		
 
 func _toggle_multi_image(value):
 	object.usesingleimage = value
@@ -166,13 +171,19 @@ func _delete_object():
 func _on_auto_toggle_pressed() -> void:
 	object.user_hidden = !object.user_hidden
 	if autoToggleTimer.is_stopped():
-		autoToggleButton.button_pressed = true
 		autoToggleTimer.start(object.auto_toggle_time)
+		%AutoToggleTextureProgressBar.visible = true
+		%AutoToggleTextureProgressBar.max_value = object.auto_toggle_time
+		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
+		autoToggleButton.self_modulate = Color(1,1,1,0)
+		
 	else:
-		autoToggleButton.button_pressed = false
+		%AutoToggleTextureProgressBar.visible = false
+		autoToggleButton.self_modulate = Color(1,1,1,1)
 		autoToggleTimer.stop()
 
 
 func _auto_toggle_timer_timeout() -> void:
-	autoToggleButton.button_pressed = false
+	%AutoToggleTextureProgressBar.visible = false
+	autoToggleButton.self_modulate = Color(1,1,1,1)
 	object.user_hidden = !object.user_hidden

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=17 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="2_jbsj1"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://3o5d6h3jcjbr" path="res://Assets/clock.png" id="9_1nrss"]
 [ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://Assets/contract.png" id="9_2la7e"]
 [ext_resource type="Texture2D" uid="uid://b2q476rsnqalh" path="res://Assets/trash-can.png" id="9_6xn6r"]
+[ext_resource type="Script" path="res://scripts/texture_progress_bar_sizer.gd" id="10_dkxkl"]
 [ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://Assets/dupeicon.png" id="10_l0soc"]
 [ext_resource type="Texture2D" uid="uid://6eqbpm12ry6o" path="res://Assets/clock-alt.png" id="10_mopo5"]
 [ext_resource type="Texture2D" uid="uid://ddsqw3n6dvqm4" path="res://Assets/cog.png" id="12_ftpaf"]
@@ -73,7 +74,7 @@ ignore_texture_size = true
 stretch_mode = 5
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
@@ -98,7 +99,6 @@ tooltip_text = "Hide the object for 10 min"
 theme = ExtResource("5_y7gat")
 toggle_mode = true
 texture_normal = ExtResource("10_mopo5")
-texture_pressed = ExtResource("9_1nrss")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -106,6 +106,32 @@ stretch_mode = 5
 unique_name_in_owner = true
 wait_time = 10.0
 one_shot = true
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 15
+text = "600"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AutoToggleTextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.102, 0.102)
+fill_mode = 4
+texture_under = ExtResource("9_1nrss")
+texture_progress = ExtResource("10_mopo5")
+tint_progress = Color(0, 1, 0, 1)
+script = ExtResource("10_dkxkl")
 
 [node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
