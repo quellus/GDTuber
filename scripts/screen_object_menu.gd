@@ -42,7 +42,7 @@ func _ready():
 		settingsmenu.requesttalking.connect(_request_talking)
 		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if !autoToggleTimer.is_stopped():
 		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
 		

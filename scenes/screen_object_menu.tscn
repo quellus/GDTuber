@@ -73,13 +73,17 @@ texture_normal = ExtResource("12_ftpaf")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer/VBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(0, 26)
 layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="VisibilityToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="VisibilityToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
@@ -91,7 +95,7 @@ texture_pressed = ExtResource("8_efo5x")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="AutoToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="AutoToggle" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
@@ -102,12 +106,12 @@ texture_normal = ExtResource("10_mopo5")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="AutoToggleTimer" type="Timer" parent="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle"]
+[node name="AutoToggleTimer" type="Timer" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle"]
 unique_name_in_owner = true
 wait_time = 10.0
 one_shot = true
 
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle"]
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -120,20 +124,21 @@ text = "600"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AutoToggleTextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle"]
+[node name="AutoToggleTextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 offset_right = 256.0
 offset_bottom = 256.0
 scale = Vector2(0.102, 0.102)
+step = 0.1
 fill_mode = 4
 texture_under = ExtResource("9_1nrss")
 texture_progress = ExtResource("10_mopo5")
 tint_progress = Color(0, 1, 0, 1)
 script = ExtResource("10_dkxkl")
 
-[node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Duplicate" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "Duplicate"
@@ -142,7 +147,7 @@ texture_normal = ExtResource("10_l0soc")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Gizmo" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Gizmo" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "Move, scale, rotate"
@@ -151,7 +156,7 @@ texture_normal = ExtResource("6_uqw4k")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Recenter" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Recenter" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "Recenter"
@@ -160,7 +165,7 @@ texture_normal = ExtResource("9_2la7e")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Delete" type="TextureButton" parent="HBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Delete" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "Delete"
@@ -179,10 +184,10 @@ visible = false
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Z Order/TextureButton2" to="." method="_shift_down"]
 [connection signal="text_changed" from="HBoxContainer/VBoxContainer/TopRow/Name" to="." method="_set_name"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/TopRow/Settings Button" to="." method="_open_menu"]
-[connection signal="toggled" from="HBoxContainer/VBoxContainer/HBoxContainer2/VisibilityToggle" to="." method="_togglevisibility"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle" to="." method="_on_auto_toggle_pressed"]
-[connection signal="timeout" from="HBoxContainer/VBoxContainer/HBoxContainer2/AutoToggle/AutoToggleTimer" to="." method="_auto_toggle_timer_timeout"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Duplicate" to="." method="_duplicate"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Gizmo" to="." method="_request_gizmo"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Recenter" to="." method="_recenter"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer2/Delete" to="." method="_delete_object"]
+[connection signal="toggled" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/VisibilityToggle" to="." method="_togglevisibility"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle" to="." method="_on_auto_toggle_pressed"]
+[connection signal="timeout" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle/AutoToggleTimer" to="." method="_auto_toggle_timer_timeout"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Duplicate" to="." method="_duplicate"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Gizmo" to="." method="_request_gizmo"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Recenter" to="." method="_recenter"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Delete" to="." method="_delete_object"]
