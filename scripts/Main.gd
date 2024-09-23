@@ -190,7 +190,8 @@ func _save_profile_data():
 				"talkingpath": obj.talkingpath,
 				"talkingandblinkingpath": obj.talkingandblinkingpath,
 				"usesingleimage": obj.usesingleimage,
-				"auto_toggle_enabled": obj.auto_toggle_enabled
+				"auto_toggle_enabled": obj.auto_toggle_enabled,
+				"auto_toggle_time": obj.auto_toggle_time
 			})
 	savedata = JSON.stringify(savedict)
 
@@ -267,7 +268,8 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 			"usesingleimage":TYPE_BOOL
 		},
 		"0.11":{
-			"auto_toggle_enabled":TYPE_BOOL
+			"auto_toggle_enabled":TYPE_BOOL,
+			"auto_toggle_time":TYPE_FLOAT
 		}
 	}
 	for v in versions:
@@ -359,6 +361,7 @@ func _load_data(path):
 					# 0.11
 					if version.naturalnocasecmp_to("0.11") >= 0:
 						newobj.auto_toggle_enabled = obj["auto_toggle_enabled"]
+						newobj.auto_toggle_time = obj["auto_toggle_time"]
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")

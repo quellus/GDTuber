@@ -26,7 +26,8 @@ var copy_properties = [
 	"talkingandblinkingpath",
 	"talking_and_blinking_texture",
 	"usesingleimage",
-	"auto_toggle_enabled"
+	"auto_toggle_enabled",
+	"auto_toggle_time"
 ]
 
 
