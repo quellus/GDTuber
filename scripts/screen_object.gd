@@ -94,6 +94,7 @@ var filter: bool = true:
 var auto_toggle_enabled: bool = false:
 	set(value):
 		auto_toggle_enabled = value
+var auto_toggle_time: float = 600
 var user_rotation: float = 0:
 	set(value):
 		if sprite:

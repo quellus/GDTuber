@@ -8,7 +8,7 @@
 bg_color = Color(0.290196, 0.290196, 0.290196, 1)
 
 [node name="Popup" type="Popup"]
-size = Vector2i(256, 256)
+size = Vector2i(256, 501)
 visible = true
 script = ExtResource("1_ay34f")
 
@@ -344,6 +344,22 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Reduces hard edges"
 theme = ExtResource("2_ves45")
+
+[node name="TimerSettings" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/TimerSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/TimerSettings/HBoxContainer"]
+layout_mode = 2
+text = "Time (Seconds)"
+
+[node name="TimerSpinBox" type="SpinBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/TimerSettings/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1e+06
 
 [node name="Color" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false

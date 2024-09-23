@@ -32,6 +32,7 @@ func _ready():
 		settingsmenu.valslider.value_changed.connect(_set_val)
 		settingsmenu.heightslider.value_changed.connect(_set_height)
 		settingsmenu.speedslider.value_changed.connect(_set_speed)
+		settingsmenu.timerspinbox.value_changed.connect(_set_auto_toggle_time)
 
 		settingsmenu.togglemultiimage.connect(_toggle_multi_image)
 
@@ -82,6 +83,7 @@ func _set_filter(value):
 	object.filter = value
 func _auto_toggle_enabled(value):
 	object.auto_toggle_enabled = value
+	settingsmenu.timersettings.visible = value
 	%AutoToggle.visible = value
 
 func _set_bounce(value):
@@ -98,6 +100,8 @@ func _set_sat(value):
 func _set_val(value):
 	object.user_val = value
 
+func _set_auto_toggle_time(value: float):
+	object.auto_toggle_time = value
 
 func update_menu():
 	%AutoToggle.visible = object.auto_toggle_enabled
@@ -106,6 +110,8 @@ func update_menu():
 	if name_field:
 		name_field.set_reset_text(object.user_name)
 	if settingsmenu:
+		settingsmenu.timersettings.visible = object.auto_toggle_enabled
+		settingsmenu.timerspinbox.value = object.auto_toggle_time
 		settingsmenu.blinktoggle.button_pressed = object.blinking
 		settingsmenu.bouncetoggle.button_pressed = object.reactive
 		settingsmenu.mouthtoggle.button_pressed = object.talking
@@ -161,7 +167,7 @@ func _on_auto_toggle_pressed() -> void:
 	object.user_hidden = !object.user_hidden
 	if autoToggleTimer.is_stopped():
 		autoToggleButton.button_pressed = true
-		autoToggleTimer.start(600)
+		autoToggleTimer.start(object.auto_toggle_time)
 	else:
 		autoToggleButton.button_pressed = false
 		autoToggleTimer.stop()
