@@ -1,10 +1,14 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://d18y4voshb0um"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wb5p2"]
-bg_color = Color(0.85098, 0.85098, 0.85098, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2cx6c"]
+bg_color = Color(0.262932, 0.262932, 0.262932, 1)
 
 [resource]
 default_font_size = 11
-Button/colors/font_color = Color(0, 0, 0, 1)
+Button/colors/font_color = Color(1, 1, 1, 1)
 Button/font_sizes/font_size = 11
-Button/styles/normal = SubResource("StyleBoxFlat_wb5p2")
+CheckBox/styles/focus = SubResource("StyleBoxFlat_2cx6c")
+CheckBox/styles/hover = SubResource("StyleBoxFlat_2cx6c")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxFlat_2cx6c")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_2cx6c")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_2cx6c")
