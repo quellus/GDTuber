@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://crst8lnhaxjoo"]
+[gd_scene load_steps=16 format=3 uid="uid://crst8lnhaxjoo"]
 
 [ext_resource type="Script" path="res://scripts/screen_object_menu.gd" id="1_0piso"]
 [ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="2_jbsj1"]
@@ -8,12 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="6_uqw4k"]
 [ext_resource type="Texture2D" uid="uid://bjtvmug1uu7ar" path="res://Assets/Eyecon.png" id="7_hlk38"]
 [ext_resource type="Texture2D" uid="uid://kjsgcuplqh0x" path="res://Assets/Eyecon2.png" id="8_efo5x"]
-[ext_resource type="Texture2D" uid="uid://3o5d6h3jcjbr" path="res://Assets/clock.png" id="9_1nrss"]
 [ext_resource type="Texture2D" uid="uid://c0opx84ix6y28" path="res://Assets/contract.png" id="9_2la7e"]
 [ext_resource type="Texture2D" uid="uid://b2q476rsnqalh" path="res://Assets/trash-can.png" id="9_6xn6r"]
+[ext_resource type="Texture2D" uid="uid://ckmfdh4r5tn6p" path="res://Assets/Clocke.png" id="9_cbvef"]
 [ext_resource type="Script" path="res://scripts/texture_progress_bar_sizer.gd" id="10_dkxkl"]
 [ext_resource type="Texture2D" uid="uid://bam5fhr8naphp" path="res://Assets/dupeicon.png" id="10_l0soc"]
-[ext_resource type="Texture2D" uid="uid://6eqbpm12ry6o" path="res://Assets/clock-alt.png" id="10_mopo5"]
 [ext_resource type="Texture2D" uid="uid://ddsqw3n6dvqm4" path="res://Assets/cog.png" id="12_ftpaf"]
 [ext_resource type="PackedScene" uid="uid://c12oguamole0m" path="res://scenes/ScreenObjectSettingsPopup.tscn" id="18_ej5mx"]
 
@@ -99,10 +98,10 @@ stretch_mode = 5
 unique_name_in_owner = true
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
-tooltip_text = "Hide the object for 10 min"
+tooltip_text = "Toggle the object's visibility for the timer duration"
 theme = ExtResource("5_y7gat")
 toggle_mode = true
-texture_normal = ExtResource("10_mopo5")
+texture_normal = ExtResource("9_cbvef")
 ignore_texture_size = true
 stretch_mode = 5
 
@@ -110,19 +109,6 @@ stretch_mode = 5
 unique_name_in_owner = true
 wait_time = 10.0
 one_shot = true
-
-[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 15
-text = "600"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="AutoToggleTextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle"]
 unique_name_in_owner = true
@@ -133,8 +119,8 @@ offset_bottom = 256.0
 scale = Vector2(0.102, 0.102)
 step = 0.1
 fill_mode = 4
-texture_under = ExtResource("9_1nrss")
-texture_progress = ExtResource("10_mopo5")
+texture_under = ExtResource("9_cbvef")
+texture_progress = ExtResource("9_cbvef")
 tint_progress = Color(0, 1, 0, 1)
 script = ExtResource("10_dkxkl")
 

@@ -30,9 +30,10 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="Image" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -327,40 +328,6 @@ layout_mode = 2
 tooltip_text = "Reduces hard edges"
 theme = ExtResource("2_ves45")
 
-[node name="Timer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Timer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Timer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Timer"
-horizontal_alignment = 1
-
-[node name="TimerBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/Timer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Reduces hard edges"
-theme = ExtResource("2_ves45")
-
-[node name="TimerSettings" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/TimerSettings"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/TimerSettings/HBoxContainer"]
-layout_mode = 2
-text = "Time (Seconds)"
-
-[node name="TimerSpinBox" type="SpinBox" parent="Control/PanelContainer/TabContainer/Image/ScrollContainer/VBoxContainer/TimerSettings/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-max_value = 1e+06
-
 [node name="Color" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false
 layout_mode = 2
@@ -440,7 +407,6 @@ step = 0.01
 value = 1.0
 
 [node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -501,3 +467,47 @@ min_value = 0.02
 max_value = 2.0
 step = 0.01
 value = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Timer" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Timer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Timer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Enables the Auto Toggler"
+mouse_filter = 1
+text = "Toggle Timer"
+horizontal_alignment = 1
+
+[node name="TimerBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/Timer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Enables the Auto Toggler"
+theme = ExtResource("2_ves45")
+
+[node name="TimerSettings" type="PanelContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/TimerSettings"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/TimerSettings/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "Timer duration in seconds"
+text = "Time (Seconds)"
+
+[node name="TimerSpinBox" type="SpinBox" parent="Control/PanelContainer/TabContainer/Animation/VBoxContainer/TimerSettings/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "Timer duration in seconds"
+min_value = 1.0
+max_value = 1e+06
+value = 30.0
