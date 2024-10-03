@@ -60,6 +60,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
+mouse_filter = 1
 theme_override_font_sizes/font_size = 11
 text = "Combined Avatar Image"
 horizontal_alignment = 1
@@ -83,6 +84,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
+mouse_filter = 1
 theme_override_font_sizes/font_size = 13
 text = "Avatar"
 horizontal_alignment = 1
@@ -280,6 +282,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has talking texture"
+mouse_filter = 1
 text = "Has Talking Texture"
 horizontal_alignment = 1
 
@@ -299,6 +302,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Sprite sheet has blinking texture"
+mouse_filter = 1
 text = "Has Blinking Texture"
 horizontal_alignment = 1
 
@@ -318,6 +322,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Reduces hard edges"
+mouse_filter = 1
 text = "Linear Filter"
 horizontal_alignment = 1
 
@@ -427,6 +432,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Bounces on voice activity"
+mouse_filter = 1
 text = "Animate Object"
 horizontal_alignment = 1
 

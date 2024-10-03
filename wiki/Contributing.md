@@ -17,7 +17,9 @@ if you are a linux user you can also install Git through your package manager
 
 ## How to contribute
 
-### Getting Started
+### Terminal
+
+#### Getting Started
 
 1. Fork the repository: Click the 'Fork' button at the top right corner of the repository page.
 
@@ -36,7 +38,7 @@ if you are a linux user you can also install Git through your package manager
    git checkout -b feature-or-bugfix-name
    ```
 
-### Making Changes
+#### Making Changes
 
 1. Open the project in Godot (version 4.3).
    
@@ -44,7 +46,7 @@ if you are a linux user you can also install Git through your package manager
    
 3. Test your changes thoroughly to ensure they work as expected.
 
-### Committing Your Changes
+#### Committing Your Changes
 
 1. Add your changes:
    ```sh
@@ -56,7 +58,7 @@ if you are a linux user you can also install Git through your package manager
    git commit -m "Description of changes"
    ```
 
-### Pushing Your Changes
+#### Pushing Your Changes
 
 1. Push to your forked repository:
 
@@ -71,6 +73,10 @@ if you are a linux user you can also install Git through your package manager
    3. Click the 'New pull request' button.
    4. Select the branch you pushed your changes to in your forked repository.
    5. Click 'Create pull request' and fill out the required information.
+
+### Github Desktop
+
+If you dont know how to use Github Desktop [watch this](https://www.youtube.com/watch?v=8UrZGJQq5cE), I know its for your own project but the basics apply.
 
 ## Insight
 

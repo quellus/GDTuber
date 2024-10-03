@@ -1,7 +1,6 @@
 class_name ScreenObjectMenu extends PanelContainer
 
 signal request_image(obj:ScreenObject, img:String, prop:String)
-
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
 signal duplicate_object(ScreenObject)
@@ -59,19 +58,19 @@ func _set_name(value: String):
 
 
 func _request_image():
-	emit_signal("request_image", object, "texture", "texturepath")
+	request_image.emit(object, "texture", "texturepath")
 func _request_neutral():
-	emit_signal("request_image", object, "neutral_texture", "neutralpath")
+	request_image.emit(object, "neutral_texture", "neutralpath")
 func _request_blinking():
-	emit_signal("request_image", object, "blinking_texture", "blinkingpath")
+	request_image.emit(object, "blinking_texture", "blinkingpath")
 func _request_talking():
-	emit_signal("request_image", object, "talking_texture", "talkingpath")
+	request_image.emit(object, "talking_texture", "talkingpath")
 func _request_talking_and_blinking():
-	emit_signal("request_image", object, "talking_and_blinking_texture", "talkingandblinkingpath")
+	request_image.emit(object, "talking_and_blinking_texture", "talkingandblinkingpath")
 
 
 func _request_gizmo():
-	emit_signal("request_gizmo", object)
+	request_gizmo.emit(object)
 
 
 func _open_menu():

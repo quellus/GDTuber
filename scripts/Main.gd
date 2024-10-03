@@ -43,9 +43,17 @@ var input_device: String
 
 # Screen Object Management
 const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
+const DEFAULT_NEUTRAL_IMAGE: String = "res://Assets/DefaultAvatar-Neutral.png"
+const DEFAULT_TALKING_IMAGE: String = "res://Assets/DefaultAvatar-Talking.png"
+const DEFAULT_BLINKING_IMAGE: String = "res://Assets/DefaultAvatar-Blinking.png"
+const DEFAULT_TALKING_AND_BLINKING_IMAGE : String = "res://Assets/DefaultAvatar-TalkingBlinking.png"
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
 var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
+var default_neutral_texture: Texture2D = preload(DEFAULT_NEUTRAL_IMAGE)
+var default_talking_texture: Texture2D = preload(DEFAULT_TALKING_IMAGE)
+var default_blinking_texture: Texture2D = preload(DEFAULT_BLINKING_IMAGE)
+var default_talking_and_blinking_texture: Texture2D = preload(DEFAULT_TALKING_AND_BLINKING_IMAGE)
 var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
 # Screen Object Editing
@@ -80,7 +88,7 @@ func _ready():
 	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
 	for device_name in devices:
 		popup_menu.add_item(device_name)
-
+	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
 	# Initialize Menu
 	menu_shown = true
 	_load_data(AUTOSAVE_PATH)
@@ -322,6 +330,7 @@ func _load_data(path):
 						objectimagefield = "texture"
 						objectimagepathfield = "texturepath"
 						_open_image(obj["texturepath"])
+					newobj.usesingleimage = true
 					# 0.2
 					if version.naturalnocasecmp_to("0.2") >= 0:
 						newobj.filter = obj["filter"]
@@ -471,11 +480,15 @@ func _set_profile_name(pname: String):
 
 
 ### Screen Object Management
-func _create_new_object():
+func _create_new_object() -> ScreenObject:
 	if MenusRoot and ObjectsRoot:
 		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
 		var newobject: ScreenObject = ScreenObject.new()
 		newobject.texture = default_avatar_texture
+		newobject.neutral_texture = default_neutral_texture
+		newobject.talking_texture = default_talking_texture
+		newobject.blinking_texture = default_blinking_texture
+		newobject.talking_and_blinking_texture = default_talking_and_blinking_texture
 		MenusRoot.add_child(newmenu)
 		ObjectsRoot.add_child(newobject)
 		newmenu.object = newobject
@@ -483,6 +496,8 @@ func _create_new_object():
 		newobject.user_position = get_viewport_rect().size/2
 		newmenu.update_menu()
 		return newobject
+	else:
+		return null
 
 func _connect_menu(smenu: ScreenObjectMenu):
 	smenu.request_image.connect(_request_image)
