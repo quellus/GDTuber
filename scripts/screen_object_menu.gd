@@ -169,7 +169,6 @@ func _delete_object():
 
 
 func _on_auto_toggle_pressed() -> void:
-	object.user_hidden = !object.user_hidden
 	if autoToggleTimer.is_stopped():
 		autoToggleTimer.start(object.auto_toggle_time)
 		%AutoToggleTextureProgressBar.visible = true
