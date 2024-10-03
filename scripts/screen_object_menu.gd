@@ -115,6 +115,7 @@ func update_menu():
 		name_field.set_reset_text(object.user_name)
 	if settingsmenu:
 		settingsmenu.timersettings.visible = object.auto_toggle_enabled
+		settingsmenu.timertoggle.button_pressed = object.auto_toggle_enabled
 		settingsmenu.timerspinbox.value = object.auto_toggle_time
 		settingsmenu.blinktoggle.button_pressed = object.blinking
 		settingsmenu.bouncetoggle.button_pressed = object.reactive
