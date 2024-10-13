@@ -10,6 +10,8 @@ signal order_changed()
 @export var name_field: LineEditReset
 @onready var visibilitytoggle: BaseButton = %VisibilityToggle
 @onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
+@onready var autoToggleButton = %AutoToggle
+@onready var autoToggleTimer: Timer = %AutoToggleTimer
 var object: ScreenObject:
 	set(value):
 		if value:
@@ -18,23 +20,31 @@ var object: ScreenObject:
 
 
 func _ready():
-	settingsmenu.blinktoggle.toggled.connect(_set_blinks)
-	settingsmenu.bouncetoggle.toggled.connect(_set_bounce)
-	settingsmenu.mouthtoggle.toggled.connect(_set_mouth)
-	settingsmenu.filtertoggle.toggled.connect(_set_filter)
-	settingsmenu.hueslider.value_changed.connect(_set_hue)
-	settingsmenu.satslider.value_changed.connect(_set_sat)
-	settingsmenu.valslider.value_changed.connect(_set_val)
-	settingsmenu.heightslider.value_changed.connect(_set_height)
-	settingsmenu.speedslider.value_changed.connect(_set_speed)
+	if settingsmenu:
+		settingsmenu.blinktoggle.toggled.connect(_set_blinks)
+		settingsmenu.bouncetoggle.toggled.connect(_set_bounce)
+		settingsmenu.mouthtoggle.toggled.connect(_set_mouth)
+		settingsmenu.filtertoggle.toggled.connect(_set_filter)
+		settingsmenu.timertoggle.toggled.connect(_auto_toggle_enabled)
+		settingsmenu.hueslider.value_changed.connect(_set_hue)
+		settingsmenu.satslider.value_changed.connect(_set_sat)
+		settingsmenu.valslider.value_changed.connect(_set_val)
+		settingsmenu.heightslider.value_changed.connect(_set_height)
+		settingsmenu.speedslider.value_changed.connect(_set_speed)
+		settingsmenu.timerspinbox.value_changed.connect(_set_auto_toggle_time)
 
-	settingsmenu.togglemultiimage.connect(_toggle_multi_image)
+		settingsmenu.togglemultiimage.connect(_toggle_multi_image)
 
-	settingsmenu.requestimage.connect(_request_image)
-	settingsmenu.requestneutral.connect(_request_neutral)
-	settingsmenu.requestblinking.connect(_request_blinking)
-	settingsmenu.requesttalking.connect(_request_talking)
-	settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
+		settingsmenu.requestimage.connect(_request_image)
+		settingsmenu.requestneutral.connect(_request_neutral)
+		settingsmenu.requestblinking.connect(_request_blinking)
+		settingsmenu.requesttalking.connect(_request_talking)
+		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
+
+func _process(_delta: float) -> void:
+	if !autoToggleTimer.is_stopped():
+		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
+		
 
 func _toggle_multi_image(value):
 	object.usesingleimage = value
@@ -75,6 +85,10 @@ func _set_mouth(value):
 	object.talking = value
 func _set_filter(value):
 	object.filter = value
+func _auto_toggle_enabled(value):
+	object.auto_toggle_enabled = value
+	settingsmenu.timersettings.visible = value
+	%AutoToggle.visible = value
 
 func _set_bounce(value):
 	object.reactive = value
@@ -90,13 +104,19 @@ func _set_sat(value):
 func _set_val(value):
 	object.user_val = value
 
+func _set_auto_toggle_time(value: float):
+	object.auto_toggle_time = value
 
 func update_menu():
+	%AutoToggle.visible = object.auto_toggle_enabled
 	if visibilitytoggle:
 		visibilitytoggle.button_pressed = object.user_hidden
 	if name_field:
 		name_field.set_reset_text(object.user_name)
 	if settingsmenu:
+		settingsmenu.timersettings.visible = object.auto_toggle_enabled
+		settingsmenu.timertoggle.button_pressed = object.auto_toggle_enabled
+		settingsmenu.timerspinbox.value = object.auto_toggle_time
 		settingsmenu.blinktoggle.button_pressed = object.blinking
 		settingsmenu.bouncetoggle.button_pressed = object.reactive
 		settingsmenu.mouthtoggle.button_pressed = object.talking
@@ -146,3 +166,23 @@ func _delete_object():
 	if object:
 		object.queue_free()
 	queue_free()
+
+
+func _on_auto_toggle_pressed() -> void:
+	if autoToggleTimer.is_stopped():
+		autoToggleTimer.start(object.auto_toggle_time)
+		%AutoToggleTextureProgressBar.visible = true
+		%AutoToggleTextureProgressBar.max_value = object.auto_toggle_time
+		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
+		autoToggleButton.self_modulate = Color(1,1,1,0)
+		
+	else:
+		%AutoToggleTextureProgressBar.visible = false
+		autoToggleButton.self_modulate = Color(1,1,1,1)
+		autoToggleTimer.stop()
+
+
+func _auto_toggle_timer_timeout() -> void:
+	%AutoToggleTextureProgressBar.visible = false
+	autoToggleButton.self_modulate = Color(1,1,1,1)
+	object.user_hidden = !object.user_hidden

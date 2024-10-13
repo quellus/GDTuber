@@ -8,6 +8,9 @@ class_name ScreenObjectSettingsPopup extends Popup
 @onready var mouthtoggle: Button = %MouthBox
 @onready var blinktoggle: Button = %BlinkBox
 @onready var filtertoggle: Button = %FilterBox
+@onready var timertoggle: Button = %TimerBox
+@onready var timersettings: PanelContainer = %TimerSettings
+@onready var timerspinbox: SpinBox = %TimerSpinBox
 
 @onready var bouncetoggle: Button = %BounceBox
 @onready var speedslider: Slider = %SpeedSlider
