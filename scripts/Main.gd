@@ -228,7 +228,9 @@ func _validate_save_json(dict: Dictionary, version: String) -> bool:
 		"0.10":{
 			"fixedWindowHeight":TYPE_INT,
 			"fixedWindowWidth": TYPE_INT,
-			"fixedWindowSize":TYPE_BOOL,
+			"fixedWindowSize":TYPE_BOOL
+		},
+		"0.12":{
 			"fpsCap": TYPE_BOOL,
 			"fpsCapValue": TYPE_INT
 		}
@@ -399,6 +401,7 @@ func _load_data(path):
 				fixedWindowSizeToggle.button_pressed = save_dict["fixedWindowSize"]
 				fixedWindowWidthSpinbox.value = save_dict["fixedWindowWidth"]
 				fixedWindowHeightSpinbox.value = save_dict["fixedWindowHeight"]
+			if version.naturalnocasecmp_to("0.12") >= 0:
 				maxFpsSpinbox.set_value_no_signal(save_dict["fpsCapValue"] if save_dict["fpsCap"] else 60)
 				fpsCapToggle.set_pressed(save_dict["fpsCap"])
 		else:
