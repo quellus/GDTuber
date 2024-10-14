@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GDTuber"
-config/version="0.11"
+config/version="0.12"
 run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.3")
 run/low_processor_mode=true
