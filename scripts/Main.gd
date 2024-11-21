@@ -26,6 +26,10 @@ var menu_shown = false:
 	set(value):
 		menu_shown = value
 		_set_menu_shown(value)
+@onready var fpsCapToggle = %FPSCapToggle
+@onready var maxFpsSpinbox = %MaxFPSSpinbox
+@onready var fpsCap: bool = false
+@onready var fpsCapValue: int = 0
 
 # Audio Management
 const MAX_SAMPLES = 20
@@ -115,6 +119,8 @@ func _process(_delta):
 			is_talking = false
 
 	%VolumeVisual.value = magnitude_avg
+	
+	%CurrentFPSLabel.set_text("Current FPS %.1f" % Engine.get_frames_per_second())
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -171,6 +177,8 @@ func _save_profile_data():
 		"fixedWindowWidth":fixedWindowWidth,
 		"fixedWindowHeight":fixedWindowHeight,
 		"fixedWindowSize":fixedWindowSize,
+		"fpsCap": fpsCap,
+		"fpsCapValue": fpsCapValue,
 		"objects":[]
 	}
 	for obj in ObjectsRoot.get_children():
@@ -221,6 +229,10 @@ func _validate_save_json(dict: Dictionary, version: String) -> bool:
 			"fixedWindowHeight":TYPE_INT,
 			"fixedWindowWidth": TYPE_INT,
 			"fixedWindowSize":TYPE_BOOL
+		},
+		"0.12":{
+			"fpsCap": TYPE_BOOL,
+			"fpsCapValue": TYPE_INT
 		}
 	}
 	for v: String in versions:
@@ -389,6 +401,9 @@ func _load_data(path):
 				fixedWindowSizeToggle.button_pressed = save_dict["fixedWindowSize"]
 				fixedWindowWidthSpinbox.value = save_dict["fixedWindowWidth"]
 				fixedWindowHeightSpinbox.value = save_dict["fixedWindowHeight"]
+			if version.naturalnocasecmp_to("0.12") >= 0:
+				maxFpsSpinbox.set_value_no_signal(save_dict["fpsCapValue"] if save_dict["fpsCap"] else 60)
+				fpsCapToggle.set_pressed(save_dict["fpsCap"])
 		else:
 			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:
@@ -617,3 +632,19 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
+
+
+func _on_fps_cap_toggled(toggled_on: bool) -> void:
+	fpsCap = toggled_on
+	if not toggled_on:
+		%FPSDropdownContainer.hide()
+		Engine.set_max_fps(0)
+		return
+	
+	%FPSDropdownContainer.show()
+	_on_max_fps_spinbox_value_changed(%MaxFPSSpinbox.get_value())
+
+func _on_max_fps_spinbox_value_changed(value: float) -> void:
+	fpsCapValue = int(value)
+	if int(value)!= Engine.get_max_fps():
+		Engine.set_max_fps(int(value))

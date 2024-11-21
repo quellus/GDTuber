@@ -384,6 +384,56 @@ max_value = 5000.0
 value = 800.0
 alignment = 1
 
+[node name="FPS" type="PanelContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer"]
+layout_mode = 2
+
+[node name="CurrentFPSLabel" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Current FPS:"
+
+[node name="FPSCapContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="FPSCapLabel" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSCapContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cap FPS"
+
+[node name="FPSCapToggle" type="CheckBox" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSCapContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_5cu1w")
+
+[node name="FPSDropdownContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="MaxFPSLabel" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSDropdownContainer"]
+layout_mode = 2
+text = "FPS: "
+
+[node name="MaxFPSSpinbox" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSDropdownContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 5.0
+max_value = 500.0
+value = 60.0
+rounded = true
+allow_greater = true
+
 [node name="BottomMenuItems" type="VBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -463,6 +513,8 @@ autostart = true
 [connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Fixed Window Size/HBoxContainer/CenterContainer/FixedWindowSizeToggle" to="." method="_on_fixed_window_button_toggled"]
 [connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/WindowSize/VBoxContainer/HBoxContainer2/CenterContainer/fixedWindowWidthSpinbox" to="." method="_on_ws_lock_width_value_changed"]
 [connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/WindowSize/VBoxContainer/HBoxContainer3/CenterContainer2/fixedWindowHeightSpinbox" to="." method="_on_ws_lock_height_value_changed"]
+[connection signal="toggled" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSCapContainer/FPSCapToggle" to="." method="_on_fps_cap_toggled"]
+[connection signal="value_changed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSDropdownContainer/MaxFPSSpinbox" to="." method="_on_max_fps_spinbox_value_changed"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/BottomMenuItems/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
