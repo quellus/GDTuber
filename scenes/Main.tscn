@@ -170,7 +170,7 @@ theme_override_constants/separation = 9
 [node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
 theme = ExtResource("3_5cu1w")
-text = "Press any key to open this menu again"
+text = "MAIN_SHOW_MENU_LABEL"
 horizontal_alignment = 1
 autowrap_mode = 2
 
