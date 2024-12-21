@@ -1,0 +1,11 @@
+keys,en
+MAIN_THRESHOLD_LABEL,Threshold
+MAIN_THRESHOLD_TOOLTIP,Cutoff volume for avatar reactions
+MAIN_LOUDNESS_LABEL,Loudness
+MAIN_LOUDNESS_TOOLTIP,Microphone gain
+MAIN_PROFILE_PLACEHOLDER,[Profile Name]
+MAIN_INPUT_DEVICE_LABEL,Input Device
+MAIN_NEW_SCREEN_OBJECT_LABEL,Create a new screen object
+MAIN_SHOW_MENU_LABEL,Press any key to open this menu again
+MAIN_SYSTEM_SETTINGS_LABEL,System Settings
+MAIN_HIDE_MENU_BUTTON,Hide Menu

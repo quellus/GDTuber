@@ -81,7 +81,7 @@ theme_override_constants/separation = 6
 [node name="TitleEdit" type="LineEdit" parent="Menu/PanelContainer/MainMenu"]
 unique_name_in_owner = true
 layout_mode = 2
-placeholder_text = "[Profile Name]"
+placeholder_text = "MAIN_PROFILE_PLACEHOLDER"
 alignment = 1
 caret_blink = true
 script = ExtResource("2_0ym8f")
@@ -90,7 +90,7 @@ script = ExtResource("2_0ym8f")
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Input Device"
+text = "MAIN_INPUT_DEVICE_LABEL"
 flat = false
 item_count = 1
 
@@ -103,10 +103,10 @@ alignment = 1
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 layout_mode = 2
-tooltip_text = "Cutoff volume for avatar reactions"
+tooltip_text = "MAIN_THRESHOLD_TOOLTIP"
 mouse_filter = 1
 theme = ExtResource("3_5cu1w")
-text = "Threshold"
+text = "MAIN_THRESHOLD_LABEL"
 
 [node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
@@ -119,24 +119,24 @@ show_percentage = false
 [node name="ThresholdSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Cutoff volume for avatar reactions"
+tooltip_text = "MAIN_THRESHOLD_TOOLTIP"
 max_value = 1.0
 step = 0.01
 value = 0.5
 
 [node name="Label2" type="Label" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 layout_mode = 2
-tooltip_text = "Mic gain"
+tooltip_text = "MAIN_LOUDNESS_TOOLTIP"
 mouse_filter = 1
 theme = ExtResource("3_5cu1w")
-text = "Loudness"
+text = "MAIN_LOUDNESS_LABEL"
 
 [node name="InputGainSlider" type="HSlider" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 10)
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Mic gain"
+tooltip_text = "MAIN_LOUDNESS_TOOLTIP"
 max_value = 24.0
 step = 0.1
 
@@ -154,7 +154,7 @@ size_flags_horizontal = 3
 [node name="Button" type="Button" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 23.555)
 layout_mode = 2
-tooltip_text = "Create a new screen object"
+tooltip_text = "MAIN_NEW_SCREEN_OBJECT_LABEL"
 text = "+"
 
 [node name="PanelContainer" type="PanelContainer" parent="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer"]
@@ -176,11 +176,11 @@ autowrap_mode = 2
 
 [node name="Settings" type="Button" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
-text = "System Settings"
+text = "MAIN_SYSTEM_SETTINGS_LABEL"
 
 [node name="CloseButton" type="Button" parent="Menu/PanelContainer/MainMenu"]
 layout_mode = 2
-text = "Hide Menu"
+text = "MAIN_HIDE_MENU_BUTTON"
 
 [node name="SettingsMenu" type="Control" parent="Menu/PanelContainer"]
 unique_name_in_owner = true
