@@ -393,23 +393,6 @@ max_value = 1.0
 step = 0.01
 value = 0.5
 
-[node name="Alpha" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Alpha"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "Alpha"
-horizontal_alignment = 1
-
-[node name="AlpSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/Color/VBoxContainer/Alpha"]
-unique_name_in_owner = true
-layout_mode = 2
-max_value = 1.0
-step = 0.01
-value = 1.0
-
 [node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false
 layout_mode = 2
