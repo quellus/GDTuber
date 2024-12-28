@@ -3,7 +3,6 @@ class_name ScreenObjectSettingsPopup extends Popup
 @onready var hueslider: Slider = %HueSlider
 @onready var satslider: Slider = %SatSlider
 @onready var valslider: Slider = %ValSlider
-@onready var alpslider: Slider = %AlpSlider
 
 @onready var mouthtoggle: Button = %MouthBox
 @onready var blinktoggle: Button = %BlinkBox
