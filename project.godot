@@ -42,7 +42,7 @@ project/assembly_name="GDTuber"
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Translations/Translations.en.translation")
+locale/translations=PackedStringArray("res://Translations/English.en.translation")
 
 [rendering]
 
