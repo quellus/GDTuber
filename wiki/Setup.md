@@ -68,7 +68,7 @@ To use this mode uncheck the *Combined Avatar Image* Option.
 
 2. Clicking the change Image button for any of the states will open your systems file explorer for you to select the image you want to use. 
 
-3. Navigate and select the image file and iy should begin to appear for that state.
+3. Navigate and select the image file and it should appear for that state.
 </br>   
 <img src="./doc_pictures/ImageOptions.png" alt="image" width="300" height="auto"> 
 
@@ -98,9 +98,11 @@ To show up correctly your sprite sheet must be a 1:1 ratio image taking up an ev
 3. Navigate and select the sprite sheet image file you'd like to use for the predefined avatar states. You should now see your sprite sheet being used for all states that are enabled. 
 
 
-## OBS Integration Recommendations
+## OBS Integration Recommendation
 
-1. Create a Game Capture source
-2. Set Mode to "Capture specific window"
-3. Set Window to the GDTuber window
-4. Select Allow Transparency at the bottom
+1. Create New or Load a scene in OBS
+2. Under sources click the add button and choose window capture
+3. Create a new capture source and give it a name "GDTuber" window
+4. Under the window options look for the GDTuber window 
+5. Adjust windows settings such as crop, to preference 
+4. Click ok
