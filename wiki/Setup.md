@@ -1,6 +1,6 @@
 # Quick Setup
 
- 1. Upon first time Opening GDTube you should see a window with a Transparent Background and an menu bar on the left side of the window. The menu bar contains the following items from top to bottom: 
+ 1. Upon first time Opening GDTuber you should see a window with a Transparent Background and an menu bar on the left side of the window. The menu bar contains the following items from top to bottom: 
     </br>
     <img src="./doc_pictures/FirstTimeWindow.png" alt="image" width="500" height="auto">
     - Scene Title: Editable textbox for giving your scene a name.
@@ -37,11 +37,11 @@
 
 ## Image Setup
 
-Currently GDTube Supports four kinds of state for an image/avatar: **Neutral**, **Blinking**, **Talking**, **Talking + Blinking**
+Currently GDTuber Supports four kinds of state for an image/avatar: **Neutral**, **Blinking**, **Talking**, **Talking + Blinking**
 
-Currently GDTube supports two ways of setting images to state, [Single Image](#single-image) mode where each state is set to single image file and [Multiple Images](#multiple-images) mode where states are contained on a single image sprite sheet. 
+Currently GDTuber supports two ways of setting images to state, [Single Image](#single-image) mode where each state is set to single image file and [Multiple Images](#multiple-images) mode where states are contained on a single image sprite sheet. 
 
-Any image formats supported by Godot should work in GDTube (For a list of supported image formats see Godot Docs [here](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_images.html))
+Any image formats supported by Godot should work in GDTuber (For a list of supported image formats see Godot Docs [here](https://docs.godotengine.org/en/stable/tutorials/assets_pipeline/importing_images.html))
 
 ### Image Control Options
 
@@ -83,7 +83,7 @@ To use this mode check the *Combined Avatar Image* Option.
 
 ##### Multiple Image Sprite Sheet Requirements 
 
-To show up correctly your sprite sheet must be a 1:1 ratio image taking up an even quadrant of the image for each state.  Top left will be the  **Neutral** state, top right will be that **Talking** state, bottom left will be the **Blinking State**, bottom right will be the **Talking + Blinking** state. 
+Your sprite sheet should be divisible into four quadrants, these quadrants will represent each supported state.  Top left will be the  **Neutral** state, top right will be that **Talking** state, bottom left will be the **Blinking State**, bottom right will be the **Talking + Blinking** state. 
 
 </br>   
 <img src="./doc_pictures/DefaultAvatar.png" alt="image" width="100" height="auto"> 
@@ -99,6 +99,16 @@ To show up correctly your sprite sheet must be a 1:1 ratio image taking up an ev
 
 
 ## OBS Integration Recommendation
+
+### Windows 
+
+1. Create a Game Capture source
+2. Set Mode to "Capture specific window"
+3. Set Window to the GDTuber window
+4. Select Allow Transparency at the bottom
+
+
+### Other Systems 
 
 1. Create New or Load a scene in OBS
 2. Under sources click the add button and choose window capture
