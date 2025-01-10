@@ -16,3 +16,6 @@ mono_crash.*.json
 
 # Those annoying tmp files Godot keeps creating
 *.tmp
+
+# VSCode 
+.vscode/
