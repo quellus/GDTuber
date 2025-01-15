@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c12oguamole0m"]
+[gd_scene load_steps=7 format=3 uid="uid://c12oguamole0m"]
 
 [ext_resource type="Script" path="res://scripts/Settings Menu.gd" id="1_ay34f"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="2_ves45"]
 [ext_resource type="Texture2D" uid="uid://u737seevwwgp" path="res://icon.svg" id="3_db3l8"]
+[ext_resource type="Texture2D" uid="uid://bum4c3am02n05" path="res://Assets/up.png" id="4_yrvrb"]
+[ext_resource type="Texture2D" uid="uid://ca2ptc02v2xhb" path="res://Assets/down.png" id="5_0ucsi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_88shl"]
 bg_color = Color(0.290196, 0.290196, 0.290196, 1)
@@ -456,6 +458,75 @@ value = 1.0
 [node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
+
+[node name="BlinkSpeed" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Blink Speed Range"
+horizontal_alignment = 1
+
+[node name="BlinkSpeedControls" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
+custom_minimum_size = Vector2(1080, 30)
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="upBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("4_yrvrb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="downBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("5_0ucsi")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="MinBlinkSettingInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+custom_minimum_size = Vector2(40, 35)
+layout_mode = 2
+text = "2"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+text = "-"
+
+[node name="MaxBlinkSettingInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+text = "4"
+scroll_v_scroll_speed = 1.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="upBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer2"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("4_yrvrb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="downBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer2"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("5_0ucsi")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false
