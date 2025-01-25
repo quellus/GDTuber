@@ -200,6 +200,8 @@ func _save_profile_data():
 				"sat": obj.user_sat,
 				"val": obj.user_val,
 				"height": obj.user_height,
+				"min_blink_delay": obj.min_blink_delay,
+				"max_blink_delay": obj.max_blink_delay,
 				"speed": obj.user_speed,
 				"neutralpath": obj.neutralpath,
 				"blinkingpath": obj.blinkingpath,
@@ -330,8 +332,11 @@ func _load_data(path):
 				men.queue_free()
 			for obj in save_dict["objects"]:
 				if _validate_object_json(obj, version):
-					# 0.1
 					var newobj = _create_new_object()
+					# agnostic
+					newobj.min_blink_delay = obj["min_blink_delay"] if obj.has("min_blink_delay") else 2 
+					newobj.max_blink_delay = obj["max_blink_delay"] if obj.has("max_blink_delay") else 4 
+					# 0.1
 					newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 					newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
 					newobj.blinking = obj["blinking"]

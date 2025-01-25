@@ -1,5 +1,7 @@
 class_name ScreenObjectSettingsPopup extends Popup
 
+signal blink_speed_change(min_interval, max_interval)
+
 @onready var hueslider: Slider = %HueSlider
 @onready var satslider: Slider = %SatSlider
 @onready var valslider: Slider = %ValSlider
@@ -36,3 +38,64 @@ class_name ScreenObjectSettingsPopup extends Popup
 @onready var talkingimageselect = %"Talking Image"
 @onready var talkingandblinkingimageselect = %"Talking + Blinking Image"
 @onready var singleimagetoggle = %SingleMultiToggle
+
+@onready var minintervalsettingsdisplay = %MinBlinkIntervalSettingsInput
+@onready var maxintervalsettingsdisplay = %MaxBlinkIntervalSettingsInput
+
+func _ready():
+    %BlinkMinIntervalIncreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMinIntervalIncreaseButton))
+    %BlinkMinIntervalDecreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMinIntervalDecreaseButton))
+    %BlinkMaxIntervalIncreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMaxIntervalIncreaseButton))
+    %BlinkMaxIntervalDecreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMaxIntervalDecreaseButton))
+
+func update_blink_intervals(blinkintervalbutton: TextureButton):
+    var min_int = int(minintervalsettingsdisplay.text)
+    var max_int = int(maxintervalsettingsdisplay.text)
+
+    var min_first=true
+    
+    match blinkintervalbutton.name:
+        "BlinkMinIntervalIncreaseButton":
+            min_int+=1 
+        "BlinkMinIntervalDecreaseButton":
+            min_int-=1 
+        "BlinkMaxIntervalIncreaseButton":
+            min_first=false
+            max_int+=1 
+        "BlinkMaxIntervalDecreaseButton":
+            min_first=false
+            max_int-=1 
+
+    var validated_min_max = min_max_validate(min_int, max_int, min_first)
+
+    minintervalsettingsdisplay.text = str(validated_min_max[0])
+    maxintervalsettingsdisplay.text = str(validated_min_max[1])
+
+    blink_speed_change.emit(validated_min_max[0], validated_min_max[1])
+
+
+func min_max_validate(min_blink_interval: int, max_blink_interval: int, min_first: bool):
+    var max_min = 2
+    var min_min = 1
+    var min_blink: int = abs(min_blink_interval)
+    var max_blink: int = abs(max_blink_interval)
+    
+    min_blink = min_min if  min_blink == 0 else min_blink
+    max_blink = max_min if  max_blink == 1 else max_blink
+
+    if min_first:
+        if min_blink >= max_blink: 
+            max_blink = min_blink+1
+    else:
+        if max_blink <= min_blink: 
+            min_blink = max_blink-1
+
+    return [min_blink, max_blink]
+
+
+
+
+
+
+
+  

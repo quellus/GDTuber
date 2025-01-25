@@ -476,27 +476,31 @@ custom_minimum_size = Vector2(1080, 30)
 layout_mode = 2
 alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="MinIntervalVboxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 
-[node name="upBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer"]
+[node name="BlinkMinIntervalIncreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalVboxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture_normal = ExtResource("4_yrvrb")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="downBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer"]
+[node name="BlinkMinIntervalDecreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalVboxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture_normal = ExtResource("5_0ucsi")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="MinBlinkSettingInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="MinBlinkIntervalSettingsInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 35)
 layout_mode = 2
 text = "2"
+editable = false
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
@@ -505,23 +509,27 @@ layout_mode = 2
 layout_mode = 2
 text = "-"
 
-[node name="MaxBlinkSettingInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="MaxBlinkIntervalSettingsInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
 text = "4"
+editable = false
 scroll_v_scroll_speed = 1.0
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="MaxIntervalVboxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 
-[node name="upBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer2"]
+[node name="BlinkMaxIntervalIncreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture_normal = ExtResource("4_yrvrb")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="downBlinkMinButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/VBoxContainer2"]
+[node name="BlinkMaxIntervalDecreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture_normal = ExtResource("5_0ucsi")

@@ -11,6 +11,8 @@ var copy_properties = [
 	"reactive",
 	"talking",
 	"blinking",
+	"min_blink_delay",
+	"max_blink_delay",
 	"user_name",
 	"user_hue",
 	"user_sat",
@@ -30,6 +32,13 @@ var copy_properties = [
 	"auto_toggle_time"
 ]
 
+var min_blink_delay: int = 2:
+	set(value):
+		min_blink_delay = value
+
+var max_blink_delay: int = 4:
+	set(value):
+		max_blink_delay = value
 
 var user_height: float = 5:
 	set(value):
@@ -274,7 +283,7 @@ func _on_animator_stopped(_anim_name):
 
 func _on_blink_timer_timeout():
 	if is_blinking:
-		blink_timer.start(rng.randf_range(2, 4))
+		blink_timer.start(rng.randi_range(min_blink_delay, max_blink_delay))
 	else:
 		blink_timer.start(0.2)
 	is_blinking = !is_blinking
