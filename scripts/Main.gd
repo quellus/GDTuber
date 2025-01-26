@@ -202,6 +202,7 @@ func _save_profile_data():
 				"height": obj.user_height,
 				"min_blink_delay": obj.min_blink_delay,
 				"max_blink_delay": obj.max_blink_delay,
+				"blink_duration": obj.blink_duration,
 				"speed": obj.user_speed,
 				"neutralpath": obj.neutralpath,
 				"blinkingpath": obj.blinkingpath,
@@ -336,6 +337,7 @@ func _load_data(path):
 					# agnostic
 					newobj.min_blink_delay = obj["min_blink_delay"] if obj.has("min_blink_delay") else 2 
 					newobj.max_blink_delay = obj["max_blink_delay"] if obj.has("max_blink_delay") else 4 
+					newobj.blink_duration = obj["blink_duration"] if obj.has("blink_duration") else 2 
 					# 0.1
 					newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 					newobj.user_position = Vector2(obj["position.x"], obj["position.y"])

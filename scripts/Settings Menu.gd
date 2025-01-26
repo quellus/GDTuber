@@ -1,6 +1,7 @@
 class_name ScreenObjectSettingsPopup extends Popup
 
 signal blink_speed_change(min_interval, max_interval)
+signal blink_duration_change(blink_duration)
 
 @onready var hueslider: Slider = %HueSlider
 @onready var satslider: Slider = %SatSlider
@@ -42,11 +43,33 @@ signal blink_speed_change(min_interval, max_interval)
 @onready var minintervalsettingsdisplay = %MinBlinkIntervalSettingsInput
 @onready var maxintervalsettingsdisplay = %MaxBlinkIntervalSettingsInput
 
+@onready var eyeclosedsettingsdisplay = %EyeClosedIntervalSettingsInput
+
 func _ready():
     %BlinkMinIntervalIncreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMinIntervalIncreaseButton))
     %BlinkMinIntervalDecreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMinIntervalDecreaseButton))
     %BlinkMaxIntervalIncreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMaxIntervalIncreaseButton))
     %BlinkMaxIntervalDecreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMaxIntervalDecreaseButton))
+
+    %EyeCloseIntervalIncreaseButton.pressed.connect(func(): update_blink_duration(%EyeCloseIntervalIncreaseButton))
+    %EyeClosedIntervalDecreaseButton.pressed.connect(func(): update_blink_duration(%EyeClosedIntervalDecreaseButton))
+
+func update_blink_duration(blinkdurationbutton: TextureButton):
+    var min_duration = 1 
+    var duration = int(eyeclosedsettingsdisplay.text)
+
+    match blinkdurationbutton.name:
+        "EyeCloseIntervalIncreaseButton":
+            duration+=1 
+        "EyeClosedIntervalDecreaseButton":
+            duration-=1 
+
+    if duration < min_duration: 
+        duration=min_duration
+    
+    eyeclosedsettingsdisplay.text = str(duration)
+    blink_duration_change.emit(duration)
+
 
 func update_blink_intervals(blinkintervalbutton: TextureButton):
     var min_int = int(minintervalsettingsdisplay.text)

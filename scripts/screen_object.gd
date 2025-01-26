@@ -13,6 +13,7 @@ var copy_properties = [
 	"blinking",
 	"min_blink_delay",
 	"max_blink_delay",
+	"blink_duration",
 	"user_name",
 	"user_hue",
 	"user_sat",
@@ -39,6 +40,10 @@ var min_blink_delay: int = 2:
 var max_blink_delay: int = 4:
 	set(value):
 		max_blink_delay = value
+
+var blink_duration: int = 2:
+	set(value):
+		blink_duration = value
 
 var user_height: float = 5:
 	set(value):
@@ -285,7 +290,8 @@ func _on_blink_timer_timeout():
 	if is_blinking:
 		blink_timer.start(rng.randi_range(min_blink_delay, max_blink_delay))
 	else:
-		blink_timer.start(0.2)
+		var duration_time = float(blink_duration/10.0)
+		blink_timer.start(duration_time)
 	is_blinking = !is_blinking
 
 func _set_hue(value):

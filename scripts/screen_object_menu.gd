@@ -41,6 +41,7 @@ func _ready():
 		settingsmenu.requesttalking.connect(_request_talking)
 		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
 		settingsmenu.blink_speed_change.connect(_set_blink_speed_interval)
+		settingsmenu.blink_duration_change.connect(_set_blink_duration_interval)
 
 func _process(_delta: float) -> void:
 	if !autoToggleTimer.is_stopped():
@@ -101,6 +102,9 @@ func _set_blink_speed_interval(min_interval, max_interval):
 	object.min_blink_delay = min_interval 
 	object.max_blink_delay = max_interval
 
+func _set_blink_duration_interval(blink_duration):
+	object.blink_duration = blink_duration
+
 func _set_hue(value):
 	object.user_hue = value
 func _set_sat(value):
@@ -138,6 +142,7 @@ func update_menu():
 		settingsmenu.singleimagetoggle.button_pressed = object.usesingleimage
 		settingsmenu.minintervalsettingsdisplay.text = str(object.min_blink_delay)
 		settingsmenu.maxintervalsettingsdisplay.text = str(object.max_blink_delay)
+		settingsmenu.eyeclosedsettingsdisplay.text = str(object.blink_duration)
 
 func _shift_up():
 	get_parent().move_child(self, get_index()-1)

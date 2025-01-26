@@ -32,9 +32,10 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="SO_SETTINGS_IMAGE_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -396,7 +397,6 @@ step = 0.01
 value = 0.5
 
 [node name="SO_SETTINGS_ANIMATION_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
-visible = false
 layout_mode = 2
 metadata/_tab_index = 2
 
@@ -468,7 +468,7 @@ size_flags_stretch_ratio = 0.0
 [node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
-text = "Blink Speed Range"
+text = "Blink Speed Controls"
 horizontal_alignment = 1
 
 [node name="BlinkSpeedControls" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
@@ -499,6 +499,7 @@ stretch_mode = 0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 35)
 layout_mode = 2
+tooltip_text = "Minimum Blink Interval (seconds) "
 text = "2"
 editable = false
 
@@ -513,6 +514,7 @@ text = "-"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
+tooltip_text = "Maximum Blink Interval (seconds) "
 text = "4"
 editable = false
 scroll_v_scroll_speed = 1.0
@@ -529,6 +531,39 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="BlinkMaxIntervalDecreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("5_0ucsi")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Label2" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+text = ";"
+
+[node name="EyeClosedIntervalSettingsInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+tooltip_text = "Blink Speed (deciseconds) "
+text = "2"
+placeholder_text = "2"
+editable = false
+scroll_v_scroll_speed = 1.0
+
+[node name="MaxIntervalVboxContainer2" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="EyeCloseIntervalIncreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("4_yrvrb")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="EyeClosedIntervalDecreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
