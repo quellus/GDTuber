@@ -142,7 +142,7 @@ func update_menu():
 		settingsmenu.singleimagetoggle.button_pressed = object.usesingleimage
 		settingsmenu.minintervalsettingsdisplay.text = str(object.min_blink_delay)
 		settingsmenu.maxintervalsettingsdisplay.text = str(object.max_blink_delay)
-		settingsmenu.eyeclosedsettingsdisplay.text = str(object.blink_duration)
+		settingsmenu.blinkdurationsettingsdisplay.text = str(object.blink_duration)
 
 func _shift_up():
 	get_parent().move_child(self, get_index()-1)

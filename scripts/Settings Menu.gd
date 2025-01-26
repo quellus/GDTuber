@@ -43,7 +43,7 @@ signal blink_duration_change(blink_duration)
 @onready var minintervalsettingsdisplay = %MinBlinkIntervalSettingsInput
 @onready var maxintervalsettingsdisplay = %MaxBlinkIntervalSettingsInput
 
-@onready var eyeclosedsettingsdisplay = %EyeClosedIntervalSettingsInput
+@onready var blinkdurationsettingsdisplay = %BlinkDurationSettingsInput
 
 func _ready():
     %BlinkMinIntervalIncreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMinIntervalIncreaseButton))
@@ -51,23 +51,23 @@ func _ready():
     %BlinkMaxIntervalIncreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMaxIntervalIncreaseButton))
     %BlinkMaxIntervalDecreaseButton.pressed.connect(func(): update_blink_intervals(%BlinkMaxIntervalDecreaseButton))
 
-    %EyeCloseIntervalIncreaseButton.pressed.connect(func(): update_blink_duration(%EyeCloseIntervalIncreaseButton))
-    %EyeClosedIntervalDecreaseButton.pressed.connect(func(): update_blink_duration(%EyeClosedIntervalDecreaseButton))
+    %BlinkDurationIncreaseButton.pressed.connect(func(): update_blink_duration(%BlinkDurationIncreaseButton))
+    %BlinkDurationDecreaseButton.pressed.connect(func(): update_blink_duration(%BlinkDurationDecreaseButton))
 
 func update_blink_duration(blinkdurationbutton: TextureButton):
     var min_duration = 1 
-    var duration = int(eyeclosedsettingsdisplay.text)
+    var duration = int(blinkdurationsettingsdisplay.text)
 
     match blinkdurationbutton.name:
-        "EyeCloseIntervalIncreaseButton":
+        "BlinkDurationIncreaseButton":
             duration+=1 
-        "EyeClosedIntervalDecreaseButton":
+        "BlinkDurationDecreaseButton":
             duration-=1 
 
     if duration < min_duration: 
         duration=min_duration
     
-    eyeclosedsettingsdisplay.text = str(duration)
+    blinkdurationsettingsdisplay.text = str(duration)
     blink_duration_change.emit(duration)
 
 

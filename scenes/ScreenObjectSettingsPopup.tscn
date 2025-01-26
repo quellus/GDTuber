@@ -542,20 +542,20 @@ stretch_mode = 0
 layout_mode = 2
 text = ";"
 
-[node name="EyeClosedIntervalSettingsInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="BlinkDurationSettingsInput" type="TextEdit" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
-tooltip_text = "Blink Speed (deciseconds) "
+tooltip_text = "Blink Duration (deciseconds) "
 text = "2"
 placeholder_text = "2"
 editable = false
 scroll_v_scroll_speed = 1.0
 
-[node name="MaxIntervalVboxContainer2" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="BlinkDurationVboxContainer2" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 
-[node name="EyeCloseIntervalIncreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer2"]
+[node name="BlinkDurationIncreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/BlinkDurationVboxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
@@ -563,7 +563,7 @@ texture_normal = ExtResource("4_yrvrb")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="EyeClosedIntervalDecreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalVboxContainer2"]
+[node name="BlinkDurationDecreaseButton" type="TextureButton" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls/BlinkDurationVboxContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
