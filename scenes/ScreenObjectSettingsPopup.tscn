@@ -465,10 +465,10 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 size_flags_stretch_ratio = 0.0
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
+[node name="blinkLabel" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
-text = "Blink Speed Controls"
+text = "SO_SETTINGS_ANIMATION_BLINK_SPEED_LABEL"
 horizontal_alignment = 1
 
 [node name="BlinkSpeedControls" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
@@ -499,14 +499,14 @@ stretch_mode = 0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 35)
 layout_mode = 2
-tooltip_text = "Minimum Blink Interval (seconds) "
+tooltip_text = "SO_SETTINGS_ANIMATION_MIN_INTERVAL_TOOLTIP"
 text = "2"
 editable = false
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="dash" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 text = "-"
 
@@ -514,7 +514,7 @@ text = "-"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
-tooltip_text = "Maximum Blink Interval (seconds) "
+tooltip_text = "SO_SETTINGS_ANIMATION_MAX_INTERVAL_TOOLTIP"
 text = "4"
 editable = false
 scroll_v_scroll_speed = 1.0
@@ -538,7 +538,7 @@ texture_normal = ExtResource("5_0ucsi")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Label2" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+[node name="semiColin" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 text = ";"
 
@@ -546,7 +546,7 @@ text = ";"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 30)
 layout_mode = 2
-tooltip_text = "Blink Duration (deciseconds) "
+tooltip_text = "SO_SETTINGS_ANIMATION_BLINK_DURATION_TOOLTIP"
 text = "2"
 placeholder_text = "2"
 editable = false
