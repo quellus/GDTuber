@@ -472,7 +472,6 @@ text = "SO_SETTINGS_ANIMATION_BLINK_SPEED_LABEL"
 horizontal_alignment = 1
 
 [node name="BlinkSpeedControls" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/BlinkSpeed"]
-custom_minimum_size = Vector2(1080, 30)
 layout_mode = 2
 alignment = 1
 
