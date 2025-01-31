@@ -2,7 +2,7 @@ keys,hu
 MAIN_THRESHOLD_LABEL,Hangerő küszöb 
 MAIN_THRESHOLD_TOOLTIP,Avatárreakció hangereje
 MAIN_LOUDNESS_LABEL,Erősítés
-MAIN_LOUDNESS_TOOLTIP,Microfon hangjának erősítése
+MAIN_LOUDNESS_TOOLTIP,Mikrofon hangjának erősítése
 MAIN_PROFILE_PLACEHOLDER,[Profil név]
 MAIN_INPUT_DEVICE_LABEL,Bemeneti eszköz 
 MAIN_NEW_SCREEN_OBJECT_LABEL,Új elem létrehozása
