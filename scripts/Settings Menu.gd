@@ -57,12 +57,12 @@ func update_blink_duration(value: float):
 
 
 func update_max_blink_interval(value: float):
-	if value <= %MinBlinkIntervalSettingsInput.value:
-		%MinBlinkIntervalSettingsInput.value = value -0.1
+	if value < %MinBlinkIntervalSettingsInput.value:
+		%MinBlinkIntervalSettingsInput.value = value
 	max_blink_speed_change.emit(value)
 
 
 func update_min_blink_interval(value: float):
-	if value >= %MaxBlinkIntervalSettingsInput.value:
-		%MaxBlinkIntervalSettingsInput.value = value +0.1
+	if value > %MaxBlinkIntervalSettingsInput.value:
+		%MaxBlinkIntervalSettingsInput.value = value
 	min_blink_speed_change.emit(value)  
