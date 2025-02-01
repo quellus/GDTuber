@@ -33,15 +33,15 @@ var copy_properties = [
 	"auto_toggle_time"
 ]
 
-var min_blink_delay: int = 2:
+var min_blink_delay: float = 2:
 	set(value):
 		min_blink_delay = value
 
-var max_blink_delay: int = 4:
+var max_blink_delay: float = 4:
 	set(value):
 		max_blink_delay = value
 
-var blink_duration: int = 2:
+var blink_duration: float = 2:
 	set(value):
 		blink_duration = value
 
@@ -288,9 +288,10 @@ func _on_animator_stopped(_anim_name):
 
 func _on_blink_timer_timeout():
 	if is_blinking:
-		blink_timer.start(rng.randi_range(min_blink_delay, max_blink_delay))
+		var timer_time = rng.randf_range(min_blink_delay, max_blink_delay)
+		blink_timer.start(timer_time)
 	else:
-		var duration_time = float(blink_duration/10.0)
+		var duration_time = blink_duration/10.0
 		blink_timer.start(duration_time)
 	is_blinking = !is_blinking
 

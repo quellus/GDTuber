@@ -40,7 +40,9 @@ func _ready():
 		settingsmenu.requestblinking.connect(_request_blinking)
 		settingsmenu.requesttalking.connect(_request_talking)
 		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
-		settingsmenu.blink_speed_change.connect(_set_blink_speed_interval)
+		settingsmenu.min_blink_speed_change.connect(_set_min_blink_speed_interval)
+		settingsmenu.max_blink_speed_change.connect(_set_max_blink_speed_interval)
+		
 		settingsmenu.blink_duration_change.connect(_set_blink_duration_interval)
 
 func _process(_delta: float) -> void:
@@ -98,11 +100,13 @@ func _set_speed(value):
 	object.user_speed = value
 func _set_height(value):
 	object.user_height = value
-func _set_blink_speed_interval(min_interval, max_interval):
-	object.min_blink_delay = min_interval 
+func _set_min_blink_speed_interval(min_interval: float):
+	object.min_blink_delay = min_interval
+
+func _set_max_blink_speed_interval(max_interval: float):
 	object.max_blink_delay = max_interval
 
-func _set_blink_duration_interval(blink_duration):
+func _set_blink_duration_interval(blink_duration: float):
 	object.blink_duration = blink_duration
 
 func _set_hue(value):
@@ -140,9 +144,9 @@ func update_menu():
 		settingsmenu.talkingpreview.texture = object.talking_texture
 		settingsmenu.talkingandblinkingpreview.texture = object.talking_and_blinking_texture
 		settingsmenu.singleimagetoggle.button_pressed = object.usesingleimage
-		settingsmenu.minintervalsettingsdisplay.text = str(object.min_blink_delay)
-		settingsmenu.maxintervalsettingsdisplay.text = str(object.max_blink_delay)
-		settingsmenu.blinkdurationsettingsdisplay.text = str(object.blink_duration)
+		settingsmenu.minintervalsettingsdisplay.value = object.min_blink_delay
+		settingsmenu.maxintervalsettingsdisplay.value = object.max_blink_delay
+		settingsmenu.blinkdurationsettingsdisplay.value = object.blink_duration
 
 func _shift_up():
 	get_parent().move_child(self, get_index()-1)
