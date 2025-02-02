@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dafvj2ka3gyor"
+
+[deps]
+
+files=["res://Translations/Hungarian.hu.translation"]
+
+source_file="res://Translations/Hungarian.csv"
+dest_files=["res://Translations/Hungarian.hu.translation"]
+
+[params]
+
+compress=true
+delimiter=0
