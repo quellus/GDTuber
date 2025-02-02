@@ -97,6 +97,9 @@ func _ready():
 	menu_shown = true
 	_load_data(AUTOSAVE_PATH)
 	_load_system_data()
+	
+	if OS.get_locale_language() in TranslationServer.get_loaded_locales():
+		TranslationServer.set_locale(OS.get_locale_language())
 
 
 ### Process
