@@ -434,6 +434,28 @@ value = 60.0
 rounded = true
 allow_greater = true
 
+[node name="Language" type="PanelContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Language"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Language/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Language/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS_LANGUAGE_LABEL"
+autowrap_mode = 2
+
+[node name="LanguageDropdown" type="OptionButton" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Language/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
 [node name="BottomMenuItems" type="VBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
