@@ -3,8 +3,8 @@ class_name Menu extends Control
 # The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
 
-@onready var language_dropdown: OptionButton = %LanguageDropdown
-@onready var language_popup = language_dropdown.get_popup()
+var localization = Localization.new()
+
 var language_map: Dictionary = {}
 
 # Window Management
@@ -102,16 +102,9 @@ func _ready():
 	_load_data(AUTOSAVE_PATH)
 	_load_system_data()
 	
-	var available_locales = TranslationServer.get_loaded_locales()
-	for locale in available_locales:
-		language_map[TranslationServer.get_locale_name(locale)] = locale
-
-
-	if OS.get_locale_language() in available_locales:
-		TranslationServer.set_locale(OS.get_locale_language())
-	for language in available_locales:
-		language_popup.add_item(TranslationServer.get_locale_name(language))
-	language_popup.index_pressed.connect(_on_locale_changed)
+	var language_popup = %LanguageDropdown.get_popup()
+	localization.language_popup = language_popup
+	localization.set_initial_language()
 
 
 ### Process
@@ -647,11 +640,6 @@ func _unhandled_input(event):
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
 			menu_shown = true
-
-
-func _on_locale_changed(index: int) -> void:
-	var language = language_popup.get_item_text(index)
-	TranslationServer.set_locale(language_map[language])
 
 
 func _on_fps_cap_toggled(toggled_on: bool) -> void:
