@@ -483,21 +483,6 @@ layout_mode = 2
 size_flags_vertical = 3
 alignment = 1
 
-[node name="MinIntervalHbox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
-layout_mode = 2
-
-[node name="MinBlinkIntervalSettingsInput" type="SpinBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalHbox"]
-unique_name_in_owner = true
-layout_mode = 2
-step = 0.1
-custom_arrow_step = 1.0
-
-[node name="blinkInterval" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalHbox"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 13
-text = "SO_SETTINGS_ANIMATION_BLINK_MIN_INTERVAL_LABEL"
-horizontal_alignment = 1
-
 [node name="MaxIntervalHbox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
 layout_mode = 2
 
@@ -506,13 +491,29 @@ unique_name_in_owner = true
 layout_mode = 2
 min_value = 0.1
 step = 0.1
-value = 1.0
+value = 4.0
 custom_arrow_step = 1.0
 
 [node name="blinkInterval" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalHbox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "SO_SETTINGS_ANIMATION_BLINK_MAX_INTERVAL_LABEL"
+horizontal_alignment = 1
+
+[node name="MinIntervalHbox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="MinBlinkIntervalSettingsInput" type="SpinBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalHbox"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+value = 2.0
+custom_arrow_step = 1.0
+
+[node name="blinkInterval" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalHbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "SO_SETTINGS_ANIMATION_BLINK_MIN_INTERVAL_LABEL"
 horizontal_alignment = 1
 
 [node name="DurationHBox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
