@@ -42,17 +42,17 @@ SO_SETTINGS_AVATAR_IMAGE_LABEL,Avatar
 SO_SETTINGS_AVATAR_IMAGE_TOOLTIP,avatárnak van beszélő képkockája
 SO_SETTINGS_CHANGE_IMAGE_BUTTON,Kép megváltoztatása
 SO_SETTINGS_NEUTRAL_IMAGE_LABEL,Semleges kép
-SO_SETTINGS_NEUTRAL_IMAGE_TOOLTIP,A képek között van semleges kép
+SO_SETTINGS_NEUTRAL_IMAGE_TOOLTIP,A spritekészletben van semleges kép
 SO_SETTINGS_BLINKING_IMAGE_LABEL,Pislogó kép
-SO_SETTINGS_BLINKING_IMAGE_TOOLTIP,A képek között van pislogó kép
+SO_SETTINGS_BLINKING_IMAGE_TOOLTIP,A spritekészletben van pislogó kép
 SO_SETTINGS_TALKING_IMAGE_LABEL,Beszélő kép
-SO_SETTINGS_TALKING_IMAGE_TOOLTIP,A képek között van beszélő kép
+SO_SETTINGS_TALKING_IMAGE_TOOLTIP,A spritekészletben van beszélő kép
 SO_SETTINGS_TALKING_BLINKING_IMAGE_LABEL,Pislogó+Beszélő kép
-SO_SETTINGS_TALKING_BLINKING_IMAGE_TOOLTIP,A képek között van pislogó és beszélő kép
+SO_SETTINGS_TALKING_BLINKING_IMAGE_TOOLTIP,A spritekészletben van pislogó és beszélő kép
 SO_SETTINGS_TALKING_TOGGLE_LABEL,Van beszélő kép
-SO_SETTINGS_TALKING_TOGGLE_TOOLTIP,A képek között van beszélő kép
+SO_SETTINGS_TALKING_TOGGLE_TOOLTIP,A spritekészletben van beszélő kép
 SO_SETTINGS_BLINKING_TOGGLE_LABEL,Van pislogó kép
-SO_SETTINGS_BLINKING_TOGGLE_TOOLTIP,A képek között van pislogó kép
+SO_SETTINGS_BLINKING_TOGGLE_TOOLTIP,A spritekészletben van pislogó kép
 SO_SETTINGS_FILTER_TOGGLE_LABEL,Lineáris szűrő
 SO_SETTINGS_FILTER_TOGGLE_TOOLTIP,lineáris szűrés simítja a hirtelen változásokat a képen.
 SO_SETTINGS_HUE_SLIDER_LABEL,Árnyalat
