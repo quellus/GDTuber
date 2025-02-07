@@ -1,5 +1,9 @@
 class_name ScreenObjectSettingsPopup extends Popup
 
+signal min_blink_speed_change(min_interval)
+signal max_blink_speed_change(max_interval)
+signal blink_duration_change(blink_duration)
+
 @onready var hueslider: Slider = %HueSlider
 @onready var satslider: Slider = %SatSlider
 @onready var valslider: Slider = %ValSlider
@@ -36,3 +40,29 @@ class_name ScreenObjectSettingsPopup extends Popup
 @onready var talkingimageselect = %"Talking Image"
 @onready var talkingandblinkingimageselect = %"Talking + Blinking Image"
 @onready var singleimagetoggle = %SingleMultiToggle
+
+@onready var minintervalsettingsdisplay = %MinBlinkIntervalSettingsInput
+@onready var maxintervalsettingsdisplay = %MaxBlinkIntervalSettingsInput
+
+@onready var blinkdurationsettingsdisplay = %BlinkDurationSettingsInput
+
+func _ready():
+	%BlinkDurationSettingsInput.value_changed.connect(update_blink_duration)
+	%MinBlinkIntervalSettingsInput.value_changed.connect(update_min_blink_interval)
+	%MaxBlinkIntervalSettingsInput.value_changed.connect(update_max_blink_interval)
+
+
+func update_blink_duration(value: float):
+	blink_duration_change.emit(value)
+
+
+func update_max_blink_interval(value: float):
+	if value < %MinBlinkIntervalSettingsInput.value:
+		%MinBlinkIntervalSettingsInput.value = value
+	max_blink_speed_change.emit(value)
+
+
+func update_min_blink_interval(value: float):
+	if value > %MaxBlinkIntervalSettingsInput.value:
+		%MaxBlinkIntervalSettingsInput.value = value
+	min_blink_speed_change.emit(value)  
