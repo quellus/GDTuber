@@ -284,7 +284,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-tooltip_text = "Locks window size to prevent unwanted resizing"
+tooltip_text = "SETTINGS_WINDOW_SIZE_TOOLTIP"
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Fixed Window Size/HBoxContainer"]
 layout_mode = 2
@@ -422,7 +422,7 @@ layout_mode = 2
 
 [node name="MaxFPSLabel" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSDropdownContainer"]
 layout_mode = 2
-text = "FPS: "
+text = "SETTINGS_MAX_FPS_LABEL"
 
 [node name="MaxFPSSpinbox" type="SpinBox" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/FPS/MarginContainer/VBoxContainer/FPSDropdownContainer"]
 unique_name_in_owner = true
