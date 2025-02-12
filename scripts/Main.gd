@@ -200,6 +200,9 @@ func _save_profile_data():
 				"sat": obj.user_sat,
 				"val": obj.user_val,
 				"height": obj.user_height,
+				"min_blink_delay": obj.min_blink_delay,
+				"max_blink_delay": obj.max_blink_delay,
+				"blink_duration": obj.blink_duration,
 				"speed": obj.user_speed,
 				"neutralpath": obj.neutralpath,
 				"blinkingpath": obj.blinkingpath,
@@ -290,6 +293,11 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 		"0.11":{
 			"auto_toggle_enabled":TYPE_BOOL,
 			"auto_toggle_time":TYPE_FLOAT
+		},
+		"0.13":{
+			"min_blink_delay":TYPE_FLOAT,
+			"max_blink_delay":TYPE_FLOAT,
+			"blink_duration":TYPE_FLOAT
 		}
 	}
 	for v in versions:
@@ -300,6 +308,8 @@ func _validate_object_json(dict: Dictionary, version: String) -> bool:
 					valid = false
 				elif !is_instance_of(dict[field], versions[v][field]):
 					push_error("FIELD TYPE INCORRECT: " + field)
+					push_error("Value: ", dict[field])
+					push_error("Type: ", type_string(typeof(dict[field])))
 					valid = false
 	return valid
 
@@ -330,8 +340,8 @@ func _load_data(path):
 				men.queue_free()
 			for obj in save_dict["objects"]:
 				if _validate_object_json(obj, version):
-					# 0.1
 					var newobj = _create_new_object()
+					# 0.1
 					newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 					newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
 					newobj.blinking = obj["blinking"]
@@ -383,6 +393,12 @@ func _load_data(path):
 					if version.naturalnocasecmp_to("0.11") >= 0:
 						newobj.auto_toggle_enabled = obj["auto_toggle_enabled"]
 						newobj.auto_toggle_time = obj["auto_toggle_time"]
+					# 0.13
+					if version.naturalnocasecmp_to("0.13") >= 0:
+						newobj.min_blink_delay = obj["min_blink_delay"] if obj.has("min_blink_delay") else 2 
+						newobj.max_blink_delay = obj["max_blink_delay"] if obj.has("max_blink_delay") else 4 
+						newobj.blink_duration = obj["blink_duration"] if obj.has("blink_duration") else 2 
+					
 					newobj.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
