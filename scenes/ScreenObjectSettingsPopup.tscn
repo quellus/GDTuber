@@ -400,18 +400,26 @@ value = 0.5
 [node name="SO_SETTINGS_ANIMATION_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false
 layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB"]
 layout_mode = 2
 
-[node name="Bounces" type="PanelContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Bounces" type="PanelContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Bounces"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Bounces"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Bounces/HBoxContainer"]
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Bounces/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
@@ -419,37 +427,37 @@ mouse_filter = 1
 text = "SO_SETTINGS_ANIMATION_TOGGLE_LABEL"
 horizontal_alignment = 1
 
-[node name="BounceBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Bounces/HBoxContainer"]
+[node name="BounceBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Bounces/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
 theme = ExtResource("2_ves45")
 
-[node name="Height" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer"]
+[node name="Height" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Height"]
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Height"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "SO_SETTINGS_ANIMATION_HEIGHT_LABEL"
 horizontal_alignment = 1
 
-[node name="HeightSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Height"]
+[node name="HeightSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Height"]
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 50.0
 value = 5.0
 
-[node name="Speed" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer"]
+[node name="Speed" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Speed"]
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Speed"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 13
 text = "SO_SETTINGS_ANIMATION_SPEED_LABEL"
 horizontal_alignment = 1
 
-[node name="SpeedSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer/Speed"]
+[node name="SpeedSlider" type="HSlider" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Speed"]
 unique_name_in_owner = true
 layout_mode = 2
 min_value = 0.02
@@ -457,23 +465,85 @@ max_value = 2.0
 step = 0.01
 value = 1.0
 
-[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="Animation" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
-visible = false
+[node name="BlinkSpeed" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-metadata/_tab_index = 3
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 5
+
+[node name="blinkLabel" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "SO_SETTINGS_ANIMATION_BLINK_SPEED_LABEL"
+horizontal_alignment = 1
+
+[node name="BlinkSpeedControls" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="MaxIntervalHbox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="MaxBlinkIntervalSettingsInput" type="SpinBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalHbox"]
+unique_name_in_owner = true
+layout_mode = 2
+min_value = 0.1
+step = 0.1
+value = 4.0
+custom_arrow_step = 1.0
+
+[node name="blinkInterval" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MaxIntervalHbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "SO_SETTINGS_ANIMATION_BLINK_MAX_INTERVAL_LABEL"
+horizontal_alignment = 1
+
+[node name="MinIntervalHbox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="MinBlinkIntervalSettingsInput" type="SpinBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalHbox"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+value = 2.0
+custom_arrow_step = 1.0
+
+[node name="blinkInterval" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/MinIntervalHbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "SO_SETTINGS_ANIMATION_BLINK_MIN_INTERVAL_LABEL"
+horizontal_alignment = 1
+
+[node name="DurationHBox" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls"]
+layout_mode = 2
+
+[node name="BlinkDurationSettingsInput" type="SpinBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/DurationHBox"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+custom_arrow_step = 1.0
+
+[node name="blinkInterval2" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed/BlinkSpeedControls/DurationHBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "SO_SETTINGS_ANIMATION_BLINK_DURATION_LABEL"
+horizontal_alignment = 1
+
+[node name="bufferSpace" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/BlinkSpeed"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
 
 [node name="SO_SETTINGS_MISC_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
 visible = false
 layout_mode = 2
-metadata/_tab_index = 4
+metadata/_tab_index = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_MISC_TAB"]
 layout_mode = 2
