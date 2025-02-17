@@ -3,6 +3,10 @@ class_name Menu extends Control
 # The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
 
+var localization = Localization.new()
+
+var language_map: Dictionary = {}
+
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
 @onready var profilename: String = "GDTuber Avatar"
@@ -97,6 +101,11 @@ func _ready():
 	menu_shown = true
 	_load_data(AUTOSAVE_PATH)
 	_load_system_data()
+	
+	var language_popup = %LanguageDropdown.get_popup()
+	localization.language_popup = language_popup
+	localization.set_initial_language()
+	%LanguageDropdown.selected = 0
 
 
 ### Process
