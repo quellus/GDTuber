@@ -105,6 +105,7 @@ func _ready():
 	var language_popup = %LanguageDropdown.get_popup()
 	localization.language_popup = language_popup
 	localization.set_initial_language()
+	%LanguageDropdown.selected = 0
 
 
 ### Process
