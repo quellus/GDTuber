@@ -1,6 +1,25 @@
 # Configuration Options
 
+## Color Controls 
+<img src="./doc_pictures/colorControls.png" alt="image" width="150" height="auto">
+
+Options for modifying the Hue, Saturation and Lightness(Value) of the image object. 
+
 ## Animation
+
+<img src="./doc_pictures/animationControls.png" alt="image" width="150" height="auto"> 
+
+### Animate Object 
+
+Check box that controls if the screen object should bounce up and down. 
+
+### Animate Object 
+
+Controls the up and down range of the bounce animation. 
+
+### Speed 
+
+Controls how fast the bounce animation goes. 
 
 ### Blink Speed Controls
 
