@@ -97,15 +97,16 @@ func _ready():
 	for device_name in devices:
 		popup_menu.add_item(device_name)
 	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
+	
+	# Initialize Localization
+	localization.language_dropdown = %LanguageDropdown
+	localization.set_initial_language()
+	%LanguageDropdown.selected = 0
+	
 	# Initialize Menu
 	menu_shown = true
 	_load_data(AUTOSAVE_PATH)
 	_load_system_data()
-	
-	var language_popup = %LanguageDropdown.get_popup()
-	localization.language_popup = language_popup
-	localization.set_initial_language()
-	%LanguageDropdown.selected = 0
 
 
 ### Process
@@ -160,6 +161,7 @@ func _save_system_data():
 	config.set_value("Audio", "input_device", input_device)
 	config.set_value("Audio", "threshold", threshold)
 	config.set_value("Audio", "input_gain", input_gain)
+	config.set_value("Localization", "language", TranslationServer.get_locale())
 	
 	config.save(SYSTEM_CONFIG_PATH)
 
@@ -174,6 +176,8 @@ func _load_system_data():
 		threshold_slider.value = threshold
 		input_gain = config.get_value("Audio", "input_gain", input_gain)
 		input_gain_slider.value = input_gain
+		
+		localization.set_locale(config.get_value("Localization", "language"))
 
 
 func _save_profile_data():
