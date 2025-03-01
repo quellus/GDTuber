@@ -70,7 +70,7 @@ ui_down={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Translations/English.en.translation")
+locale/translations=PackedStringArray("res://Translations/English.en.translation", "res://Translations/Hungarian.hu.translation")
 
 [rendering]
 

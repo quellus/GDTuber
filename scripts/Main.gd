@@ -3,6 +3,10 @@ class_name Menu extends Control
 # The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
 
+var localization = Localization.new()
+
+var language_map: Dictionary = {}
+
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
 @onready var profilename: String = "GDTuber Avatar"
@@ -93,6 +97,11 @@ func _ready():
 	for device_name in devices:
 		popup_menu.add_item(device_name)
 	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
+	
+	# Initialize Localization
+	localization.language_dropdown = %LanguageDropdown
+	localization.setup()
+	
 	# Initialize Menu
 	menu_shown = true
 	_load_data(AUTOSAVE_PATH)
@@ -151,6 +160,7 @@ func _save_system_data():
 	config.set_value("Audio", "input_device", input_device)
 	config.set_value("Audio", "threshold", threshold)
 	config.set_value("Audio", "input_gain", input_gain)
+	config.set_value("Localization", "language", TranslationServer.get_locale())
 	
 	config.save(SYSTEM_CONFIG_PATH)
 
@@ -165,6 +175,10 @@ func _load_system_data():
 		threshold_slider.value = threshold
 		input_gain = config.get_value("Audio", "input_gain", input_gain)
 		input_gain_slider.value = input_gain
+		
+		var locale = config.get_value("Localization", "language", TranslationServer.get_locale())
+		if locale != TranslationServer.get_locale():
+			localization.set_locale(locale)
 
 
 func _save_profile_data():
