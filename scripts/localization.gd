@@ -12,14 +12,14 @@ func _init() -> void:
 		language_map[TranslationServer.get_locale_name(locale)] = locale
 
 
-func set_initial_language() -> void:
-	set_default_language()
+func setup() -> void:
+	set_language_from_os()
 	_populate_dropdown()
 	language_dropdown.item_selected.connect(_on_locale_changed)
 	language_dropdown.selected = 0
 
 
-func set_default_language():
+func set_language_from_os():
 	var os_lang = OS.get_locale_language()
 	if os_lang in available_locales:
 		TranslationServer.set_locale(os_lang)
@@ -40,7 +40,7 @@ func set_locale(locale: String):
 func _on_locale_changed(index: int) -> void:
 	var language = language_dropdown.get_item_text(index)
 	if language == tr(DEFAULT_LANGUAGE_LABEL):
-		set_default_language()
+		set_language_from_os()
 	else:
 		TranslationServer.set_locale(language_map[language])
 

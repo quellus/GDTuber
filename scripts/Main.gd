@@ -100,7 +100,7 @@ func _ready():
 	
 	# Initialize Localization
 	localization.language_dropdown = %LanguageDropdown
-	localization.set_initial_language()
+	localization.setup()
 	
 	# Initialize Menu
 	menu_shown = true
