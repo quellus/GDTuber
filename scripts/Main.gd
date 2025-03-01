@@ -101,7 +101,6 @@ func _ready():
 	# Initialize Localization
 	localization.language_dropdown = %LanguageDropdown
 	localization.set_initial_language()
-	%LanguageDropdown.selected = 0
 	
 	# Initialize Menu
 	menu_shown = true
@@ -177,7 +176,9 @@ func _load_system_data():
 		input_gain = config.get_value("Audio", "input_gain", input_gain)
 		input_gain_slider.value = input_gain
 		
-		localization.set_locale(config.get_value("Localization", "language"))
+		var locale = config.get_value("Localization", "language", TranslationServer.get_locale())
+		if locale != TranslationServer.get_locale():
+			localization.set_locale(locale)
 
 
 func _save_profile_data():
