@@ -39,7 +39,7 @@ Thank you for considering contributing to our project! We appreciate your intere
 
 ### Prerequisites
 
-- Ensure you have Godot version **4.3** installed. You can download it from the [official Godot website](https://godotengine.org/download).
+- Ensure you have Godot version **4.4** installed. You can download it from the [official Godot website](https://godotengine.org/download).
 
 ### Getting Started
 
@@ -59,7 +59,7 @@ Thank you for considering contributing to our project! We appreciate your intere
 
 ### Making Changes
 
-1. Open the project in Godot (version 4.3).
+1. Open the project in Godot (version 4.4).
 2. Make your changes or additions in the Godot editor.
 3. Test your changes thoroughly to ensure they work as expected.
 
