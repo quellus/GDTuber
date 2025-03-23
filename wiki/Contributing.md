@@ -4,7 +4,7 @@ Thank you for considering contributing to our project! We appreciate your intere
 
 ## Requirements
 
-- You must have [Godot version 4.3](https://godotengine.org/download/archive/) installed as this project is made in godot (Windows, Linux, Mac)
+- You must have [Godot version 4.4](https://godotengine.org/download/archive/) installed as this project is made in godot (Windows, Linux, Mac)
 - Git installed on your computer. Install git by [clicking here](https://git-scm.com/) (Windows, Linux, Mac)
 
 if you are a linux user you can also install Git through your package manager
@@ -40,7 +40,7 @@ if you are a linux user you can also install Git through your package manager
 
 #### Making Changes
 
-1. Open the project in Godot (version 4.3).
+1. Open the project in Godot (version 4.4).
    
 2. Make your changes or additions in the Godot editor.
    

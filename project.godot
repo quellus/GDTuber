@@ -11,9 +11,10 @@ config_version=5
 [application]
 
 config/name="GDTuber"
+config/description="No Description"
 config/version="0.13"
 run/main_scene="res://scenes/Main.tscn"
-config/features=PackedStringArray("4.3")
+config/features=PackedStringArray("4.4")
 run/low_processor_mode=true
 config/icon="res://Assets/GDTuber.png"
 config/windows_native_icon="res://GDTuber Icon.ico"

@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dvjlkpjvjxn0h"]
 
-[ext_resource type="Script" path="res://scripts/Main.gd" id="1_6oykm"]
-[ext_resource type="Script" path="res://scripts/LineEditReset.gd" id="2_0ym8f"]
+[ext_resource type="Script" uid="uid://bjlwevofrob1" path="res://scripts/Main.gd" id="1_6oykm"]
+[ext_resource type="Script" uid="uid://djq7cnr1q3go0" path="res://scripts/LineEditReset.gd" id="2_0ym8f"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="3_5cu1w"]
-[ext_resource type="Script" path="res://scripts/gizmo.gd" id="4_7g88q"]
+[ext_resource type="Script" uid="uid://6dijgfptswv4" path="res://scripts/gizmo.gd" id="4_7g88q"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="5_lmu52"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
@@ -93,6 +93,7 @@ size_flags_horizontal = 4
 text = "MAIN_INPUT_DEVICE_LABEL"
 flat = false
 item_count = 1
+popup/item_0/id = 0
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/MainMenu"]
 custom_minimum_size = Vector2(115.075, 0)
