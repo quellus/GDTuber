@@ -104,7 +104,29 @@ func _ready():
 	
 	# Initialize Menu
 	menu_shown = true
-	_load_data(AUTOSAVE_PATH)
+	#var data_loader = File_Loader.new()
+	var window: Window = get_tree().get_root()
+	File_Loader.load_data(
+		AUTOSAVE_PATH,
+		MenusRoot,
+		ObjectsRoot,
+		project_version,
+		window,
+		titleedit,
+		profilename,
+		background_color,
+		bgcolorPicker,
+		background,
+		bgcolor,
+		background_transparent,
+		bgTransparentToggle,
+		fixedWindowSizeToggle,
+		fixedWindowWidthSpinbox,
+		fixedWindowHeightSpinbox,
+		maxFpsSpinbox,
+		fpsCapToggle
+		)
+	#_load_data(AUTOSAVE_PATH)
 	_load_system_data()
 
 
