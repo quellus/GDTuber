@@ -1,6 +1,6 @@
 class_name File_Loader
 
-static func _open_image(path, object_creator: OnScreenObjectMenu):
+static func open_image(path, object_creator: OnScreenObjectMenu):
 	if object_creator.openingfor:
 		var image = Image.new()
 		var err = image.load(path)
@@ -12,7 +12,7 @@ static func _open_image(path, object_creator: OnScreenObjectMenu):
 		object_creator.openingfor.set(object_creator.objectimagepathfield, path)
 	
 
-static func _validate_object_json(dict: Dictionary, version: String) -> bool:
+static func validate_object_json(dict: Dictionary, version: String) -> bool:
 	var valid = true
 	var versions = {
 		"0.1":{
@@ -77,7 +77,7 @@ static func _validate_object_json(dict: Dictionary, version: String) -> bool:
 	return valid
 
 
-static func _validate_save_json(dict: Dictionary, version: String) -> bool:
+static func validate_save_json(dict: Dictionary, version: String) -> bool:
 	var valid = true
 	var versions = {
 		"0.1":{
@@ -146,7 +146,7 @@ static func load_data(
 			if save_dict["version"] is float:
 				save_dict["version"] = str(save_dict["version"])
 				version = save_dict["version"]
-		if _validate_save_json(save_dict, version):
+		if validate_save_json(save_dict, version):
 			version = save_dict["version"]
 			# Version Check
 			if version.naturalnocasecmp_to(project_version) > 0:
@@ -158,7 +158,7 @@ static func load_data(
 			for men in menu_root.get_children():
 				men.queue_free()
 			for obj in save_dict["objects"]:
-				if _validate_object_json(obj, version):
+				if validate_object_json(obj, version):
 					var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(menu_root, objects_root)  # _create_new_object(menu_root, objects_root, file_dialog)
 					var new_onscreen_object_menu = OnScreenObjectMenu.new(
 						menu_root,
@@ -179,7 +179,7 @@ static func load_data(
 						new_onscreen_object_menu.openingfor = new_onscreen_object
 						new_onscreen_object_menu.objectimagefield = "texture"
 						new_onscreen_object_menu.objectimagepathfield = "texturepath"
-						_open_image(obj["texturepath"], new_onscreen_object_menu)
+						open_image(obj["texturepath"], new_onscreen_object_menu)
 					new_onscreen_object.usesingleimage = true
 					# 0.2
 					if version.naturalnocasecmp_to("0.2") >= 0:
@@ -216,7 +216,7 @@ static func load_data(
 								new_onscreen_object_menu.openingfor = new_onscreen_object
 								new_onscreen_object_menu.objectimagefield = imgload[1]
 								new_onscreen_object_menu.objectimagepathfield = imgload[0]
-								_open_image(imgload[2],new_onscreen_object_menu)
+								open_image(imgload[2],new_onscreen_object_menu)
 					# 0.11
 					if version.naturalnocasecmp_to("0.11") >= 0:
 						new_onscreen_object.auto_toggle_enabled = obj["auto_toggle_enabled"]
