@@ -106,6 +106,7 @@ func _ready():
 	menu_shown = true
 	#var data_loader = File_Loader.new()
 	var window: Window = get_tree().get_root()
+	
 	File_Loader.load_data(
 		AUTOSAVE_PATH,
 		MenusRoot,
@@ -124,7 +125,10 @@ func _ready():
 		fixedWindowWidthSpinbox,
 		fixedWindowHeightSpinbox,
 		maxFpsSpinbox,
-		fpsCapToggle
+		fpsCapToggle,
+		file_dialog,
+		gizmo,
+		drag_target
 		)
 	#_load_data(AUTOSAVE_PATH)
 	_load_system_data()

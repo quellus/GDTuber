@@ -1,4 +1,6 @@
-static func _open_image(path, object_creator: OnScreenObjectCreator):
+class_name File_Loader
+
+static func _open_image(path, object_creator: OnScreenObjectMenu):
 	if object_creator.openingfor:
 		var image = Image.new()
 		var err = image.load(path)
@@ -129,7 +131,10 @@ static func load_data(
 	fixedWindowWidthSpinbox: SpinBox,
 	fixedWindowHeightSpinbox: SpinBox,
 	maxFpsSpinbox: SpinBox,
-	fpsCapToggle: CheckBox):
+	fpsCapToggle: CheckBox,
+	file_dialog_window: Window,
+	gizmo_instance: Gizmo,
+	drag_target_instance: ScreenObject):
 
 	var save_json = FileAccess.get_file_as_string(path)
 	if save_json == "":
@@ -154,45 +159,53 @@ static func load_data(
 				men.queue_free()
 			for obj in save_dict["objects"]:
 				if _validate_object_json(obj, version):
-					var newObjectFactory = OnScreenObjectCreator.new()
-					var newobj = newObjectFactory.make_new_screen_object(menu_root, objects_root)  # _create_new_object(menu_root, objects_root, file_dialog)
+					var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(menu_root, objects_root)  # _create_new_object(menu_root, objects_root, file_dialog)
+					var new_onscreen_object_menu = OnScreenObjectMenu.new(
+						menu_root,
+						objects_root,
+						new_onscreen_object,
+						file_dialog_window,
+						gizmo_instance,
+						drag_target_instance
+					)
 					# 0.1
-					newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
-					newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
-					newobj.blinking = obj["blinking"]
-					newobj.reactive = obj["reactive"]
-					newobj.talking = obj["talking"]
+					new_onscreen_object.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
+					new_onscreen_object.user_position = Vector2(obj["position.x"], obj["position.y"])
+					new_onscreen_object.blinking = obj["blinking"]
+					new_onscreen_object.reactive = obj["reactive"]
+					new_onscreen_object.talking = obj["talking"]
 					if obj["texturepath"] != "":
-						newObjectFactory.openingfor = newobj
-						newObjectFactory.objectimagefield = "texture"
-						newObjectFactory.objectimagepathfield = "texturepath"
-						_open_image(obj["texturepath"], newObjectFactory)
-					newobj.usesingleimage = true
+						print("heheheheheh ")
+						new_onscreen_object_menu.openingfor = new_onscreen_object
+						new_onscreen_object_menu.objectimagefield = "texture"
+						new_onscreen_object_menu.objectimagepathfield = "texturepath"
+						_open_image(obj["texturepath"], new_onscreen_object_menu)
+					new_onscreen_object.usesingleimage = true
 					# 0.2
 					if version.naturalnocasecmp_to("0.2") >= 0:
-						newobj.filter = obj["filter"]
+						new_onscreen_object.filter = obj["filter"]
 					# 0.4
 					if version.naturalnocasecmp_to("0.4") >= 0:
-						newobj.user_rotation = obj["rotation"]
+						new_onscreen_object.user_rotation = obj["rotation"]
 					# 0.5
 					if version.naturalnocasecmp_to("0.5") >= 0:
-						newobj.user_hidden = obj["hidden"]
+						new_onscreen_object.user_hidden = obj["hidden"]
 					# 0.6
 					if version.naturalnocasecmp_to("0.6") >= 0:
-						newobj.user_name = obj["name"]
+						new_onscreen_object.user_name = obj["name"]
 					# 0.7
 					if version.naturalnocasecmp_to("0.7") >= 0:
-						newobj.user_hue = obj["hue"]
-						newobj.user_sat = obj["sat"]
-						newobj.user_val = obj["val"]
+						new_onscreen_object.user_hue = obj["hue"]
+						new_onscreen_object.user_sat = obj["sat"]
+						new_onscreen_object.user_val = obj["val"]
 					# 0.8
 					if version.naturalnocasecmp_to("0.8") >= 0:
-						newobj.user_height = obj["height"]
-						newobj.user_speed = obj["speed"]
-					newobj.update_menu.emit()
+						new_onscreen_object.user_height = obj["height"]
+						new_onscreen_object.user_speed = obj["speed"]
+					new_onscreen_object.update_menu.emit()
 					# 0.9
 					if version.naturalnocasecmp_to("0.9") >= 0:
-						newobj.usesingleimage = obj["usesingleimage"]
+						new_onscreen_object.usesingleimage = obj["usesingleimage"]
 						for imgload in [
 							["neutralpath", "neutral_texture", obj["neutralpath"]],
 							["blinkingpath", "blinking_texture", obj["blinkingpath"]],
@@ -200,21 +213,21 @@ static func load_data(
 							["talkingandblinkingpath", "talking_and_blinking_texture", obj["talkingandblinkingpath"]]
 						]:
 							if imgload[2] != "":
-								newObjectFactory.openingfor = newobj
-								newObjectFactory.objectimagefield = imgload[1]
-								newObjectFactory.objectimagepathfield = imgload[0]
-								_open_image(imgload[2],newObjectFactory)
+								new_onscreen_object_menu.openingfor = new_onscreen_object
+								new_onscreen_object_menu.objectimagefield = imgload[1]
+								new_onscreen_object_menu.objectimagepathfield = imgload[0]
+								_open_image(imgload[2],new_onscreen_object_menu)
 					# 0.11
 					if version.naturalnocasecmp_to("0.11") >= 0:
-						newobj.auto_toggle_enabled = obj["auto_toggle_enabled"]
-						newobj.auto_toggle_time = obj["auto_toggle_time"]
+						new_onscreen_object.auto_toggle_enabled = obj["auto_toggle_enabled"]
+						new_onscreen_object.auto_toggle_time = obj["auto_toggle_time"]
 					# 0.13
 					if version.naturalnocasecmp_to("0.13") >= 0:
-						newobj.min_blink_delay = obj["min_blink_delay"] if obj.has("min_blink_delay") else 2 
-						newobj.max_blink_delay = obj["max_blink_delay"] if obj.has("max_blink_delay") else 4 
-						newobj.blink_duration = obj["blink_duration"] if obj.has("blink_duration") else 2 
+						new_onscreen_object.min_blink_delay = obj["min_blink_delay"] if obj.has("min_blink_delay") else 2 
+						new_onscreen_object.max_blink_delay = obj["max_blink_delay"] if obj.has("max_blink_delay") else 4 
+						new_onscreen_object.blink_duration = obj["blink_duration"] if obj.has("blink_duration") else 2 
 					
-					newobj.update_menu.emit()
+					new_onscreen_object.update_menu.emit()
 				else:
 					push_error("ERROR: object does not contain required fields")
 			# Load Program Settings
