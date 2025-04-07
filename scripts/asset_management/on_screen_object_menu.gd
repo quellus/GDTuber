@@ -2,6 +2,9 @@ class_name OnScreenObjectMenu extends Node
 
 static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
 
+var rotating = false
+var rotation_center: Vector2 = Vector2()
+var starting_rotation: float = 0
 var file_dialog: Window 
 var gizmo: Gizmo
 var openingfor: ScreenObject
@@ -59,6 +62,39 @@ func _connect_menu(smenu: ScreenObjectMenu):
 	smenu.grab_gizmo.connect(_grab_gizmo)
 	smenu.order_changed.connect(_order_objects)
 
+func _input(event):
+	if event is InputEventMouseMotion and drag_target and rotating:
+		var rotvector = event.global_position-rotation_center
+		var rotangle = atan2(rotvector.y, rotvector.x)
+		var targetrot = rotangle+starting_rotation
+		if Input.is_key_pressed(KEY_CTRL):
+			drag_target.user_rotation = round(targetrot/AssetConsts.SNAP_ANGLE)*AssetConsts.SNAP_ANGLE
+		else:
+			drag_target.user_rotation = targetrot
+
+	if event is InputEventMouseButton and drag_target:
+			match event.button_index:
+				MOUSE_BUTTON_RIGHT:
+					if event.is_pressed():
+						if !rotating:
+							rotation_center = drag_target.global_position
+							var rotvector = event.global_position-rotation_center
+							var rotangle = atan2(rotvector.y, rotvector.x)
+							starting_rotation = drag_target.user_rotation - rotangle
+							rotating = true
+					else:
+						rotating = false
+
+func _unhandled_input(event):
+	# Scroll to zoom
+	if event is InputEventMouseButton and drag_target:
+		if is_instance_valid(drag_target):
+			match event.button_index:
+				MOUSE_BUTTON_WHEEL_UP:
+					drag_target.user_scale *= AssetConsts.SCALE_RATIO
+				MOUSE_BUTTON_WHEEL_DOWN:
+					drag_target.user_scale *= 1 / AssetConsts.SCALE_RATIO
+
 
 func _init(menu_root_instance: Node,
 		objects_root_instance: Node,
@@ -72,11 +108,11 @@ func _init(menu_root_instance: Node,
 	drag_target = drag_target_instance
 	menu_root = menu_root_instance
 	objects_root = objects_root_instance
-
 	newmenu = screen_object_menu_scene.instantiate() as ScreenObjectMenu
-	menu_root.add_child(newmenu)
+	menu_root.add_child(newmenu)	
 	newmenu.object = connected_screen_object
 	newmenu.update_menu()
 	_connect_menu(newmenu) 
+	objects_root.add_child(self)
 
 	

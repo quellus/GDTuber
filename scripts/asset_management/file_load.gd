@@ -175,7 +175,6 @@ static func load_data(
 					new_onscreen_object.reactive = obj["reactive"]
 					new_onscreen_object.talking = obj["talking"]
 					if obj["texturepath"] != "":
-						print("heheheheheh ")
 						new_onscreen_object_menu.openingfor = new_onscreen_object
 						new_onscreen_object_menu.objectimagefield = "texture"
 						new_onscreen_object_menu.objectimagepathfield = "texturepath"

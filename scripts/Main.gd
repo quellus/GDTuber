@@ -37,7 +37,6 @@ var menu_shown = false:
 
 # Audio Management
 const MAX_SAMPLES = 20
-const SCALE_RATIO = 1.1
 @onready var input_gain_slider: Slider = %InputGainSlider
 @onready var threshold_slider: Slider = %ThresholdSlider
 @onready var device_dropdown := %DeviceDropdown
@@ -50,23 +49,13 @@ var input_gain: float
 var input_device: String
 
 # Screen Object Management
-const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
-const DEFAULT_NEUTRAL_IMAGE: String = "res://Assets/DefaultAvatar-Neutral.png"
-const DEFAULT_TALKING_IMAGE: String = "res://Assets/DefaultAvatar-Talking.png"
-const DEFAULT_BLINKING_IMAGE: String = "res://Assets/DefaultAvatar-Blinking.png"
-const DEFAULT_TALKING_AND_BLINKING_IMAGE : String = "res://Assets/DefaultAvatar-TalkingBlinking.png"
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
-var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
-var default_neutral_texture: Texture2D = preload(DEFAULT_NEUTRAL_IMAGE)
-var default_talking_texture: Texture2D = preload(DEFAULT_TALKING_IMAGE)
-var default_blinking_texture: Texture2D = preload(DEFAULT_BLINKING_IMAGE)
-var default_talking_and_blinking_texture: Texture2D = preload(DEFAULT_TALKING_AND_BLINKING_IMAGE)
-var somenuscene = preload("res://scenes/screen_object_menu.tscn")
+
 
 # Screen Object Editing
-const SNAP_ANGLE = PI/4
 @export var gizmo: Gizmo
+
 var drag_target: ScreenObject
 var rotating = false
 var rotation_center: Vector2 = Vector2()
@@ -273,7 +262,6 @@ func _on_quit_button_button_down():
 	get_tree().quit()
 
 
-
 func _on_fixed_window_button_toggled(value):
 	var windowsize = DisplayServer.window_get_size()
 	fixedWindowSize = value
@@ -345,40 +333,9 @@ func _on_input_gain_change(_new_input_gain : float):
 
 
 ### Input
-func _input(event):
 
-	if event is InputEventMouseMotion and drag_target and rotating:
-		var rotvector = event.global_position-rotation_center
-		var rotangle = atan2(rotvector.y, rotvector.x)
-		var targetrot = rotangle+starting_rotation
-		if Input.is_key_pressed(KEY_CTRL):
-			drag_target.user_rotation = round(targetrot/SNAP_ANGLE)*SNAP_ANGLE
-		else:
-			drag_target.user_rotation = targetrot
-
-	if event is InputEventMouseButton and drag_target:
-			match event.button_index:
-				MOUSE_BUTTON_RIGHT:
-					if event.is_pressed():
-						if !rotating:
-							rotation_center = drag_target.global_position
-							var rotvector = event.global_position-rotation_center
-							var rotangle = atan2(rotvector.y, rotvector.x)
-							starting_rotation = drag_target.user_rotation - rotangle
-							rotating = true
-					else:
-						rotating = false
 
 func _unhandled_input(event):
-
-	# Scroll to zoom
-	if event is InputEventMouseButton and drag_target:
-		if is_instance_valid(drag_target):
-			match event.button_index:
-				MOUSE_BUTTON_WHEEL_UP:
-					drag_target.user_scale *= SCALE_RATIO
-				MOUSE_BUTTON_WHEEL_DOWN:
-					drag_target.user_scale *= 1 / SCALE_RATIO
 	# Toggle Menu
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
