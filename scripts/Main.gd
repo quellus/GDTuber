@@ -177,6 +177,18 @@ func _save_system_data():
 	config.save(SYSTEM_CONFIG_PATH)
 
 
+func _add_new_object_to_scene():
+	var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(MenusRoot, ObjectsRoot)
+	OnScreenObjectMenu.new(
+						MenusRoot,
+						ObjectsRoot,
+						new_onscreen_object,
+						file_dialog,
+						gizmo,
+						drag_target
+					)
+
+
 func _load_system_data():
 	var config = ConfigFile.new()
 	var err: Error = config.load(SYSTEM_CONFIG_PATH)

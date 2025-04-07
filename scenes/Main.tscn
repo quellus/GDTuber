@@ -524,7 +524,7 @@ autostart = true
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
-[connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
+[connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_add_new_object_to_scene"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/Settings" to="." method="_open_settings"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Main Menu" to="." method="_close_settings"]
