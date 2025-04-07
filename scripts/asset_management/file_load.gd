@@ -1,15 +1,16 @@
 class_name File_Loader
 
-static func open_image(path, object_creator: OnScreenObjectMenu):
-	if object_creator.openingfor:
+# this should maybe live in OnScreenObjectMenu
+static func open_image(path, on_screen_object_menu: OnScreenObjectMenu):
+	if on_screen_object_menu.openingfor:
 		var image = Image.new()
 		var err = image.load(path)
 		if err != OK:
 			push_error("cannot load image.")
 			return
 
-		object_creator.openingfor.set(object_creator.objectimagefield, ImageTexture.create_from_image(image))
-		object_creator.openingfor.set(object_creator.objectimagepathfield, path)
+		on_screen_object_menu.openingfor.set(on_screen_object_menu.objectimagefield, ImageTexture.create_from_image(image))
+		on_screen_object_menu.openingfor.set(on_screen_object_menu.objectimagepathfield, path)
 	
 
 static func validate_object_json(dict: Dictionary, version: String) -> bool:
@@ -132,7 +133,7 @@ static func load_data(
 	fixedWindowHeightSpinbox: SpinBox,
 	maxFpsSpinbox: SpinBox,
 	fpsCapToggle: CheckBox,
-	file_dialog_window: Window,
+	file_dialog_window: FileDialog,
 	gizmo_instance: Gizmo,
 	drag_target_instance: ScreenObject):
 

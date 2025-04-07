@@ -1,3 +1,5 @@
+
+# should probably be renamed to onscreen object user interface controller or something
 class_name OnScreenObjectMenu extends Node
 
 static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
@@ -5,7 +7,7 @@ static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.t
 var rotating = false
 var rotation_center: Vector2 = Vector2()
 var starting_rotation: float = 0
-var file_dialog: Window 
+var file_dialog: FileDialog 
 var gizmo: Gizmo
 var openingfor: ScreenObject
 var objectimagefield: String
@@ -15,11 +17,15 @@ var drag_target: ScreenObject
 var menu_root: Node
 var objects_root: Node
 
+func _update_image(path):
+	file_dialog.file_selected.disconnect(_update_image)
+	File_Loader.open_image(path, self)
 
 func _request_image(requestor, imageproperty, pathproperty):
 	openingfor = requestor
 	objectimagefield = imageproperty
 	objectimagepathfield = pathproperty
+	file_dialog.file_selected.connect(_update_image)
 	file_dialog.popup_centered()
 
 func _clear_gizmo():
@@ -99,7 +105,7 @@ func _unhandled_input(event):
 func _init(menu_root_instance: Node,
 		objects_root_instance: Node,
 	 	connected_screen_object: ScreenObject, 
-	 	file_dialog_window: Window,
+	 	file_dialog_window: FileDialog,
 	 	gizmo_instance: Gizmo,
 	 	drag_target_instance: ScreenObject):
 	

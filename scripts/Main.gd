@@ -62,7 +62,7 @@ var rotation_center: Vector2 = Vector2()
 var starting_rotation: float = 0
 
 # File Management
-@onready var file_dialog := %ImageOpenDialog
+@onready var file_dialog :FileDialog= %ImageOpenDialog
 @onready var json_save_dialog : FileDialog = %JSONSaveDialog
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
 var openingfor: ScreenObject
