@@ -1,18 +1,5 @@
 class_name File_Loader
 
-# this should maybe live in OnScreenObjectMenu
-static func open_image(path, on_screen_object_menu: OnScreenObjectMenu):
-	if on_screen_object_menu.openingfor:
-		var image = Image.new()
-		var err = image.load(path)
-		if err != OK:
-			push_error("cannot load image.")
-			return
-
-		on_screen_object_menu.openingfor.set(on_screen_object_menu.objectimagefield, ImageTexture.create_from_image(image))
-		on_screen_object_menu.openingfor.set(on_screen_object_menu.objectimagepathfield, path)
-	
-
 static func validate_object_json(dict: Dictionary, version: String) -> bool:
 	var valid = true
 	var versions = {
@@ -134,8 +121,7 @@ static func load_data(
 	maxFpsSpinbox: SpinBox,
 	fpsCapToggle: CheckBox,
 	file_dialog_window: FileDialog,
-	gizmo_instance: Gizmo,
-	drag_target_instance: ScreenObject):
+	gizmo_instance: Gizmo):
 
 	var save_json = FileAccess.get_file_as_string(path)
 	if save_json == "":
@@ -161,13 +147,12 @@ static func load_data(
 			for obj in save_dict["objects"]:
 				if validate_object_json(obj, version):
 					var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(menu_root, objects_root)  # _create_new_object(menu_root, objects_root, file_dialog)
-					var new_onscreen_object_menu = OnScreenObjectMenu.new(
+					var new_onscreen_object_menu_controller = OnScreenObjectMenuController.new(
 						menu_root,
 						objects_root,
 						new_onscreen_object,
 						file_dialog_window,
 						gizmo_instance,
-						drag_target_instance
 					)
 					# 0.1
 					new_onscreen_object.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
@@ -176,10 +161,10 @@ static func load_data(
 					new_onscreen_object.reactive = obj["reactive"]
 					new_onscreen_object.talking = obj["talking"]
 					if obj["texturepath"] != "":
-						new_onscreen_object_menu.openingfor = new_onscreen_object
-						new_onscreen_object_menu.objectimagefield = "texture"
-						new_onscreen_object_menu.objectimagepathfield = "texturepath"
-						open_image(obj["texturepath"], new_onscreen_object_menu)
+						new_onscreen_object_menu_controller.openingfor = new_onscreen_object
+						new_onscreen_object_menu_controller.objectimagefield = "texture"
+						new_onscreen_object_menu_controller.objectimagepathfield = "texturepath"
+						new_onscreen_object_menu_controller.open_image(obj["texturepath"])
 					new_onscreen_object.usesingleimage = true
 					# 0.2
 					if version.naturalnocasecmp_to("0.2") >= 0:
@@ -213,10 +198,10 @@ static func load_data(
 							["talkingandblinkingpath", "talking_and_blinking_texture", obj["talkingandblinkingpath"]]
 						]:
 							if imgload[2] != "":
-								new_onscreen_object_menu.openingfor = new_onscreen_object
-								new_onscreen_object_menu.objectimagefield = imgload[1]
-								new_onscreen_object_menu.objectimagepathfield = imgload[0]
-								open_image(imgload[2],new_onscreen_object_menu)
+								new_onscreen_object_menu_controller.openingfor = new_onscreen_object
+								new_onscreen_object_menu_controller.objectimagefield = imgload[1]
+								new_onscreen_object_menu_controller.objectimagepathfield = imgload[0]
+								new_onscreen_object_menu_controller.open_image(imgload[2])
 					# 0.11
 					if version.naturalnocasecmp_to("0.11") >= 0:
 						new_onscreen_object.auto_toggle_enabled = obj["auto_toggle_enabled"]

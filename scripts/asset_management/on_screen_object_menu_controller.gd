@@ -1,25 +1,36 @@
-
-# should probably be renamed to onscreen object user interface controller or something
-class_name OnScreenObjectMenu extends Node
+class_name OnScreenObjectMenuController extends Node
 
 static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
 
+var drag_target: ScreenObject
 var rotating = false
 var rotation_center: Vector2 = Vector2()
 var starting_rotation: float = 0
-var file_dialog: FileDialog 
-var gizmo: Gizmo
 var openingfor: ScreenObject
 var objectimagefield: String
 var objectimagepathfield: String
-var newmenu: ScreenObjectMenu 
-var drag_target: ScreenObject
+var screen_object_menu_ui: ScreenObjectMenu 
+
+var file_dialog: FileDialog 
+var gizmo: Gizmo
+
 var menu_root: Node
 var objects_root: Node
 
+func open_image(path):
+	if openingfor:
+		var image = Image.new()
+		var err = image.load(path)
+		if err != OK:
+			push_error("cannot load image.")
+			return
+
+		openingfor.set(objectimagefield, ImageTexture.create_from_image(image))
+		openingfor.set(objectimagepathfield, path)
+
 func _update_image(path):
 	file_dialog.file_selected.disconnect(_update_image)
-	File_Loader.open_image(path, self)
+	open_image(path)
 
 func _request_image(requestor, imageproperty, pathproperty):
 	openingfor = requestor
@@ -34,23 +45,26 @@ func _clear_gizmo():
 
 func _duplicate_object(obj: ScreenObject):
 	var newobj = OnScreenObjectCreator.make_new_screen_object(menu_root, objects_root)
-	OnScreenObjectMenu.new(menu_root,objects_root,newobj,file_dialog,gizmo,drag_target)
+	OnScreenObjectMenuController.new(menu_root,objects_root,newobj,file_dialog,gizmo)
 
 	for property in obj.copy_properties:
 		newobj.set(property, obj.get(property))
 	newobj.update_menu.emit()
 	pass
 
-func _on_drag_requested(object: ScreenObject):
-	if drag_target == object:
+func _handle_gizmo_focus_request(object_requesting_gizmo: ScreenObject):
+	if drag_target == object_requesting_gizmo:
 		drag_target = null
 		gizmo.visible = false
 		gizmo.target = null
 	else:
-		gizmo.global_position = object.global_position
+		gizmo.global_position = object_requesting_gizmo.global_position
 		gizmo.visible = true
-		gizmo.target = object
-		drag_target = object
+		gizmo.target = object_requesting_gizmo
+		drag_target = object_requesting_gizmo
+
+func _on_request_gizmo_focus(object: ScreenObject):
+	gizmo.request_screen_object_gizmo_focus(object)
 
 func _grab_gizmo(object: ScreenObject):
 	gizmo.global_position = object.global_position
@@ -60,13 +74,15 @@ func _order_objects():
 		objects_root.move_child(node.object, node.get_index())
 		pass
 
-func _connect_menu(smenu: ScreenObjectMenu):
-	smenu.request_image.connect(_request_image)
-	smenu.tree_exiting.connect(_clear_gizmo)
-	smenu.duplicate_object.connect(_duplicate_object)
-	smenu.request_gizmo.connect(_on_drag_requested)
-	smenu.grab_gizmo.connect(_grab_gizmo)
-	smenu.order_changed.connect(_order_objects)
+func _connect_signals():
+	screen_object_menu_ui.request_image.connect(_request_image)
+	screen_object_menu_ui.tree_exiting.connect(_clear_gizmo)
+	screen_object_menu_ui.duplicate_object.connect(_duplicate_object)
+	screen_object_menu_ui.request_gizmo.connect(_on_request_gizmo_focus)
+	screen_object_menu_ui.grab_gizmo.connect(_grab_gizmo)
+	screen_object_menu_ui.order_changed.connect(_order_objects)
+
+	gizmo.gizmo_focus_requested.connect(_handle_gizmo_focus_request)
 
 func _input(event):
 	if event is InputEventMouseMotion and drag_target and rotating:
@@ -106,19 +122,18 @@ func _init(menu_root_instance: Node,
 		objects_root_instance: Node,
 	 	connected_screen_object: ScreenObject, 
 	 	file_dialog_window: FileDialog,
-	 	gizmo_instance: Gizmo,
-	 	drag_target_instance: ScreenObject):
+	 	gizmo_instance: Gizmo):
 	
 	file_dialog= file_dialog_window
 	gizmo = gizmo_instance
-	drag_target = drag_target_instance
 	menu_root = menu_root_instance
 	objects_root = objects_root_instance
-	newmenu = screen_object_menu_scene.instantiate() as ScreenObjectMenu
-	menu_root.add_child(newmenu)	
-	newmenu.object = connected_screen_object
-	newmenu.update_menu()
-	_connect_menu(newmenu) 
+	screen_object_menu_ui = screen_object_menu_scene.instantiate() as ScreenObjectMenu
+	menu_root.add_child(screen_object_menu_ui)	
+	screen_object_menu_ui.object = connected_screen_object
+	screen_object_menu_ui.update_menu()
+
+	_connect_signals() 
 	objects_root.add_child(self)
 
 	

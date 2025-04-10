@@ -56,18 +56,13 @@ var input_device: String
 # Screen Object Editing
 @export var gizmo: Gizmo
 
-var drag_target: ScreenObject
-var rotating = false
-var rotation_center: Vector2 = Vector2()
-var starting_rotation: float = 0
+#var drag_target: ScreenObject
 
 # File Management
 @onready var file_dialog :FileDialog= %ImageOpenDialog
 @onready var json_save_dialog : FileDialog = %JSONSaveDialog
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
-var openingfor: ScreenObject
-var objectimagefield: String
-var objectimagepathfield: String
+
 var savedata: String
 const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
 const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
@@ -115,7 +110,6 @@ func _ready():
 		fpsCapToggle,
 		file_dialog,
 		gizmo,
-		drag_target
 		)
 	_load_system_data()
 
@@ -179,13 +173,12 @@ func _save_system_data():
 
 func _add_new_object_to_scene():
 	var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(MenusRoot, ObjectsRoot)
-	OnScreenObjectMenu.new(
+	OnScreenObjectMenuController.new(
 						MenusRoot,
 						ObjectsRoot,
 						new_onscreen_object,
 						file_dialog,
 						gizmo,
-						drag_target
 					)
 
 
