@@ -63,8 +63,6 @@ var input_device: String
 @onready var json_save_dialog : FileDialog = %JSONSaveDialog
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
 
-var savedata: String
-const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
 const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
 
 ### Ready
@@ -88,29 +86,11 @@ func _ready():
 	
 	# Initialize Menu
 	menu_shown = true
-	var window: Window = get_tree().get_root()
 	File_Loader.load_data(
-		AUTOSAVE_PATH,
-		MenusRoot,
-		ObjectsRoot,
-		project_version,
-		window,
-		titleedit,
-		profilename,
-		background_color,
-		bgcolorPicker,
-		background,
-		bgcolor,
-		background_transparent,
-		bgTransparentToggle,
-		fixedWindowSizeToggle,
-		fixedWindowWidthSpinbox,
-		fixedWindowHeightSpinbox,
-		maxFpsSpinbox,
-		fpsCapToggle,
-		file_dialog,
-		gizmo,
-		)
+		PlatformConsts.AUTOSAVE_PATH,
+		self
+	)
+	
 	_load_system_data()
 
 
@@ -142,24 +122,23 @@ func _notification(what):
 		_autosave()
 		get_tree().quit() # default behavior
 
-### File I/O
+### Handle Save event from button click 
 func _save_file(path: String):
-	if path.get_extension() == "":
-		path = path+".gdtuber"
-	var save_game = FileAccess.open(path, FileAccess.WRITE)
-	save_game.store_line(savedata)
+	# try catch here? 
+	var scene_state_json: String = File_Saver.serialize_scene_state_to_json(self)
+	File_Saver.save_to_file(scene_state_json, path)
+
 
 
 func _on_save_button():
-	_save_profile_data()
 	json_save_dialog.popup_centered()
 
 
 func _autosave():
-	_save_profile_data()
-	_save_system_data()
-	_save_file(AUTOSAVE_PATH)
 
+	# should probably be in a try catch?
+	_save_system_data() # for audio stuff 
+	_save_file(PlatformConsts.AUTOSAVE_PATH)
 
 func _save_system_data():
 	var config = ConfigFile.new()
@@ -197,57 +176,14 @@ func _load_system_data():
 		if locale != TranslationServer.get_locale():
 			localization.set_locale(locale)
 
-
-func _save_profile_data():
-	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
-	var savedict = {
-		"version":project_version,
-		"profile_name":profilename,
-		"background_transparent":background_transparent,
-		"background_color":background_color.to_html(),
-		"fixedWindowWidth":fixedWindowWidth,
-		"fixedWindowHeight":fixedWindowHeight,
-		"fixedWindowSize":fixedWindowSize,
-		"fpsCap": fpsCap,
-		"fpsCapValue": fpsCapValue,
-		"objects":[]
-	}
-	for obj in ObjectsRoot.get_children():
-		if obj is ScreenObject:
-			savedict["objects"].append({
-				"scale.x": obj.user_scale.x,
-				"scale.y": obj.user_scale.y,
-				"position.x": obj.user_position.x,
-				"position.y": obj.user_position.y,
-				"texturepath": obj.texturepath,
-				"blinking": obj.blinking,
-				"reactive": obj.reactive,
-				"talking": obj.talking,
-				"filter": obj.filter,
-				"rotation": obj.user_rotation,
-				"hidden": obj.user_hidden,
-				"name": obj.user_name,
-				"hue": obj.user_hue,
-				"sat": obj.user_sat,
-				"val": obj.user_val,
-				"height": obj.user_height,
-				"min_blink_delay": obj.min_blink_delay,
-				"max_blink_delay": obj.max_blink_delay,
-				"blink_duration": obj.blink_duration,
-				"speed": obj.user_speed,
-				"neutralpath": obj.neutralpath,
-				"blinkingpath": obj.blinkingpath,
-				"talkingpath": obj.talkingpath,
-				"talkingandblinkingpath": obj.talkingandblinkingpath,
-				"usesingleimage": obj.usesingleimage,
-				"auto_toggle_enabled": obj.auto_toggle_enabled,
-				"auto_toggle_time": obj.auto_toggle_time
-			})
-	savedata = JSON.stringify(savedict)
-
-
 func _load_dialog():
 	json_load_dialog.popup_centered()
+
+func _load_data(path: String):
+	File_Loader.load_data(
+		path,
+		self
+	)
 
 func _on_autosave_timer_timeout():
 	_autosave()
@@ -262,8 +198,7 @@ func _on_button_button_down():
 
 func _on_quit_button_button_down():
 	_save_system_data()
-	_save_profile_data()
-	_save_file(AUTOSAVE_PATH)
+	_save_file(PlatformConsts.AUTOSAVE_PATH)
 	get_tree().quit()
 
 
@@ -338,8 +273,6 @@ func _on_input_gain_change(_new_input_gain : float):
 
 
 ### Input
-
-
 func _unhandled_input(event):
 	# Toggle Menu
 	if event is InputEventKey or event is InputEventMouse:

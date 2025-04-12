@@ -102,26 +102,26 @@ static func validate_save_json(dict: Dictionary, version: String) -> bool:
 
 
 static func load_data(
-	path,
-	menu_root: Node,
-	objects_root: Node,
-	project_version: String,
-	tree_root: Window,
-	titleedit: LineEdit, 
-	profilename: String, 
-	background_color: Color,
-	bgcolorPicker: ColorPickerButton,
-	background: ColorRect, 
-	bgcolor: Panel, 
-	background_transparent: bool,
-	bgTransparentToggle: CheckBox,
-	fixedWindowSizeToggle: CheckBox,
-	fixedWindowWidthSpinbox: SpinBox,
-	fixedWindowHeightSpinbox: SpinBox,
-	maxFpsSpinbox: SpinBox,
-	fpsCapToggle: CheckBox,
-	file_dialog_window: FileDialog,
-	gizmo_instance: Gizmo):
+	path: String,
+	main_menu: Menu
+	):
+		
+	var tree_root: Window = main_menu.get_tree().get_root()
+	var objects_root = main_menu.ObjectsRoot
+	var menu_root = main_menu.MenusRoot
+	var titleedit: LineEdit = main_menu.titleedit
+	var profilename: String =  main_menu.profilename
+	var background_color: Color = main_menu.background_color
+	var bgcolorPicker: ColorPickerButton = main_menu.bgcolorPicker
+	var background: ColorRect = main_menu.background
+	var bgcolor: Panel = main_menu.bgcolor
+	var background_transparent: bool = main_menu.background_transparent
+	var bgTransparentToggle: CheckBox = main_menu.bgTransparentToggle
+	var fixedWindowSizeToggle: CheckBox = main_menu.fixedWindowSizeToggle
+	var fixedWindowWidthSpinbox: SpinBox = main_menu.fixedWindowWidthSpinbox
+	var fixedWindowHeightSpinbox: SpinBox = main_menu.fixedWindowHeightSpinbox
+	var maxFpsSpinbox: SpinBox = main_menu.maxFpsSpinbox
+	var fpsCapToggle: CheckBox = main_menu.fpsCapToggle
 
 	var save_json = FileAccess.get_file_as_string(path)
 	if save_json == "":
@@ -136,7 +136,7 @@ static func load_data(
 		if validate_save_json(save_dict, version):
 			version = save_dict["version"]
 			# Version Check
-			if version.naturalnocasecmp_to(project_version) > 0:
+			if version.naturalnocasecmp_to(main_menu.project_version) > 0:
 				push_warning("WARNING: save data is newer than current version, attempting to load data")
 
 			# Generate Objects from Objects Array
@@ -151,8 +151,8 @@ static func load_data(
 						menu_root,
 						objects_root,
 						new_onscreen_object,
-						file_dialog_window,
-						gizmo_instance,
+						main_menu.file_dialog,
+						main_menu.gizmo,
 					)
 					# 0.1
 					new_onscreen_object.user_scale = Vector2(obj["scale.x"], obj["scale.y"])

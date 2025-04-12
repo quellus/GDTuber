@@ -90,7 +90,7 @@ func _input(event):
 		var rotangle = atan2(rotvector.y, rotvector.x)
 		var targetrot = rotangle+starting_rotation
 		if Input.is_key_pressed(KEY_CTRL):
-			drag_target.user_rotation = round(targetrot/AssetConsts.SNAP_ANGLE)*AssetConsts.SNAP_ANGLE
+			drag_target.user_rotation = round(targetrot/PlatformConsts.SNAP_ANGLE)*PlatformConsts.SNAP_ANGLE
 		else:
 			drag_target.user_rotation = targetrot
 
@@ -113,9 +113,9 @@ func _unhandled_input(event):
 		if is_instance_valid(drag_target):
 			match event.button_index:
 				MOUSE_BUTTON_WHEEL_UP:
-					drag_target.user_scale *= AssetConsts.SCALE_RATIO
+					drag_target.user_scale *= PlatformConsts.SCALE_RATIO
 				MOUSE_BUTTON_WHEEL_DOWN:
-					drag_target.user_scale *= 1 / AssetConsts.SCALE_RATIO
+					drag_target.user_scale *= 1 / PlatformConsts.SCALE_RATIO
 
 
 func _init(menu_root_instance: Node,

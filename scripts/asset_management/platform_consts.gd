@@ -1,6 +1,10 @@
-class_name AssetConsts
+# reconsider putting this into classes that are just static functions.
+
+class_name PlatformConsts
 
 const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
+
+const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
 
 const SCALE_RATIO: float = 1.1
 const SNAP_ANGLE: float = PI/4
