@@ -1,4 +1,4 @@
-class_name File_Saver
+class_name SceneFileSave
 
 static func save_to_file(state_as_json_string: String, path: String=PlatformConsts.AUTOSAVE_PATH):
 	if path.get_extension() == "":

@@ -53,7 +53,7 @@ func _duplicate_object(obj: ScreenObject):
 	pass
 
 func _handle_gizmo_focus_request(object_requesting_gizmo: ScreenObject):
-	if drag_target == object_requesting_gizmo:
+	if drag_target == object_requesting_gizmo or object_requesting_gizmo==null:
 		drag_target = null
 		gizmo.visible = false
 		gizmo.target = null

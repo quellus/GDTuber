@@ -86,7 +86,7 @@ func _ready():
 	
 	# Initialize Menu
 	menu_shown = true
-	File_Loader.load_data(
+	SceneFileLoad.load_scene_from_file(
 		PlatformConsts.AUTOSAVE_PATH,
 		self
 	)
@@ -125,8 +125,8 @@ func _notification(what):
 ### Handle Save event from button click 
 func _save_file(path: String):
 	# try catch here? 
-	var scene_state_json: String = File_Saver.serialize_scene_state_to_json(self)
-	File_Saver.save_to_file(scene_state_json, path)
+	var scene_state_json: String = SceneFileSave.serialize_scene_state_to_json(self)
+	SceneFileSave.save_to_file(scene_state_json, path)
 
 
 
@@ -180,10 +180,11 @@ func _load_dialog():
 	json_load_dialog.popup_centered()
 
 func _load_data(path: String):
-	File_Loader.load_data(
+	SceneFileLoad.load_scene_from_file(
 		path,
 		self
 	)
+	gizmo.request_screen_object_gizmo_focus(null)
 
 func _on_autosave_timer_timeout():
 	_autosave()

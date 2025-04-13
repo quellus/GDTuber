@@ -1,4 +1,4 @@
-class_name File_Loader
+class_name SceneFileLoad
 
 static func validate_object_json(dict: Dictionary, version: String) -> bool:
 	var valid = true
@@ -101,7 +101,7 @@ static func validate_save_json(dict: Dictionary, version: String) -> bool:
 	return valid
 
 
-static func load_data(
+static func load_scene_from_file(
 	path: String,
 	main_menu: Menu
 	):
