@@ -122,10 +122,7 @@ func _notification(what):
 
 ### Handle Save event from button click 
 func _save_file(path: String):
-	# try catch here? 
-	var scene_state_json: String = SceneFileSave.serialize_scene_state_to_json(self)
-	SceneFileSave.save_to_file(scene_state_json, path)
-
+	SceneFileSave.save_scene_to_file(self, path)
 
 
 func _on_save_button():
@@ -133,19 +130,24 @@ func _on_save_button():
 
 
 func _autosave():
-	# should probably be in a try catch?
 	SystemSettings.save_system_data(input_device, threshold, input_gain)
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
 
 func _add_new_object_to_scene():
-	var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(MenusRoot, ObjectsRoot)
-	OnScreenObjectMenuController.new(
-						MenusRoot,
-						ObjectsRoot,
-						new_onscreen_object,
-						file_dialog,
-						gizmo,
-					)
+	if MenusRoot and ObjectsRoot:
+		var new_onscreen_object: ScreenObject = OnScreenObjectCreator.make_new_screen_object()
+		var new_onscreen_object_menu_controller =  OnScreenObjectMenuController.new(
+							MenusRoot,
+							ObjectsRoot,
+							new_onscreen_object,
+							file_dialog,
+							gizmo,
+						)
+		ObjectsRoot.add_child(new_onscreen_object)
+		ObjectsRoot.add_child(new_onscreen_object_menu_controller)
+		MenusRoot.add_child(new_onscreen_object_menu_controller.screen_object_menu_ui)
+		new_onscreen_object.user_position = MenusRoot.get_viewport_rect().size/2  
+		
 
 func _load_system_data():
 	var system_setting_array: Array =  SystemSettings.load_system_data()
@@ -188,7 +190,6 @@ func _on_quit_button_button_down():
 	SystemSettings.save_system_data(input_device, threshold, input_gain)
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
 	get_tree().quit()
-
 
 func _on_fixed_window_button_toggled(value):
 	var windowsize = DisplayServer.window_get_size()

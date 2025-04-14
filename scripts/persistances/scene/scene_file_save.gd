@@ -1,6 +1,6 @@
 class_name SceneFileSave
 
-static func save_to_file(state_as_json_string: String, path: String=PlatformConsts.AUTOSAVE_PATH):
+static func _write_json_file_system(state_as_json_string: String, path: String):
 	if path.get_extension() == "":
 		path = path+".gdtuber"
 	var save_game = FileAccess.open(path, FileAccess.WRITE)
@@ -63,4 +63,9 @@ static func serialize_scene_state_to_json(
 				"auto_toggle_time": obj.auto_toggle_time
 			})
 	return JSON.stringify(savedict)
+
+
+static func save_scene_to_file(main_menu: Menu, path: String=PlatformConsts.AUTOSAVE_PATH):
+	var scene_state_json: String = serialize_scene_state_to_json(main_menu)
+	_write_json_file_system(scene_state_json, path)
 

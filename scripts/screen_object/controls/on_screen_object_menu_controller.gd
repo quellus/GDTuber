@@ -44,8 +44,14 @@ func _clear_gizmo():
 	gizmo.visible = false
 
 func _duplicate_object(obj: ScreenObject):
-	var newobj = OnScreenObjectCreator.make_new_screen_object(menu_root, objects_root)
-	OnScreenObjectMenuController.new(menu_root,objects_root,newobj,file_dialog,gizmo)
+	var newobj = OnScreenObjectCreator.make_new_screen_object()
+	var new_onscreen_object_menu = OnScreenObjectMenuController.new(menu_root,objects_root,newobj,file_dialog,gizmo)
+	newobj.user_position = menu_root.get_viewport_rect().size/2 
+
+	# adding children to the scene should happen in main via a signal not in this. 
+	objects_root.add_child(newobj)
+	menu_root.add_child(new_onscreen_object_menu.screen_object_menu_ui)
+	objects_root.add_child(new_onscreen_object_menu)
 
 	for property in obj.copy_properties:
 		newobj.set(property, obj.get(property))
@@ -129,11 +135,8 @@ func _init(menu_root_instance: Node,
 	menu_root = menu_root_instance
 	objects_root = objects_root_instance
 	screen_object_menu_ui = screen_object_menu_scene.instantiate() as ScreenObjectMenu
-	menu_root.add_child(screen_object_menu_ui)	
 	screen_object_menu_ui.object = connected_screen_object
 	screen_object_menu_ui.update_menu()
-
 	_connect_signals() 
-	objects_root.add_child(self)
 
 	
