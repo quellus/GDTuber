@@ -63,8 +63,6 @@ var input_device: String
 @onready var json_save_dialog : FileDialog = %JSONSaveDialog
 @onready var json_load_dialog : FileDialog = %JSONLoadDialog
 
-const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
-
 ### Ready
 func _ready():
 	# Set Window Properties
@@ -135,20 +133,9 @@ func _on_save_button():
 
 
 func _autosave():
-
 	# should probably be in a try catch?
-	_save_system_data() # for audio stuff 
+	SystemSettings.save_system_data(input_device, threshold, input_gain)
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
-
-func _save_system_data():
-	var config = ConfigFile.new()
-	config.set_value("Audio", "input_device", input_device)
-	config.set_value("Audio", "threshold", threshold)
-	config.set_value("Audio", "input_gain", input_gain)
-	config.set_value("Localization", "language", TranslationServer.get_locale())
-	
-	config.save(SYSTEM_CONFIG_PATH)
-
 
 func _add_new_object_to_scene():
 	var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object(MenusRoot, ObjectsRoot)
@@ -160,19 +147,19 @@ func _add_new_object_to_scene():
 						gizmo,
 					)
 
-
 func _load_system_data():
-	var config = ConfigFile.new()
-	var err: Error = config.load(SYSTEM_CONFIG_PATH)
-	if err == OK:
-		input_device = config.get_value("Audio", "input_device", input_device)
+	var system_setting_array: Array =  SystemSettings.load_system_data()
+
+	if system_setting_array.is_empty() == false:
+		input_device = system_setting_array[0] 
+		threshold = system_setting_array[1]
+		input_gain = system_setting_array[2]
+		var locale = system_setting_array[3]
+
 		AudioServer.set_input_device(input_device)
-		threshold = config.get_value("Audio", "threshold", threshold)
 		threshold_slider.value = threshold
-		input_gain = config.get_value("Audio", "input_gain", input_gain)
 		input_gain_slider.value = input_gain
-		
-		var locale = config.get_value("Localization", "language", TranslationServer.get_locale())
+
 		if locale != TranslationServer.get_locale():
 			localization.set_locale(locale)
 
@@ -198,7 +185,7 @@ func _on_button_button_down():
 	menu_shown = false
 
 func _on_quit_button_button_down():
-	_save_system_data()
+	SystemSettings.save_system_data(input_device, threshold, input_gain)
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
 	get_tree().quit()
 

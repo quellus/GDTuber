@@ -2,6 +2,8 @@
 
 class_name PlatformConsts
 
+const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
+
 const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
 
 const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
