@@ -151,11 +151,7 @@ static func load_scene_from_file(
 						main_menu.file_dialog,
 						main_menu.gizmo,
 					)
-					objects_root.add_child(new_onscreen_object)
-					objects_root.add_child(new_onscreen_object_menu_controller)
-					new_onscreen_object.user_position = menu_root.get_viewport_rect().size/2 
-					menu_root.add_child(new_onscreen_object_menu_controller.screen_object_menu_ui)
-					main_menu.connect_object_ui_signals_to_scene(new_onscreen_object_menu_controller)
+					main_menu.add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller)
 					# 0.1
 					new_onscreen_object.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 					new_onscreen_object.user_position = Vector2(obj["position.x"], obj["position.y"])

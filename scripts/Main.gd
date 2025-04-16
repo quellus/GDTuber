@@ -133,6 +133,19 @@ func _autosave():
 	SystemSettings.save_system_data(input_device, threshold, input_gain)
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
 
+
+func add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller: OnScreenObjectMenuController):
+	var new_onscreen_object_menu_ui = new_onscreen_object_menu_controller.screen_object_menu_ui
+	var new_onscreen_object = new_onscreen_object_menu_ui.object
+
+	ObjectsRoot.add_child(new_onscreen_object)
+	ObjectsRoot.add_child(new_onscreen_object_menu_controller)
+	new_onscreen_object.user_position = MenusRoot.get_viewport_rect().size/2 
+	MenusRoot.add_child(new_onscreen_object_menu_controller.screen_object_menu_ui)
+	connect_object_ui_signals_to_scene(new_onscreen_object_menu_controller)
+	new_onscreen_object_menu_ui.update_menu()
+
+
 func connect_object_ui_signals_to_scene(onscreen_object_menu_controller: OnScreenObjectMenuController):
 	onscreen_object_menu_controller.object_duplication_request.connect(_duplicate_object_in_scene)
 	onscreen_object_menu_controller.object_reorder_request.connect(_order_object_in_scene)
@@ -144,12 +157,8 @@ func _order_object_in_scene():
 func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
 	var new_copied_object = OnScreenObjectCreator.make_new_screen_object()
 	var new_onscreen_object_menu_controller = OnScreenObjectMenuController.new(new_copied_object,file_dialog,gizmo)
-	new_copied_object.user_position = MenusRoot.get_viewport_rect().size/2 
 
-	# adding children to the scene should happen in main via a signal not in this. 
-	ObjectsRoot.add_child(new_copied_object)
-	MenusRoot.add_child(new_onscreen_object_menu_controller.screen_object_menu_ui)
-	ObjectsRoot.add_child(new_onscreen_object_menu_controller)
+	add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller)
 
 	for property in object_for_duplication.copy_properties:
 		new_copied_object.set(property, object_for_duplication.get(property))
@@ -167,12 +176,8 @@ func _add_new_object_to_scene():
 							file_dialog,
 							gizmo,
 						)
-		ObjectsRoot.add_child(new_onscreen_object)
-		ObjectsRoot.add_child(new_onscreen_object_menu_controller)
-		MenusRoot.add_child(new_onscreen_object_menu_controller.screen_object_menu_ui)		
-		new_onscreen_object.user_position = MenusRoot.get_viewport_rect().size/2  
-		new_onscreen_object_menu_controller.object_duplication_request.connect(_duplicate_object_in_scene)
 
+		add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller)
 		
 
 func _load_system_data():
