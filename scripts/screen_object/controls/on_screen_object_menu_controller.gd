@@ -2,6 +2,9 @@ class_name OnScreenObjectMenuController extends Node
 
 static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
 
+signal object_duplication_request(ScreenObject)
+signal object_reorder_request()
+
 var drag_target: ScreenObject
 var rotating = false
 var rotation_center: Vector2 = Vector2()
@@ -14,8 +17,6 @@ var screen_object_menu_ui: ScreenObjectMenu
 var file_dialog: FileDialog 
 var gizmo: Gizmo
 
-var menu_root: Node
-var objects_root: Node
 
 func open_image(path):
 	if openingfor:
@@ -43,21 +44,6 @@ func _clear_gizmo():
 	gizmo.target = null
 	gizmo.visible = false
 
-func _duplicate_object(obj: ScreenObject):
-	var newobj = OnScreenObjectCreator.make_new_screen_object()
-	var new_onscreen_object_menu = OnScreenObjectMenuController.new(menu_root,objects_root,newobj,file_dialog,gizmo)
-	newobj.user_position = menu_root.get_viewport_rect().size/2 
-
-	# adding children to the scene should happen in main via a signal not in this. 
-	objects_root.add_child(newobj)
-	menu_root.add_child(new_onscreen_object_menu.screen_object_menu_ui)
-	objects_root.add_child(new_onscreen_object_menu)
-
-	for property in obj.copy_properties:
-		newobj.set(property, obj.get(property))
-	newobj.update_menu.emit()
-	pass
-
 func _handle_gizmo_focus_request(object_requesting_gizmo: ScreenObject):
 	if drag_target == object_requesting_gizmo or object_requesting_gizmo==null:
 		drag_target = null
@@ -75,18 +61,13 @@ func _on_request_gizmo_focus(object: ScreenObject):
 func _grab_gizmo(object: ScreenObject):
 	gizmo.global_position = object.global_position
 
-func _order_objects():
-	for node:ScreenObjectMenu in menu_root.get_children():
-		objects_root.move_child(node.object, node.get_index())
-		pass
-
 func _connect_signals():
 	screen_object_menu_ui.request_image.connect(_request_image)
 	screen_object_menu_ui.tree_exiting.connect(_clear_gizmo)
-	screen_object_menu_ui.duplicate_object.connect(_duplicate_object)
+	screen_object_menu_ui.duplicate_object.connect(func(object_for_duplication: ScreenObject): object_duplication_request.emit(object_for_duplication) )
 	screen_object_menu_ui.request_gizmo.connect(_on_request_gizmo_focus)
 	screen_object_menu_ui.grab_gizmo.connect(_grab_gizmo)
-	screen_object_menu_ui.order_changed.connect(_order_objects)
+	screen_object_menu_ui.order_changed.connect(func(): object_reorder_request.emit())
 
 	gizmo.gizmo_focus_requested.connect(_handle_gizmo_focus_request)
 
@@ -124,19 +105,16 @@ func _unhandled_input(event):
 					drag_target.user_scale *= 1 / PlatformConsts.SCALE_RATIO
 
 
-func _init(menu_root_instance: Node,
-		objects_root_instance: Node,
+func _init(
 	 	connected_screen_object: ScreenObject, 
 	 	file_dialog_window: FileDialog,
 	 	gizmo_instance: Gizmo):
 	
 	file_dialog= file_dialog_window
 	gizmo = gizmo_instance
-	menu_root = menu_root_instance
-	objects_root = objects_root_instance
 	screen_object_menu_ui = screen_object_menu_scene.instantiate() as ScreenObjectMenu
 	screen_object_menu_ui.object = connected_screen_object
-	screen_object_menu_ui.update_menu()
+	# screen_object_menu_ui.update_menu()
 	_connect_signals() 
 
 	
