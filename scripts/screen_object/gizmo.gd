@@ -5,6 +5,7 @@ signal gizmo_focus_requested(ScreenObject)
 var dragging: bool
 var target: ScreenObject
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _input(event):
 	if dragging:
@@ -22,6 +23,7 @@ func request_screen_object_gizmo_focus(object_requesting_gizmo: ScreenObject):
 func drag():
 	if !dragging:
 		dragging = true
+
 
 func dragnt():
 	dragging = false
