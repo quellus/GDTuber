@@ -155,7 +155,7 @@ func _order_object_in_scene():
 		ObjectsRoot.move_child(node.object, node.get_index())
 
 func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
-	var new_copied_object = OnScreenObjectCreator.make_new_screen_object()
+	var new_copied_object = ScreenObject.new()
 	var new_onscreen_object_menu_controller = OnScreenObjectMenuController.new(new_copied_object,file_dialog,gizmo)
 
 	add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller)
@@ -170,7 +170,7 @@ func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
 
 func _add_new_object_to_scene():
 	if MenusRoot and ObjectsRoot:
-		var new_onscreen_object: ScreenObject = OnScreenObjectCreator.make_new_screen_object()
+		var new_onscreen_object = ScreenObject.new()
 		var new_onscreen_object_menu_controller =  OnScreenObjectMenuController.new(
 							new_onscreen_object,
 							file_dialog,

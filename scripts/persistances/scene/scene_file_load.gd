@@ -145,7 +145,7 @@ static func load_scene_from_file(
 				men.queue_free()
 			for obj in save_dict["objects"]:
 				if validate_object_json(obj, version):
-					var new_onscreen_object = OnScreenObjectCreator.make_new_screen_object()
+					var new_onscreen_object = ScreenObject.new()
 					var new_onscreen_object_menu_controller = OnScreenObjectMenuController.new(
 						new_onscreen_object,
 						main_menu.file_dialog,

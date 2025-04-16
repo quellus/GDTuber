@@ -1,5 +1,13 @@
 class_name ScreenObject extends Node2D
 
+func _init():
+	self.texture = PlatformConsts.default_avatar_texture
+	self.neutral_texture = PlatformConsts.default_neutral_texture
+	self.talking_texture = PlatformConsts.default_talking_texture
+	self.blinking_texture = PlatformConsts.default_blinking_texture
+	self.talking_and_blinking_texture = PlatformConsts.default_talking_and_blinking_texture
+
+
 var copy_properties = [
 	"user_position",
 	"user_hidden",
