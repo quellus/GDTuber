@@ -87,16 +87,16 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 	var titleedit: LineEdit = main_menu.titleedit
 	var profilename: String = main_menu.profilename
 	var background_color: Color = main_menu.background_color
-	var bgcolorPicker: ColorPickerButton = main_menu.bgcolorPicker
+	var bg_color_picker: ColorPickerButton = main_menu.bg_color_picker
 	var background: ColorRect = main_menu.background
-	var bgcolor: Panel = main_menu.bgcolor
+	var bgcolor: Panel = main_menu.bg_color
 	var background_transparent: bool = main_menu.background_transparent
-	var bgTransparentToggle: CheckBox = main_menu.bgTransparentToggle
-	var fixedWindowSizeToggle: CheckBox = main_menu.fixedWindowSizeToggle
-	var fixedWindowWidthSpinbox: SpinBox = main_menu.fixedWindowWidthSpinbox
-	var fixedWindowHeightSpinbox: SpinBox = main_menu.fixedWindowHeightSpinbox
-	var maxFpsSpinbox: SpinBox = main_menu.maxFpsSpinbox
-	var fpsCapToggle: CheckBox = main_menu.fpsCapToggle
+	var bg_transparent_toggle: CheckBox = main_menu.bg_transparent_toggle
+	var fixed_window_size_toggle: CheckBox = main_menu.fixed_window_size_toggle
+	var fixed_window_width_spinbox: SpinBox = main_menu.fixed_window_width_spinbox
+	var fixed_window_height_spinbox: SpinBox = main_menu.fixed_window_height_spinbox
+	var max_fps_spinbox: SpinBox = main_menu.max_fps_spinbox
+	var fps_cap_toggle: CheckBox = main_menu.fps_cap_toggle
 
 	var save_json = FileAccess.get_file_as_string(path)
 	if save_json == "":
@@ -221,22 +221,22 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 					save_dict["background_color"], background_color
 				)
 				background.color = background_color
-				bgcolorPicker.color = background_color
+				bg_color_picker.color = background_color
 
 				var transparent_toggle = save_dict["background_transparent"]
 				bgcolor.visible = !transparent_toggle
 				background.visible = !transparent_toggle
 				background_transparent = transparent_toggle
-				bgTransparentToggle.button_pressed = save_dict["background_transparent"]
+				bg_transparent_toggle.button_pressed = save_dict["background_transparent"]
 			if version.naturalnocasecmp_to("0.10") >= 0:
-				fixedWindowSizeToggle.button_pressed = save_dict["fixedWindowSize"]
-				fixedWindowWidthSpinbox.value = save_dict["fixedWindowWidth"]
-				fixedWindowHeightSpinbox.value = save_dict["fixedWindowHeight"]
+				fixed_window_size_toggle.button_pressed = save_dict["fixedWindowSize"]
+				fixed_window_width_spinbox.value = save_dict["fixedWindowWidth"]
+				fixed_window_height_spinbox.value = save_dict["fixedWindowHeight"]
 			if version.naturalnocasecmp_to("0.12") >= 0:
-				maxFpsSpinbox.set_value_no_signal(
+				max_fps_spinbox.set_value_no_signal(
 					save_dict["fpsCapValue"] if save_dict["fpsCap"] else 60
 				)
-				fpsCapToggle.set_pressed(save_dict["fpsCap"])
+				fps_cap_toggle.set_pressed(save_dict["fpsCap"])
 		else:
 			push_error("ERROR: Required Fields for Save File Version not Found")
 	else:

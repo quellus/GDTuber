@@ -1,52 +1,7 @@
 class_name Menu extends Control
 
-# The project version is stored in Project Settings->Config->Version
-var project_version = ProjectSettings.get_setting("application/config/version")
-
-var localization = Localization.new()
-
-var language_map: Dictionary = {}
-
-# Window Management
-@onready var titleedit: LineEdit = %TitleEdit
-@onready var profilename: String = "GDTuber Avatar"
-@onready var mainmenu: Control = %MainMenu
-@onready var settingsmenu: Control = %SettingsMenu
-@onready var background = %Background
-@onready var bgcolor = %BackgroundColor
-@onready var bgTransparentToggle = %BGTransparentToggle
-@onready var bgcolorPicker = %ColorPickerButton
-@onready var background_transparent: bool = !background.visible
-@onready var background_color: Color = background.color
-@onready var menu = %Menu
-@onready var windowsizecontainer = %WindowSize
-@onready var fixedWindowWidthSpinbox = %fixedWindowWidthSpinbox
-@onready var fixedWindowWidth: int
-@onready var fixedWindowHeightSpinbox = %fixedWindowHeightSpinbox
-@onready var fixedWindowHeight: int
-@onready var fixedWindowSizeToggle = %FixedWindowSizeToggle
-@onready var fixedWindowSize: bool = false
-var menu_shown = false:
-	set(value):
-		menu_shown = value
-		_set_menu_shown(value)
-@onready var fpsCapToggle = %FPSCapToggle
-@onready var maxFpsSpinbox = %MaxFPSSpinbox
-@onready var fpsCap: bool = false
-@onready var fpsCapValue: int = 0
-
-# Audio Management
+#Audio
 const MAX_SAMPLES = 20
-@onready var input_gain_slider: Slider = %InputGainSlider
-@onready var threshold_slider: Slider = %ThresholdSlider
-@onready var device_dropdown := %DeviceDropdown
-var bus_index
-var analyzer: AudioEffectSpectrumAnalyzerInstance
-var samples: Array[float] = []
-var amplifier_effect = AudioEffectAmplify
-var threshold = 0.5
-var input_gain: float
-var input_device: String
 
 # Screen Object Management
 @export var ObjectsRoot: Node
@@ -55,7 +10,66 @@ var input_device: String
 # Screen Object Editing
 @export var gizmo: Gizmo
 
-#var drag_target: ScreenObject
+# The project version is stored in Project Settings->Config->Version
+var project_version = ProjectSettings.get_setting("application/config/version")
+
+var localization = Localization.new()
+
+var language_map: Dictionary = {}
+
+var menu_shown = false:
+	set(value):
+		menu_shown = value
+		_set_menu_shown(value)
+
+var is_talking := false:
+	set(value):
+		if value != is_talking:
+			for screen_object in get_tree().get_nodes_in_group("reactive"):
+				if screen_object is ScreenObject:
+					screen_object.is_talking = value
+		is_talking = value
+
+
+#Audio Vars
+var bus_index
+var analyzer: AudioEffectSpectrumAnalyzerInstance
+var samples: Array[float] = []
+var amplifier_effect = AudioEffectAmplify
+var threshold = 0.5
+var input_gain: float
+var input_device: String
+
+
+# Window Management
+@onready var titleedit: LineEdit = %TitleEdit
+@onready var profilename: String = "GDTuber Avatar"
+@onready var mainmenu: Control = %MainMenu
+@onready var settings_menu: Control = %SettingsMenu
+@onready var background = %Background
+@onready var bg_color = %BackgroundColor
+@onready var bg_transparent_toggle = %BGTransparentToggle
+@onready var bg_color_picker = %ColorPickerButton
+@onready var background_transparent: bool = !background.visible
+@onready var background_color: Color = background.color
+@onready var menu = %Menu
+@onready var window_size_container = %WindowSize
+@onready var fixed_window_width_spinbox = %fixedWindowWidthSpinbox
+@onready var fixed_window_width: int
+@onready var fixed_window_height_spinbox = %fixedWindowHeightSpinbox
+@onready var fixed_window_height: int
+@onready var fixed_window_size_toggle = %FixedWindowSizeToggle
+@onready var fixed_window_size: bool = false
+
+@onready var fps_cap_toggle = %FPSCapToggle
+@onready var max_fps_spinbox = %MaxFPSSpinbox
+@onready var fps_cap: bool = false
+@onready var fps_cap_value: int = 0
+
+# Audio Management
+@onready var input_gain_slider: Slider = %InputGainSlider
+@onready var threshold_slider: Slider = %ThresholdSlider
+@onready var device_dropdown := %DeviceDropdown
 
 # File Management
 @onready var file_dialog: FileDialog = %ImageOpenDialog
@@ -237,26 +251,26 @@ func _on_quit_button_button_down():
 
 func _on_fixed_window_button_toggled(value):
 	var windowsize = DisplayServer.window_get_size()
-	fixedWindowSize = value
+	fixed_window_size = value
 	WindowManager.toggle_fixed_window_size(windowsize, value)
 	if value == true:
-		fixedWindowWidthSpinbox.value = windowsize.x
-		fixedWindowHeightSpinbox.value = windowsize.y
-		windowsizecontainer.show()
+		fixed_window_width_spinbox.value = windowsize.x
+		fixed_window_height_spinbox.value = windowsize.y
+		window_size_container.show()
 	else:
-		windowsizecontainer.hide()
+		window_size_container.hide()
 
 
 func _on_ws_lock_width_value_changed(value):
-	if fixedWindowSizeToggle.button_pressed and fixedWindowWidth != value:
-		fixedWindowWidth = value
-		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth, fixedWindowHeight), value)
+	if fixed_window_size_toggle.button_pressed and fixed_window_width != value:
+		fixed_window_width = value
+		WindowManager.toggle_fixed_window_size(Vector2i(fixed_window_width, fixed_window_height), value)
 
 
 func _on_ws_lock_height_value_changed(value):
-	if fixedWindowSizeToggle.button_pressed and fixedWindowHeight != value:
-		fixedWindowHeight = value
-		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth, fixedWindowHeight), value)
+	if fixed_window_size_toggle.button_pressed and fixed_window_height != value:
+		fixed_window_height = value
+		WindowManager.toggle_fixed_window_size(Vector2i(fixed_window_width, fixed_window_height), value)
 
 
 func _on_fullscreen_toggle():
@@ -264,13 +278,13 @@ func _on_fullscreen_toggle():
 
 
 func _open_settings():
-	settingsmenu.visible = true
+	settings_menu.visible = true
 	mainmenu.visible = false
 
 
 func _close_settings():
 	mainmenu.visible = true
-	settingsmenu.visible = false
+	settings_menu.visible = false
 
 
 ### Audio Management
@@ -280,13 +294,6 @@ func _on_popup_menu_index_pressed(index: int):
 	AudioServer.set_input_device(input_device)
 
 
-var is_talking := false:
-	set(value):
-		if value != is_talking:
-			for screen_object in get_tree().get_nodes_in_group("reactive"):
-				if screen_object is ScreenObject:
-					screen_object.is_talking = value
-		is_talking = value
 
 
 func _get_average() -> float:
@@ -323,7 +330,7 @@ func _unhandled_input(event):
 
 
 func _on_fps_cap_toggled(toggled_on: bool) -> void:
-	fpsCap = toggled_on
+	fps_cap = toggled_on
 	if not toggled_on:
 		%FPSDropdownContainer.hide()
 		Engine.set_max_fps(0)
@@ -334,6 +341,6 @@ func _on_fps_cap_toggled(toggled_on: bool) -> void:
 
 
 func _on_max_fps_spinbox_value_changed(value: float) -> void:
-	fpsCapValue = int(value)
+	fps_cap_value = int(value)
 	if int(value) != Engine.get_max_fps():
 		Engine.set_max_fps(int(value))

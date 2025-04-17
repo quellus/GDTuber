@@ -21,11 +21,11 @@ static func serialize_scene_state_to_json(main_menu: Menu) -> String:
 		"profile_name": main_menu.profilename,
 		"background_transparent": main_menu.background_transparent,
 		"background_color": main_menu.background_color.to_html(),
-		"fixedWindowWidth": main_menu.fixedWindowWidth,
-		"fixedWindowHeight": main_menu.fixedWindowHeight,
-		"fixedWindowSize": main_menu.fixedWindowSize,
-		"fpsCap": main_menu.fpsCap,
-		"fpsCapValue": main_menu.fpsCapValue,
+		"fixedWindowWidth": main_menu.fixed_window_width,
+		"fixedWindowHeight": main_menu.fixed_window_height,
+		"fixedWindowSize": main_menu.fixed_window_size,
+		"fpsCap": main_menu.fps_cap,
+		"fpsCapValue": main_menu.fps_cap_value,
 		"objects": []
 	}
 
