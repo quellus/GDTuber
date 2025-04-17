@@ -85,12 +85,10 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 	var objects_root = main_menu.ObjectsRoot
 	var menu_root = main_menu.MenusRoot
 	var titleedit: LineEdit = main_menu.titleedit
-	var profilename: String = main_menu.profilename
 	var background_color: Color = main_menu.background_color
 	var bg_color_picker: ColorPickerButton = main_menu.bg_color_picker
 	var background: ColorRect = main_menu.background
 	var bgcolor: Panel = main_menu.bg_color
-	var background_transparent: bool = main_menu.background_transparent
 	var bg_transparent_toggle: CheckBox = main_menu.bg_transparent_toggle
 	var fixed_window_size_toggle: CheckBox = main_menu.fixed_window_size_toggle
 	var fixed_window_width_spinbox: SpinBox = main_menu.fixed_window_width_spinbox
@@ -213,7 +211,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 			if version.naturalnocasecmp_to("0.4") >= 0:
 				var profile_name = save_dict["profile_name"]
 				titleedit.text = profile_name
-				profilename = profile_name
+				main_menu.profilename = profile_name
 				tree_root.title = profile_name
 			# 0.8
 			if version.naturalnocasecmp_to("0.8") >= 0:
@@ -226,7 +224,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 				var transparent_toggle = save_dict["background_transparent"]
 				bgcolor.visible = !transparent_toggle
 				background.visible = !transparent_toggle
-				background_transparent = transparent_toggle
+				main_menu.background_transparent = transparent_toggle
 				bg_transparent_toggle.button_pressed = save_dict["background_transparent"]
 			if version.naturalnocasecmp_to("0.10") >= 0:
 				fixed_window_size_toggle.button_pressed = save_dict["fixedWindowSize"]

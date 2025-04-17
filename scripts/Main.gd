@@ -286,6 +286,20 @@ func _close_settings():
 	mainmenu.visible = true
 	settings_menu.visible = false
 
+func _toggle_transparent(value):
+	bg_color.visible = !value
+	background.visible = !value
+	background_transparent = value
+
+func _change_background_color(color):
+	background.color = color
+	background_color = color
+
+func _set_profile_name(pname: String):
+	titleedit.text = pname
+	profilename = pname
+	get_tree().get_root().title = pname
+
 
 ### Audio Management
 func _on_popup_menu_index_pressed(index: int):
