@@ -1,5 +1,6 @@
 extends TextureProgressBar
 
+
 func _ready():
 	var new_scale: float = $"..".size.x / size.x
 	scale.x = new_scale

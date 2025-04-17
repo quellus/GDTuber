@@ -47,7 +47,6 @@ signal blink_duration_change(blink_duration)
 @onready var blinkdurationsettingsdisplay = %BlinkDurationSettingsInput
 
 
-
 func update_blink_duration(value: float):
 	blink_duration_change.emit(value)
 
@@ -61,24 +60,29 @@ func update_max_blink_interval(value: float):
 func update_min_blink_interval(value: float):
 	if value > %MaxBlinkIntervalSettingsInput.value:
 		%MaxBlinkIntervalSettingsInput.value = value
-	min_blink_speed_change.emit(value)  
+	min_blink_speed_change.emit(value)
 
-func sync_ui_hight_val_changed(value: float): 
+
+func sync_ui_hight_val_changed(value: float):
 	%HeightSpinBox.value = value
 	%HeightSlider.value = value
 
-func sync_ui_speed_val_changed(value: float): 
+
+func sync_ui_speed_val_changed(value: float):
 	%SpeedSpinBox.value = value
 	%SpeedSlider.value = value
 
-func sync_ui_hue_val_changed(value: float): 
+
+func sync_ui_hue_val_changed(value: float):
 	%HueSpinBox.value = value
 	%HueSlider.value = value
+
 
 func sync_ui_sat_val_changed(value: float):
 	%SatSliderSpin.value = value
 	%SatSlider.value = value
 
-func sync_ui_val_val_changed(value: float): 
+
+func sync_ui_val_val_changed(value: float):
 	%ValSpinBox.value = value
 	%ValSlider.value = value

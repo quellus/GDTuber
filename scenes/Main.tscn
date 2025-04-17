@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dvjlkpjvjxn0h"]
 
 [ext_resource type="Script" uid="uid://bjlwevofrob1" path="res://scripts/Main.gd" id="1_6oykm"]
-[ext_resource type="Script" uid="uid://djq7cnr1q3go0" path="res://scripts/LineEditReset.gd" id="2_0ym8f"]
+[ext_resource type="Script" uid="uid://djq7cnr1q3go0" path="res://scripts/screen_object/controls/LineEditReset.gd" id="2_0ym8f"]
 [ext_resource type="Theme" uid="uid://d18y4voshb0um" path="res://Resources/Menu Theme.tres" id="3_5cu1w"]
-[ext_resource type="Script" uid="uid://6dijgfptswv4" path="res://scripts/gizmo.gd" id="4_7g88q"]
+[ext_resource type="Script" uid="uid://6dijgfptswv4" path="res://scripts/screen_object/gizmo.gd" id="4_7g88q"]
 [ext_resource type="Texture2D" uid="uid://c5fl4pf7cxwvc" path="res://Assets/gizmo.png" id="5_lmu52"]
 
 [sub_resource type="AudioStreamMicrophone" id="1"]
@@ -524,7 +524,7 @@ autostart = true
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
-[connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_create_new_object"]
+[connection signal="pressed" from="Menu/PanelContainer/MainMenu/ScrollContainer/VBoxContainer/Button" to="." method="_add_new_object_to_scene"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/Settings" to="." method="_open_settings"]
 [connection signal="pressed" from="Menu/PanelContainer/MainMenu/CloseButton" to="." method="_on_button_button_down"]
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Main Menu" to="." method="_close_settings"]
@@ -541,7 +541,6 @@ autostart = true
 [connection signal="pressed" from="Menu/PanelContainer/SettingsMenu/VBoxContainer2/BottomMenuItems/QuitButton" to="." method="_on_quit_button_button_down"]
 [connection signal="button_down" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="drag"]
 [connection signal="button_up" from="Menu/Gizmo/Button" to="Menu/Gizmo" method="dragnt"]
-[connection signal="file_selected" from="ImageOpenDialog" to="." method="_open_image"]
 [connection signal="file_selected" from="JSONSaveDialog" to="." method="_save_file"]
 [connection signal="file_selected" from="JSONLoadDialog" to="." method="_load_data"]
 [connection signal="timeout" from="AutosaveTimer" to="." method="_on_autosave_timer_timeout"]
