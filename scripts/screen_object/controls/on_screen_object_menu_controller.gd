@@ -1,9 +1,10 @@
 class_name OnScreenObjectMenuController extends Node
 
-static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
-
 signal object_duplication_request(ScreenObject)
 signal object_reorder_request
+
+static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
+
 
 var drag_target: ScreenObject
 var rotating = false

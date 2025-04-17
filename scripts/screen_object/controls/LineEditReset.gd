@@ -7,7 +7,6 @@ var lastchange: String = ""
 func _ready():
 	focus_exited.connect(reset_text)
 	text_submitted.connect(set_reset_text)
-	pass  # Replace with function body.
 
 
 func reset_text():

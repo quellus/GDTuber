@@ -8,15 +8,19 @@ signal order_changed
 
 @export var popupanchor: Control
 @export var name_field: LineEditReset
-@onready var visibilitytoggle: BaseButton = %VisibilityToggle
-@onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
-@onready var autoToggleButton = %AutoToggle
-@onready var autoToggleTimer: Timer = %AutoToggleTimer
+
 var object: ScreenObject:
 	set(value):
 		if value:
 			value.update_menu.connect(update_menu)
 		object = value
+
+
+@onready var visibilitytoggle: BaseButton = %VisibilityToggle
+@onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
+@onready var auto_toggle_button = %AutoToggle
+@onready var auto_toggle_timer: Timer = %AutoToggleTimer
+
 
 
 func _ready():
@@ -47,15 +51,14 @@ func _ready():
 
 
 func _process(_delta: float) -> void:
-	if !autoToggleTimer.is_stopped():
-		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
+	if !auto_toggle_timer.is_stopped():
+		%AutoToggleTextureProgressBar.value = auto_toggle_timer.time_left
 
 
 func _toggle_multi_image(value):
 	object.usesingleimage = value
 	settingsmenu.singleimageselect.visible = value
 	settingsmenu.multiimageselect.visible = !value
-	pass
 
 
 func _set_name(value: String):
@@ -183,13 +186,11 @@ func update_menu():
 func _shift_up():
 	get_parent().move_child(self, get_index() - 1)
 	order_changed.emit()
-	pass
 
 
 func _shift_down():
 	get_parent().move_child(self, get_index() + 1)
 	order_changed.emit()
-	pass
 
 
 func _recenter():
@@ -197,7 +198,6 @@ func _recenter():
 	object.user_position = viewportsize / 2
 	object.get_viewport_transform()
 	grab_gizmo.emit(object)
-	pass
 
 
 func _togglevisibility(value):
@@ -206,7 +206,6 @@ func _togglevisibility(value):
 
 func _duplicate():
 	duplicate_object.emit(object)
-	pass
 
 
 func _delete_object():
@@ -216,20 +215,20 @@ func _delete_object():
 
 
 func _on_auto_toggle_pressed() -> void:
-	if autoToggleTimer.is_stopped():
-		autoToggleTimer.start(object.auto_toggle_time)
+	if auto_toggle_timer.is_stopped():
+		auto_toggle_timer.start(object.auto_toggle_time)
 		%AutoToggleTextureProgressBar.visible = true
 		%AutoToggleTextureProgressBar.max_value = object.auto_toggle_time
-		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
-		autoToggleButton.self_modulate = Color(1, 1, 1, 0)
+		%AutoToggleTextureProgressBar.value = auto_toggle_timer.time_left
+		auto_toggle_button.self_modulate = Color(1, 1, 1, 0)
 
 	else:
 		%AutoToggleTextureProgressBar.visible = false
-		autoToggleButton.self_modulate = Color(1, 1, 1, 1)
-		autoToggleTimer.stop()
+		auto_toggle_button.self_modulate = Color(1, 1, 1, 1)
+		auto_toggle_timer.stop()
 
 
 func _auto_toggle_timer_timeout() -> void:
 	%AutoToggleTextureProgressBar.visible = false
-	autoToggleButton.self_modulate = Color(1, 1, 1, 1)
+	auto_toggle_button.self_modulate = Color(1, 1, 1, 1)
 	object.user_hidden = !object.user_hidden

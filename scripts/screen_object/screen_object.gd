@@ -1,13 +1,7 @@
 class_name ScreenObject extends Node2D
 
 
-func _init():
-	self.texture = PlatformConsts.default_avatar_texture
-	self.neutral_texture = PlatformConsts.default_neutral_texture
-	self.talking_texture = PlatformConsts.default_talking_texture
-	self.blinking_texture = PlatformConsts.default_blinking_texture
-	self.talking_and_blinking_texture = PlatformConsts.default_talking_and_blinking_texture
-
+signal update_menu
 
 var copy_properties = [
 	"user_position",
@@ -145,7 +139,6 @@ var user_scale: Vector2 = Vector2(1, 1):
 
 var user_name: String = ""
 
-signal update_menu
 
 var texturepath: String
 var neutralpath: String
@@ -316,3 +309,10 @@ func _on_blink_timer_timeout():
 
 func _set_hue(value):
 	sprite.material.set_shader_parameter("hue", value)
+
+func _init():
+	self.texture = PlatformConsts.default_avatar_texture
+	self.neutral_texture = PlatformConsts.default_neutral_texture
+	self.talking_texture = PlatformConsts.default_talking_texture
+	self.blinking_texture = PlatformConsts.default_blinking_texture
+	self.talking_and_blinking_texture = PlatformConsts.default_talking_and_blinking_texture
