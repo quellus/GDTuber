@@ -1,13 +1,6 @@
 class_name SceneFileSave
 
 
-static func _write_json_file_system(state_as_json_string: String, path: String):
-	if path.get_extension() == "":
-		path = path + ".gdtuber"
-	var save_game = FileAccess.open(path, FileAccess.WRITE)
-	save_game.store_line(state_as_json_string)
-
-
 static func serialize_scene_state_to_json(main_menu: Menu) -> String:
 	var file_dialog_window = main_menu.file_dialog
 	var json_save_dialog = main_menu.json_save_dialog
@@ -68,3 +61,10 @@ static func serialize_scene_state_to_json(main_menu: Menu) -> String:
 static func save_scene_to_file(main_menu: Menu, path: String = PlatformConsts.AUTOSAVE_PATH):
 	var scene_state_json: String = serialize_scene_state_to_json(main_menu)
 	_write_json_file_system(scene_state_json, path)
+
+
+static func _write_json_file_system(state_as_json_string: String, path: String):
+	if path.get_extension() == "":
+		path = path + ".gdtuber"
+	var save_game = FileAccess.open(path, FileAccess.WRITE)
+	save_game.store_line(state_as_json_string)

@@ -14,18 +14,14 @@ func toggle_fullscreen():
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-		if (
-			DisplayServer.window_get_size()
-			== Vector2i(
-				ProjectSettings.get_setting("display/window/size/viewport_width"),
-				ProjectSettings.get_setting("display/window/size/viewport_height")
-			)
-		):
+		var width = ProjectSettings.get_setting("display/window/size/viewport_width")
+		var height = ProjectSettings.get_setting("display/window/size/viewport_height")
+		if DisplayServer.window_get_size() == Vector2i(width, height):
 			change_window_size(default_window_size)
 	return DisplayServer.window_get_mode()
 
 
-# NOTE: this function can be used to disable rezizing the window and sets it to specific size
+# NOTE: this function can be used to disable resizing the window and sets it to specific size
 func toggle_fixed_window_size(size: Vector2i, lock: bool):
 	if lock:
 		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_RESIZE_DISABLED, true)
