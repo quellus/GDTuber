@@ -147,25 +147,21 @@ func _autosave():
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
 
 
-func add_object_with_ui_controller_to_scene(
-	new_onscreen_object_menu_controller: OnScreenObjectMenuController
-):
-	var new_onscreen_object_menu_ui = new_onscreen_object_menu_controller.screen_object_menu_ui
+func add_object_with_ui_controller_to_scene(object_menu_controller: OnScreenObjectMenuController):
+	var new_onscreen_object_menu_ui = object_menu_controller.screen_object_menu_ui
 	var new_onscreen_object = new_onscreen_object_menu_ui.object
 
 	ObjectsRoot.add_child(new_onscreen_object)
-	ObjectsRoot.add_child(new_onscreen_object_menu_controller)
+	ObjectsRoot.add_child(object_menu_controller)
 	new_onscreen_object.user_position = MenusRoot.get_viewport_rect().size / 2
-	MenusRoot.add_child(new_onscreen_object_menu_controller.screen_object_menu_ui)
-	connect_object_ui_signals_to_scene(new_onscreen_object_menu_controller)
+	MenusRoot.add_child(object_menu_controller.screen_object_menu_ui)
+	connect_object_ui_signals_to_scene(object_menu_controller)
 	new_onscreen_object_menu_ui.update_menu()
 
 
-func connect_object_ui_signals_to_scene(
-	onscreen_object_menu_controller: OnScreenObjectMenuController
-):
-	onscreen_object_menu_controller.object_duplication_request.connect(_duplicate_object_in_scene)
-	onscreen_object_menu_controller.object_reorder_request.connect(_order_object_in_scene)
+func connect_object_ui_signals_to_scene(object_menu_controller: OnScreenObjectMenuController):
+	object_menu_controller.object_duplication_request.connect(_duplicate_object_in_scene)
+	object_menu_controller.object_reorder_request.connect(_order_object_in_scene)
 
 
 func _order_object_in_scene():
