@@ -144,7 +144,7 @@ func _on_save_button():
 
 func _autosave():
 	SystemSettings.save_system_data(input_device, threshold, input_gain)
-	_save_file(PlatformConsts.AUTOSAVE_PATH)
+	SceneFileSave.save_scene_to_file(self)
 
 
 func add_object_with_ui_controller_to_scene(object_menu_controller: OnScreenObjectMenuController):

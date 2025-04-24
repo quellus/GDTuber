@@ -120,9 +120,7 @@ func _unhandled_input(event):
 					drag_target.user_scale *= 1 / PlatformConsts.SCALE_RATIO
 
 
-func _init(
-	connected_screen_object: ScreenObject, file_dialog_window: FileDialog, gizmo_instance: Gizmo
-):
+func _init(connected_screen_object: ScreenObject, file_dialog_window: FileDialog, gizmo_instance: Gizmo):
 	file_dialog = file_dialog_window
 	gizmo = gizmo_instance
 	screen_object_menu_ui = screen_object_menu_scene.instantiate() as ScreenObjectMenu

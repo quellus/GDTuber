@@ -1,5 +1,3 @@
-# reconsider putting this into classes that are just static functions.
-
 class_name PlatformConsts
 
 const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
