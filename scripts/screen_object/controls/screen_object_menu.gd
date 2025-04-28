@@ -1,6 +1,8 @@
 class_name ScreenObjectMenu extends PanelContainer
 
-signal request_image(obj: ScreenObject, img: String, prop: String)
+static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
+
+signal request_image(screen_obj_menu: ScreenObjectMenu, img: String, prop: String)
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
 signal duplicate_object(ScreenObject)
@@ -66,23 +68,23 @@ func _set_name(value: String):
 
 
 func _request_image():
-	request_image.emit(object, "texture", "texturepath")
+	request_image.emit(self, "texture", "texturepath")
 
 
 func _request_neutral():
-	request_image.emit(object, "neutral_texture", "neutralpath")
+	request_image.emit(self,  "neutral_texture", "neutralpath")
 
 
 func _request_blinking():
-	request_image.emit(object, "blinking_texture", "blinkingpath")
+	request_image.emit(self, "blinking_texture", "blinkingpath")
 
 
 func _request_talking():
-	request_image.emit(object, "talking_texture", "talkingpath")
+	request_image.emit(self, "talking_texture", "talkingpath")
 
 
 func _request_talking_and_blinking():
-	request_image.emit(object, "talking_and_blinking_texture", "talkingandblinkingpath")
+	request_image.emit(self, "talking_and_blinking_texture", "talkingandblinkingpath")
 
 
 func _request_gizmo():
@@ -232,3 +234,15 @@ func _auto_toggle_timer_timeout() -> void:
 	%AutoToggleTextureProgressBar.visible = false
 	auto_toggle_button.self_modulate = Color(1, 1, 1, 1)
 	object.user_hidden = !object.user_hidden
+
+
+func set_screen_object_image(path, imageproperty, pathproperty):
+	if object:
+		var image = Image.new()
+		var err = image.load(path)
+		if err != OK:
+			push_error("cannot load image.")
+			return
+		object.set(imageproperty, ImageTexture.create_from_image(image))
+		object.set(pathproperty, path)
+		self.update_menu()

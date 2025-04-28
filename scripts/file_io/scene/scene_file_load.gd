@@ -122,17 +122,21 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 			for obj in save_dict["objects"]:
 				if validate_object_json(obj, version):
 					var new_onscreen_object = ScreenObject.new()
-					var new_onscreen_object_menu_controller = (
-						OnScreenObjectMenuController
-						. new(
-							new_onscreen_object,
-							main_menu.file_dialog,
-							main_menu.gizmo,
-						)
-					)
-					main_menu.add_object_with_ui_controller_to_scene(
-						new_onscreen_object_menu_controller
-					)
+					var screen_object_menu_ui = ScreenObjectMenu.screen_object_menu_scene.instantiate() as ScreenObjectMenu
+					screen_object_menu_ui.object = new_onscreen_object
+					main_menu.add_scene_object_with_ui_to_scene(screen_object_menu_ui)
+
+					# var new_onscreen_object_menu_controller = (
+				#		OnScreenObjectMenuController
+				#		. new(
+				#			new_onscreen_object,
+				#			main_menu.file_dialog,
+				#			main_menu.gizmo,
+				#		)
+				#	)
+					#main_menu.add_object_with_ui_controller_to_scene(
+					#		new_onscreen_object_menu_controller
+					# )
 					# 0.1
 					new_onscreen_object.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 					new_onscreen_object.user_position = Vector2(
@@ -142,10 +146,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 					new_onscreen_object.reactive = obj["reactive"]
 					new_onscreen_object.talking = obj["talking"]
 					if obj["texturepath"] != "":
-						new_onscreen_object_menu_controller.openingfor = new_onscreen_object
-						new_onscreen_object_menu_controller.objectimagefield = "texture"
-						new_onscreen_object_menu_controller.objectimagepathfield = "texturepath"
-						new_onscreen_object_menu_controller.open_image(obj["texturepath"])
+						screen_object_menu_ui.set_screen_object_image(obj["texturepath"], "texture", "texturepath")
 					new_onscreen_object.usesingleimage = true
 					# 0.2
 					if version.naturalnocasecmp_to("0.2") >= 0:
@@ -183,10 +184,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 							]
 						]:
 							if imgload[2] != "":
-								new_onscreen_object_menu_controller.openingfor = new_onscreen_object
-								new_onscreen_object_menu_controller.objectimagefield = imgload[1]
-								new_onscreen_object_menu_controller.objectimagepathfield = imgload[0]
-								new_onscreen_object_menu_controller.open_image(imgload[2])
+								screen_object_menu_ui.set_screen_object_image(imgload[2], imgload[1], imgload[0])
 					# 0.11
 					if version.naturalnocasecmp_to("0.11") >= 0:
 						new_onscreen_object.auto_toggle_enabled = obj["auto_toggle_enabled"]
