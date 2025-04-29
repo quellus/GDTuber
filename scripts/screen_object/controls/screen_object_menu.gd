@@ -23,6 +23,11 @@ var object: ScreenObject:
 @onready var auto_toggle_button = %AutoToggle
 @onready var auto_toggle_timer: Timer = %AutoToggleTimer
 
+static func create_screen_object_menu_with_default_scene_object() -> ScreenObjectMenu:
+	var new_onscreen_object = ScreenObject.new()
+	var screen_object_menu_ui = ScreenObjectMenu.screen_object_menu_scene.instantiate() as ScreenObjectMenu
+	screen_object_menu_ui.object = new_onscreen_object
+	return screen_object_menu_ui
 
 
 func _ready():

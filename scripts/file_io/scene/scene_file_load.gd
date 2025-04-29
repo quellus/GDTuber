@@ -121,22 +121,11 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 				men.queue_free()
 			for obj in save_dict["objects"]:
 				if validate_object_json(obj, version):
-					var new_onscreen_object = ScreenObject.new()
-					var screen_object_menu_ui = ScreenObjectMenu.screen_object_menu_scene.instantiate() as ScreenObjectMenu
-					screen_object_menu_ui.object = new_onscreen_object
+					var screen_object_menu_ui = ScreenObjectMenu.create_screen_object_menu_with_default_scene_object()
+					var new_onscreen_object = screen_object_menu_ui.object
+
 					main_menu.add_scene_object_with_ui_to_scene(screen_object_menu_ui)
 
-					# var new_onscreen_object_menu_controller = (
-				#		OnScreenObjectMenuController
-				#		. new(
-				#			new_onscreen_object,
-				#			main_menu.file_dialog,
-				#			main_menu.gizmo,
-				#		)
-				#	)
-					#main_menu.add_object_with_ui_controller_to_scene(
-					#		new_onscreen_object_menu_controller
-					# )
 					# 0.1
 					new_onscreen_object.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
 					new_onscreen_object.user_position = Vector2(

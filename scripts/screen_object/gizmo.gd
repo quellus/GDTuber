@@ -1,6 +1,5 @@
 class_name Gizmo extends Control
 
-# signal gizmo_focus_requested(ScreenObject)
 
 var dragging: bool
 var target: ScreenObject

@@ -76,7 +76,6 @@ var input_device: String
 @onready var json_save_dialog: FileDialog = %JSONSaveDialog
 @onready var json_load_dialog: FileDialog = %JSONLoadDialog
 
-
 ### Ready
 func _ready():
 	# Set Window Properties
@@ -147,41 +146,9 @@ func _autosave():
 	SceneFileSave.save_scene_to_file(self)
 
 
-#func add_object_with_ui_controller_to_scene(object_menu_controller: OnScreenObjectMenuController):
-#	var new_onscreen_object_menu_ui = object_menu_controller.screen_object_menu_ui
-#	var new_onscreen_object = new_onscreen_object_menu_ui.object
-#
-#	ObjectsRoot.add_child(new_onscreen_object)
-#	ObjectsRoot.add_child(object_menu_controller)
-#	new_onscreen_object.user_position = MenusRoot.get_viewport_rect().size / 2
-#	MenusRoot.add_child(object_menu_controller.screen_object_menu_ui)
-#	connect_object_ui_signals_to_scene(object_menu_controller)
-#	new_onscreen_object_menu_ui.update_menu()
-
-
-#func connect_object_ui_signals_to_scene(object_menu_controller: OnScreenObjectMenuController):
-#	object_menu_controller.object_duplication_request.connect(_duplicate_object_in_scene)
-#	object_menu_controller.object_reorder_request.connect(_order_object_in_scene)
-
-
 func _order_object_in_scene():
 	for node: ScreenObjectMenu in MenusRoot.get_children():
 		ObjectsRoot.move_child(node.object, node.get_index())
-
-
-#func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
-#	var new_copied_object = ScreenObject.new()
-#	var new_onscreen_object_menu_controller = OnScreenObjectMenuController.new(
-#		new_copied_object, file_dialog, gizmo
-#	)
-#
-#	add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller)
-#
-#	for property in object_for_duplication.copy_properties:
-#		new_copied_object.set(property, object_for_duplication.get(property))
-#
-#	connect_object_ui_signals_to_scene(new_onscreen_object_menu_controller)
-#	new_copied_object.update_menu.emit()
 
 func _request_image(requestor_menu: ScreenObjectMenu, imageproperty: String, pathproperty: String):
 	file_dialog.file_selected.connect(func file_selector_return(path):
@@ -189,12 +156,9 @@ func _request_image(requestor_menu: ScreenObjectMenu, imageproperty: String, pat
 		)
 	file_dialog.popup_centered()
 
-# very similar to add new object maybe consolidate? 
-func _duplicate_object_in_scene_v2(object_for_duplication: ScreenObject): 
-	var new_copied_object = ScreenObject.new()
-	var screen_object_menu_ui = ScreenObjectMenu.screen_object_menu_scene.instantiate() as ScreenObjectMenu
-	screen_object_menu_ui.object = new_copied_object
-
+func _duplicate_object_in_scene(object_for_duplication: ScreenObject): 
+	var screen_object_menu_ui = ScreenObjectMenu.create_screen_object_menu_with_default_scene_object()
+	var new_copied_object = screen_object_menu_ui.object
 	add_scene_object_with_ui_to_scene(screen_object_menu_ui)
 	
 	for property in object_for_duplication.copy_properties:
@@ -211,30 +175,12 @@ func add_scene_object_with_ui_to_scene(screen_object_menu_ui: ScreenObjectMenu):
 	screen_object_menu_ui.grab_gizmo.connect(gizmo.handle_object_recenter)
 	screen_object_menu_ui.tree_exiting.connect(gizmo.handle_clear)
 	screen_object_menu_ui.request_image.connect(_request_image)
-	screen_object_menu_ui.duplicate_object.connect(_duplicate_object_in_scene_v2)
+	screen_object_menu_ui.duplicate_object.connect(_duplicate_object_in_scene)
+
 
 func _add_new_object_to_scene():
 	if MenusRoot and ObjectsRoot:
-		var new_onscreen_object = ScreenObject.new()
-		var screen_object_menu_ui = ScreenObjectMenu.screen_object_menu_scene.instantiate() as ScreenObjectMenu
-		screen_object_menu_ui.object = new_onscreen_object
-		add_scene_object_with_ui_to_scene(screen_object_menu_ui)
-
-
-#func _add_new_object_to_scene_old():
-#	if MenusRoot and ObjectsRoot:
-#		var new_onscreen_object = ScreenObject.new()
-#		var new_onscreen_object_menu_controller = (
-#			OnScreenObjectMenuController
-#			. new(
-#				new_onscreen_object,
-#				file_dialog,
-#				gizmo,
-#			)
-#		)
-#
-#		add_object_with_ui_controller_to_scene(new_onscreen_object_menu_controller)
-
+		add_scene_object_with_ui_to_scene(ScreenObjectMenu.create_screen_object_menu_with_default_scene_object())
 
 func _load_system_data():
 	var system_setting_array: Array = SystemSettings.load_system_data()
@@ -339,8 +285,6 @@ func _on_popup_menu_index_pressed(index: int):
 	var popup_menu = device_dropdown.get_popup()
 	input_device = popup_menu.get_item_text(index)
 	AudioServer.set_input_device(input_device)
-
-
 
 
 func _get_average() -> float:
