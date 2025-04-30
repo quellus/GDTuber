@@ -16,7 +16,7 @@ func _input(event):
 				target.global_position = global_position
 				target.user_position = target.global_position
 
-	# maybe move even types into labeled functions 
+	# maybe move even types into labeled functions
 	if event is InputEventMouseMotion and target and rotating:
 		var rotvector = event.global_position - rotation_center
 		var rotangle = atan2(rotvector.y, rotvector.x)

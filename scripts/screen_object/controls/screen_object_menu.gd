@@ -1,12 +1,12 @@
 class_name ScreenObjectMenu extends PanelContainer
 
-static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
-
 signal request_image(screen_obj_menu: ScreenObjectMenu, img: String, prop: String)
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
 signal duplicate_object(ScreenObject)
 signal order_changed
+
+static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
 
 @export var popupanchor: Control
 @export var name_field: LineEditReset

@@ -6,9 +6,9 @@ const MAX_SAMPLES = 20
 # Screen Object Management
 @export var ObjectsRoot: Node
 @export var MenusRoot: Node
+@export var gizmo: Gizmo
 
 # Screen Object Editing
-@export var gizmo: Gizmo
 
 # The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
@@ -152,15 +152,14 @@ func _order_object_in_scene():
 
 func _request_image(requestor_menu: ScreenObjectMenu, imageproperty: String, pathproperty: String):
 	file_dialog.file_selected.connect(func file_selector_return(path):
-		requestor_menu.set_screen_object_image(path, imageproperty, pathproperty)
-		)
+		requestor_menu.set_screen_object_image(path, imageproperty, pathproperty))
 	file_dialog.popup_centered()
 
-func _duplicate_object_in_scene(object_for_duplication: ScreenObject): 
+func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
 	var screen_object_menu_ui = ScreenObjectMenu.create_screen_object_menu_with_default_scene_object()
 	var new_copied_object = screen_object_menu_ui.object
 	add_scene_object_with_ui_to_scene(screen_object_menu_ui)
-	
+
 	for property in object_for_duplication.copy_properties:
 		new_copied_object.set(property, object_for_duplication.get(property))
 
@@ -180,7 +179,8 @@ func add_scene_object_with_ui_to_scene(screen_object_menu_ui: ScreenObjectMenu):
 
 func _add_new_object_to_scene():
 	if MenusRoot and ObjectsRoot:
-		add_scene_object_with_ui_to_scene(ScreenObjectMenu.create_screen_object_menu_with_default_scene_object())
+		add_scene_object_with_ui_to_scene(
+			ScreenObjectMenu.create_screen_object_menu_with_default_scene_object())
 
 func _load_system_data():
 	var system_setting_array: Array = SystemSettings.load_system_data()
