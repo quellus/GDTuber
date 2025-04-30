@@ -2,10 +2,11 @@ class_name Localization
 
 const DEFAULT_LANGUAGE_LABEL = "SETTINGS_LANGUAGE_DEFAULT_LABEL"
 
-var language_dropdown: OptionButton = null # this has to be set externally
+var language_dropdown: OptionButton = null  # this has to be set externally
 
 var language_map: Dictionary = {}
 var available_locales = TranslationServer.get_loaded_locales()
+
 
 func _init() -> void:
 	for locale in available_locales:

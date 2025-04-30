@@ -1,22 +1,33 @@
 class_name ScreenObjectMenu extends PanelContainer
 
-signal request_image(obj:ScreenObject, img:String, prop:String)
+signal request_image(screen_obj_menu: ScreenObjectMenu, img: String, prop: String)
 signal request_gizmo(ScreenObject)
 signal grab_gizmo(ScreenObject)
 signal duplicate_object(ScreenObject)
-signal order_changed()
+signal order_changed
+
+static var screen_object_menu_scene = preload("res://scenes/screen_object_menu.tscn")
 
 @export var popupanchor: Control
 @export var name_field: LineEditReset
-@onready var visibilitytoggle: BaseButton = %VisibilityToggle
-@onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
-@onready var autoToggleButton = %AutoToggle
-@onready var autoToggleTimer: Timer = %AutoToggleTimer
+
 var object: ScreenObject:
 	set(value):
 		if value:
 			value.update_menu.connect(update_menu)
 		object = value
+
+
+@onready var visibilitytoggle: BaseButton = %VisibilityToggle
+@onready var settingsmenu: ScreenObjectSettingsPopup = $HBoxContainer/Control/Popup4
+@onready var auto_toggle_button = %AutoToggle
+@onready var auto_toggle_timer: Timer = %AutoToggleTimer
+
+static func create_screen_object_menu_with_default_scene_object() -> ScreenObjectMenu:
+	var new_onscreen_object = ScreenObject.new()
+	var screen_object_menu_ui = ScreenObjectMenu.screen_object_menu_scene.instantiate() as ScreenObjectMenu
+	screen_object_menu_ui.object = new_onscreen_object
+	return screen_object_menu_ui
 
 
 func _ready():
@@ -42,19 +53,19 @@ func _ready():
 		settingsmenu.requesttalkingandblinking.connect(_request_talking_and_blinking)
 		settingsmenu.min_blink_speed_change.connect(_set_min_blink_speed_interval)
 		settingsmenu.max_blink_speed_change.connect(_set_max_blink_speed_interval)
-		
+
 		settingsmenu.blink_duration_change.connect(_set_blink_duration_interval)
 
+
 func _process(_delta: float) -> void:
-	if !autoToggleTimer.is_stopped():
-		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
-		
+	if !auto_toggle_timer.is_stopped():
+		%AutoToggleTextureProgressBar.value = auto_toggle_timer.time_left
+
 
 func _toggle_multi_image(value):
 	object.usesingleimage = value
 	settingsmenu.singleimageselect.visible = value
 	settingsmenu.multiimageselect.visible = !value
-	pass
 
 
 func _set_name(value: String):
@@ -62,15 +73,23 @@ func _set_name(value: String):
 
 
 func _request_image():
-	request_image.emit(object, "texture", "texturepath")
+	request_image.emit(self, "texture", "texturepath")
+
+
 func _request_neutral():
-	request_image.emit(object, "neutral_texture", "neutralpath")
+	request_image.emit(self,  "neutral_texture", "neutralpath")
+
+
 func _request_blinking():
-	request_image.emit(object, "blinking_texture", "blinkingpath")
+	request_image.emit(self, "blinking_texture", "blinkingpath")
+
+
 func _request_talking():
-	request_image.emit(object, "talking_texture", "talkingpath")
+	request_image.emit(self, "talking_texture", "talkingpath")
+
+
 func _request_talking_and_blinking():
-	request_image.emit(object, "talking_and_blinking_texture", "talkingandblinkingpath")
+	request_image.emit(self, "talking_and_blinking_texture", "talkingandblinkingpath")
 
 
 func _request_gizmo():
@@ -85,39 +104,61 @@ func _open_menu():
 
 func _set_blinks(value):
 	object.blinking = value
+
+
 func _set_mouth(value):
 	object.talking = value
+
+
 func _set_filter(value):
 	object.filter = value
+
+
 func _auto_toggle_enabled(value):
 	object.auto_toggle_enabled = value
 	settingsmenu.timersettings.visible = value
 	%AutoToggle.visible = value
 
+
 func _set_bounce(value):
 	object.reactive = value
+
+
 func _set_speed(value):
 	object.user_speed = value
+
+
 func _set_height(value):
 	object.user_height = value
+
+
 func _set_min_blink_speed_interval(min_interval: float):
 	object.min_blink_delay = min_interval
+
 
 func _set_max_blink_speed_interval(max_interval: float):
 	object.max_blink_delay = max_interval
 
+
 func _set_blink_duration_interval(blink_duration: float):
 	object.blink_duration = blink_duration
 
+
 func _set_hue(value):
 	object.user_hue = value
+
+
 func _set_sat(value):
 	object.user_sat = value
+
+
 func _set_val(value):
 	object.user_val = value
 
+
 func _set_auto_toggle_time(value: float):
 	object.auto_toggle_time = value
+
 
 func update_menu():
 	%AutoToggle.visible = object.auto_toggle_enabled
@@ -148,24 +189,22 @@ func update_menu():
 		settingsmenu.maxintervalsettingsdisplay.value = object.max_blink_delay
 		settingsmenu.blinkdurationsettingsdisplay.value = object.blink_duration
 
+
 func _shift_up():
-	get_parent().move_child(self, get_index()-1)
+	get_parent().move_child(self, get_index() - 1)
 	order_changed.emit()
-	pass
 
 
 func _shift_down():
-	get_parent().move_child(self, get_index()+1)
+	get_parent().move_child(self, get_index() + 1)
 	order_changed.emit()
-	pass
 
 
 func _recenter():
 	var viewportsize = object.get_viewport_rect().size
-	object.user_position = viewportsize/2
+	object.user_position = viewportsize / 2
 	object.get_viewport_transform()
 	grab_gizmo.emit(object)
-	pass
 
 
 func _togglevisibility(value):
@@ -174,7 +213,6 @@ func _togglevisibility(value):
 
 func _duplicate():
 	duplicate_object.emit(object)
-	pass
 
 
 func _delete_object():
@@ -184,20 +222,32 @@ func _delete_object():
 
 
 func _on_auto_toggle_pressed() -> void:
-	if autoToggleTimer.is_stopped():
-		autoToggleTimer.start(object.auto_toggle_time)
+	if auto_toggle_timer.is_stopped():
+		auto_toggle_timer.start(object.auto_toggle_time)
 		%AutoToggleTextureProgressBar.visible = true
 		%AutoToggleTextureProgressBar.max_value = object.auto_toggle_time
-		%AutoToggleTextureProgressBar.value = autoToggleTimer.time_left
-		autoToggleButton.self_modulate = Color(1,1,1,0)
-		
+		%AutoToggleTextureProgressBar.value = auto_toggle_timer.time_left
+		auto_toggle_button.self_modulate = Color(1, 1, 1, 0)
+
 	else:
 		%AutoToggleTextureProgressBar.visible = false
-		autoToggleButton.self_modulate = Color(1,1,1,1)
-		autoToggleTimer.stop()
+		auto_toggle_button.self_modulate = Color(1, 1, 1, 1)
+		auto_toggle_timer.stop()
 
 
 func _auto_toggle_timer_timeout() -> void:
 	%AutoToggleTextureProgressBar.visible = false
-	autoToggleButton.self_modulate = Color(1,1,1,1)
+	auto_toggle_button.self_modulate = Color(1, 1, 1, 1)
 	object.user_hidden = !object.user_hidden
+
+
+func set_screen_object_image(path, imageproperty, pathproperty):
+	if object:
+		var image = Image.new()
+		var err = image.load(path)
+		if err != OK:
+			push_error("cannot load image.")
+			return
+		object.set(imageproperty, ImageTexture.create_from_image(image))
+		object.set(pathproperty, path)
+		self.update_menu()
