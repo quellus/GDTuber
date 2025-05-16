@@ -521,6 +521,10 @@ use_native_dialog = true
 wait_time = 60.0
 autostart = true
 
+[node name="AudioResetTimer" type="Timer" parent="."]
+wait_time = 60.0
+autostart = true
+
 [connection signal="text_submitted" from="Menu/PanelContainer/MainMenu/TitleEdit" to="." method="_set_profile_name"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/ThresholdSlider" to="." method="_on_v_slider_drag_ended"]
 [connection signal="value_changed" from="Menu/PanelContainer/MainMenu/HBoxContainer/InputGainSlider" to="." method="_on_input_gain_change"]
@@ -544,3 +548,4 @@ autostart = true
 [connection signal="file_selected" from="JSONSaveDialog" to="." method="_save_file"]
 [connection signal="file_selected" from="JSONLoadDialog" to="." method="_load_data"]
 [connection signal="timeout" from="AutosaveTimer" to="." method="_on_autosave_timer_timeout"]
+[connection signal="timeout" from="AudioResetTimer" to="." method="_on_audio_reset_timer_timeout"]
