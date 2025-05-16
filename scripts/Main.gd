@@ -1,5 +1,15 @@
 class_name Menu extends Control
 
+#Audio
+const MAX_SAMPLES = 20
+
+# Screen Object Management
+@export var ObjectsRoot: Node
+@export var MenusRoot: Node
+@export var gizmo: Gizmo
+
+# Screen Object Editing
+
 # The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
 
@@ -7,40 +17,21 @@ var localization = Localization.new()
 
 var language_map: Dictionary = {}
 
-# Window Management
-@onready var titleedit: LineEdit = %TitleEdit
-@onready var profilename: String = "GDTuber Avatar"
-@onready var mainmenu: Control = %MainMenu
-@onready var settingsmenu: Control = %SettingsMenu
-@onready var background = %Background
-@onready var bgcolor = %BackgroundColor
-@onready var bgTransparentToggle = %BGTransparentToggle
-@onready var bgcolorPicker = %ColorPickerButton
-@onready var background_transparent: bool = !background.visible
-@onready var background_color: Color = background.color
-@onready var menu = %Menu
-@onready var windowsizecontainer = %WindowSize
-@onready var fixedWindowWidthSpinbox = %fixedWindowWidthSpinbox
-@onready var fixedWindowWidth: int
-@onready var fixedWindowHeightSpinbox = %fixedWindowHeightSpinbox
-@onready var fixedWindowHeight: int
-@onready var fixedWindowSizeToggle = %FixedWindowSizeToggle
-@onready var fixedWindowSize: bool = false
 var menu_shown = false:
 	set(value):
 		menu_shown = value
 		_set_menu_shown(value)
-@onready var fpsCapToggle = %FPSCapToggle
-@onready var maxFpsSpinbox = %MaxFPSSpinbox
-@onready var fpsCap: bool = false
-@onready var fpsCapValue: int = 0
 
-# Audio Management
-const MAX_SAMPLES = 20
-const SCALE_RATIO = 1.1
-@onready var input_gain_slider: Slider = %InputGainSlider
-@onready var threshold_slider: Slider = %ThresholdSlider
-@onready var device_dropdown := %DeviceDropdown
+var is_talking := false:
+	set(value):
+		if value != is_talking:
+			for screen_object in get_tree().get_nodes_in_group("reactive"):
+				if screen_object is ScreenObject:
+					screen_object.is_talking = value
+		is_talking = value
+
+
+#Audio Vars
 var bus_index
 var analyzer: AudioEffectSpectrumAnalyzerInstance
 var samples: Array[float] = []
@@ -49,39 +40,41 @@ var threshold = 0.5
 var input_gain: float
 var input_device: String
 
-# Screen Object Management
-const DEFAULT_IMAGE: String = "res://Assets/DefaultAvatar.png"
-const DEFAULT_NEUTRAL_IMAGE: String = "res://Assets/DefaultAvatar-Neutral.png"
-const DEFAULT_TALKING_IMAGE: String = "res://Assets/DefaultAvatar-Talking.png"
-const DEFAULT_BLINKING_IMAGE: String = "res://Assets/DefaultAvatar-Blinking.png"
-const DEFAULT_TALKING_AND_BLINKING_IMAGE : String = "res://Assets/DefaultAvatar-TalkingBlinking.png"
-@export var ObjectsRoot: Node
-@export var MenusRoot: Node
-var default_avatar_texture: Texture2D = preload(DEFAULT_IMAGE)
-var default_neutral_texture: Texture2D = preload(DEFAULT_NEUTRAL_IMAGE)
-var default_talking_texture: Texture2D = preload(DEFAULT_TALKING_IMAGE)
-var default_blinking_texture: Texture2D = preload(DEFAULT_BLINKING_IMAGE)
-var default_talking_and_blinking_texture: Texture2D = preload(DEFAULT_TALKING_AND_BLINKING_IMAGE)
-var somenuscene = preload("res://scenes/screen_object_menu.tscn")
 
-# Screen Object Editing
-const SNAP_ANGLE = PI/4
-@export var gizmo: Gizmo
-var drag_target: ScreenObject
-var rotating = false
-var rotation_center: Vector2 = Vector2()
-var starting_rotation: float = 0
+# Window Management
+@onready var titleedit: LineEdit = %TitleEdit
+@onready var profilename: String = "GDTuber Avatar"
+@onready var mainmenu: Control = %MainMenu
+@onready var settings_menu: Control = %SettingsMenu
+@onready var background = %Background
+@onready var bg_color = %BackgroundColor
+@onready var bg_transparent_toggle = %BGTransparentToggle
+@onready var bg_color_picker = %ColorPickerButton
+@onready var background_transparent: bool = !background.visible
+@onready var background_color: Color = background.color
+@onready var menu = %Menu
+@onready var window_size_container = %WindowSize
+@onready var fixed_window_width_spinbox = %fixedWindowWidthSpinbox
+@onready var fixed_window_width: int
+@onready var fixed_window_height_spinbox = %fixedWindowHeightSpinbox
+@onready var fixed_window_height: int
+@onready var fixed_window_size_toggle = %FixedWindowSizeToggle
+@onready var fixed_window_size: bool = false
+
+@onready var fps_cap_toggle = %FPSCapToggle
+@onready var max_fps_spinbox = %MaxFPSSpinbox
+@onready var fps_cap: bool = false
+@onready var fps_cap_value: int = 0
+
+# Audio Management
+@onready var input_gain_slider: Slider = %InputGainSlider
+@onready var threshold_slider: Slider = %ThresholdSlider
+@onready var device_dropdown := %DeviceDropdown
 
 # File Management
-@onready var file_dialog := %ImageOpenDialog
-@onready var json_save_dialog : FileDialog = %JSONSaveDialog
-@onready var json_load_dialog : FileDialog = %JSONLoadDialog
-var openingfor: ScreenObject
-var objectimagefield: String
-var objectimagepathfield: String
-var savedata: String
-const AUTOSAVE_PATH: String = "user://autosave.gdtuber"
-const SYSTEM_CONFIG_PATH: String = "user://system_config.cfg"
+@onready var file_dialog: FileDialog = %ImageOpenDialog
+@onready var json_save_dialog: FileDialog = %JSONSaveDialog
+@onready var json_load_dialog: FileDialog = %JSONLoadDialog
 
 ### Ready
 func _ready():
@@ -97,14 +90,15 @@ func _ready():
 	for device_name in devices:
 		popup_menu.add_item(device_name)
 	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
-	
+
 	# Initialize Localization
 	localization.language_dropdown = %LanguageDropdown
 	localization.setup()
-	
+
 	# Initialize Menu
 	menu_shown = true
-	_load_data(AUTOSAVE_PATH)
+	SceneFileLoad.load_scene_from_file(PlatformConsts.AUTOSAVE_PATH, self)
+
 	_load_system_data()
 
 
@@ -128,333 +122,93 @@ func _process(_delta):
 			is_talking = false
 
 	%VolumeVisual.value = magnitude_avg
-	
+
 	%CurrentFPSLabel.set_text("Current FPS %.1f" % Engine.get_frames_per_second())
+
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_autosave()
-		get_tree().quit() # default behavior
+		get_tree().quit()  # default behavior
 
-### File I/O
+
+### Handle Save event from button click
 func _save_file(path: String):
-	if path.get_extension() == "":
-		path = path+".gdtuber"
-	var save_game = FileAccess.open(path, FileAccess.WRITE)
-	save_game.store_line(savedata)
+	SceneFileSave.save_scene_to_file(self, path)
 
 
 func _on_save_button():
-	_save_profile_data()
 	json_save_dialog.popup_centered()
 
 
 func _autosave():
-	_save_profile_data()
-	_save_system_data()
-	_save_file(AUTOSAVE_PATH)
+	SystemSettings.save_system_data(input_device, threshold, input_gain)
+	SceneFileSave.save_scene_to_file(self)
 
 
-func _save_system_data():
-	var config = ConfigFile.new()
-	config.set_value("Audio", "input_device", input_device)
-	config.set_value("Audio", "threshold", threshold)
-	config.set_value("Audio", "input_gain", input_gain)
-	config.set_value("Localization", "language", TranslationServer.get_locale())
+func _order_object_in_scene():
+	for node: ScreenObjectMenu in MenusRoot.get_children():
+		ObjectsRoot.move_child(node.object, node.get_index())
+
+func _request_image(requestor_menu: ScreenObjectMenu, imageproperty: String, pathproperty: String):
+	file_dialog.file_selected.connect(func file_selector_return(path):
+		requestor_menu.set_screen_object_image(path, imageproperty, pathproperty))
+	file_dialog.popup_centered()
+
+func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
+	var screen_object_menu_ui = ScreenObjectMenu.create_screen_object_menu_with_default_scene_object()
+	var new_copied_object = screen_object_menu_ui.object
+	add_scene_object_with_ui_to_scene(screen_object_menu_ui)
+
+	for property in object_for_duplication.copy_properties:
+		new_copied_object.set(property, object_for_duplication.get(property))
+
+func add_scene_object_with_ui_to_scene(screen_object_menu_ui: ScreenObjectMenu):
+	var new_onscreen_object = screen_object_menu_ui.object
 	
-	config.save(SYSTEM_CONFIG_PATH)
+	ObjectsRoot.add_child(new_onscreen_object)
+	MenusRoot.add_child(screen_object_menu_ui)
+	new_onscreen_object.user_position = MenusRoot.get_viewport_rect().size / 2
 
+	screen_object_menu_ui.request_gizmo.connect(gizmo.request_screen_object_gizmo_focus)
+	screen_object_menu_ui.grab_gizmo.connect(gizmo.handle_object_recenter)
+	screen_object_menu_ui.tree_exiting.connect(gizmo.handle_clear)
+	screen_object_menu_ui.request_image.connect(_request_image)
+	screen_object_menu_ui.duplicate_object.connect(_duplicate_object_in_scene)
+	screen_object_menu_ui.order_changed.connect(_order_object_in_scene)
+	screen_object_menu_ui.update_menu()
+
+
+func _add_new_object_to_scene():
+	if MenusRoot and ObjectsRoot:
+		add_scene_object_with_ui_to_scene(
+			ScreenObjectMenu.create_screen_object_menu_with_default_scene_object())
 
 func _load_system_data():
-	var config = ConfigFile.new()
-	var err: Error = config.load(SYSTEM_CONFIG_PATH)
-	if err == OK:
-		input_device = config.get_value("Audio", "input_device", input_device)
+	var system_setting_array: Array = SystemSettings.load_system_data()
+
+	if system_setting_array.is_empty() == false:
+		input_device = system_setting_array[0]
+		threshold = system_setting_array[1]
+		input_gain = system_setting_array[2]
+		var locale = system_setting_array[3]
+
 		AudioServer.set_input_device(input_device)
-		threshold = config.get_value("Audio", "threshold", threshold)
 		threshold_slider.value = threshold
-		input_gain = config.get_value("Audio", "input_gain", input_gain)
 		input_gain_slider.value = input_gain
-		
-		var locale = config.get_value("Localization", "language", TranslationServer.get_locale())
+
 		if locale != TranslationServer.get_locale():
 			localization.set_locale(locale)
 
 
-func _save_profile_data():
-	json_save_dialog.file_mode = FileDialog.FILE_MODE_SAVE_FILE
-	var savedict = {
-		"version":project_version,
-		"profile_name":profilename,
-		"background_transparent":background_transparent,
-		"background_color":background_color.to_html(),
-		"fixedWindowWidth":fixedWindowWidth,
-		"fixedWindowHeight":fixedWindowHeight,
-		"fixedWindowSize":fixedWindowSize,
-		"fpsCap": fpsCap,
-		"fpsCapValue": fpsCapValue,
-		"objects":[]
-	}
-	for obj in ObjectsRoot.get_children():
-		if obj is ScreenObject:
-			savedict["objects"].append({
-				"scale.x": obj.user_scale.x,
-				"scale.y": obj.user_scale.y,
-				"position.x": obj.user_position.x,
-				"position.y": obj.user_position.y,
-				"texturepath": obj.texturepath,
-				"blinking": obj.blinking,
-				"reactive": obj.reactive,
-				"talking": obj.talking,
-				"filter": obj.filter,
-				"rotation": obj.user_rotation,
-				"hidden": obj.user_hidden,
-				"name": obj.user_name,
-				"hue": obj.user_hue,
-				"sat": obj.user_sat,
-				"val": obj.user_val,
-				"height": obj.user_height,
-				"min_blink_delay": obj.min_blink_delay,
-				"max_blink_delay": obj.max_blink_delay,
-				"blink_duration": obj.blink_duration,
-				"speed": obj.user_speed,
-				"neutralpath": obj.neutralpath,
-				"blinkingpath": obj.blinkingpath,
-				"talkingpath": obj.talkingpath,
-				"talkingandblinkingpath": obj.talkingandblinkingpath,
-				"usesingleimage": obj.usesingleimage,
-				"auto_toggle_enabled": obj.auto_toggle_enabled,
-				"auto_toggle_time": obj.auto_toggle_time
-			})
-	savedata = JSON.stringify(savedict)
-
-func _validate_save_json(dict: Dictionary, version: String) -> bool:
-	var valid = true
-	var versions = {
-		"0.1":{
-			"objects":TYPE_ARRAY,
-			"version":TYPE_STRING
-		},
-		"0.4":{
-			"profile_name":TYPE_STRING,
-		},
-		"0.8":{
-			"background_transparent":TYPE_BOOL,
-			"background_color":TYPE_STRING
-		},
-		"0.10":{
-			"fixedWindowHeight":TYPE_INT,
-			"fixedWindowWidth": TYPE_INT,
-			"fixedWindowSize":TYPE_BOOL
-		},
-		"0.12":{
-			"fpsCap": TYPE_BOOL,
-			"fpsCapValue": TYPE_INT
-		}
-	}
-	for v: String in versions:
-		if version.naturalnocasecmp_to(v) >= 0:
-			for field in versions[v]:
-				if field not in dict:
-					push_error("FIELD NOT FOUND: " + field)
-					valid = false
-				elif !is_instance_of(dict[field], versions[v][field]):
-					push_error("FIELD TYPE INCORRECT: " + field)
-					valid = false
-	return valid
-
-func _validate_object_json(dict: Dictionary, version: String) -> bool:
-	var valid = true
-	var versions = {
-		"0.1":{
-			"scale.x":TYPE_FLOAT,
-			"scale.y":TYPE_FLOAT,
-			"position.x":TYPE_FLOAT,
-			"position.y":TYPE_FLOAT,
-			"texturepath":TYPE_STRING,
-			"blinking":TYPE_BOOL,
-			"reactive":TYPE_BOOL,
-			"talking":TYPE_BOOL
-		},
-		"0.2":{
-			"filter":TYPE_BOOL
-		},
-		"0.4":{
-			"rotation":TYPE_FLOAT
-		},
-		"0.5":{
-			"hidden":TYPE_BOOL
-		},
-		"0.6":{
-			"name":TYPE_STRING,
-		},
-		"0.7":{
-			"hue":TYPE_FLOAT,
-			"sat":TYPE_FLOAT,
-			"val":TYPE_FLOAT,
-		},
-		"0.8":{
-			"height":TYPE_FLOAT,
-			"speed":TYPE_FLOAT
-		},
-		"0.9":{
-			"neutralpath":TYPE_STRING,
-			"blinkingpath":TYPE_STRING,
-			"talkingpath":TYPE_STRING,
-			"talkingandblinkingpath":TYPE_STRING,
-			"usesingleimage":TYPE_BOOL
-		},
-		"0.11":{
-			"auto_toggle_enabled":TYPE_BOOL,
-			"auto_toggle_time":TYPE_FLOAT
-		},
-		"0.13":{
-			"min_blink_delay":TYPE_FLOAT,
-			"max_blink_delay":TYPE_FLOAT,
-			"blink_duration":TYPE_FLOAT
-		}
-	}
-	for v in versions:
-		if version.naturalnocasecmp_to(v) >= 0:
-			for field in versions[v]:
-				if field not in dict:
-					push_error("FIELD NOT FOUND: " + field)
-					valid = false
-				elif !is_instance_of(dict[field], versions[v][field]):
-					push_error("FIELD TYPE INCORRECT: " + field)
-					push_error("Value: ", dict[field])
-					push_error("Type: ", type_string(typeof(dict[field])))
-					valid = false
-	return valid
-
 func _load_dialog():
 	json_load_dialog.popup_centered()
 
-func _load_data(path):
-	var save_json = FileAccess.get_file_as_string(path)
-	if save_json == "":
-		return
-	var save_dict = JSON.parse_string(save_json)
-	var version : String = "0.1.0"
-	if save_dict:
-		if "version" in save_dict:
-			if save_dict["version"] is float:
-				save_dict["version"] = str(save_dict["version"])
-				version = save_dict["version"]
-		if _validate_save_json(save_dict, version):
-			version = save_dict["version"]
-			# Version Check
-			if version.naturalnocasecmp_to(project_version) > 0:
-				push_warning("WARNING: save data is newer than current version, attempting to load data")
 
-			# Generate Objects from Objects Array
-			for obj in ObjectsRoot.get_children():
-				obj.queue_free()
-			for men in MenusRoot.get_children():
-				men.queue_free()
-			for obj in save_dict["objects"]:
-				if _validate_object_json(obj, version):
-					var newobj = _create_new_object()
-					# 0.1
-					newobj.user_scale = Vector2(obj["scale.x"], obj["scale.y"])
-					newobj.user_position = Vector2(obj["position.x"], obj["position.y"])
-					newobj.blinking = obj["blinking"]
-					newobj.reactive = obj["reactive"]
-					newobj.talking = obj["talking"]
-					if obj["texturepath"] != "":
-						openingfor = newobj
-						objectimagefield = "texture"
-						objectimagepathfield = "texturepath"
-						_open_image(obj["texturepath"])
-					newobj.usesingleimage = true
-					# 0.2
-					if version.naturalnocasecmp_to("0.2") >= 0:
-						newobj.filter = obj["filter"]
-					# 0.4
-					if version.naturalnocasecmp_to("0.4") >= 0:
-						newobj.user_rotation = obj["rotation"]
-					# 0.5
-					if version.naturalnocasecmp_to("0.5") >= 0:
-						newobj.user_hidden = obj["hidden"]
-					# 0.6
-					if version.naturalnocasecmp_to("0.6") >= 0:
-						newobj.user_name = obj["name"]
-					# 0.7
-					if version.naturalnocasecmp_to("0.7") >= 0:
-						newobj.user_hue = obj["hue"]
-						newobj.user_sat = obj["sat"]
-						newobj.user_val = obj["val"]
-					# 0.8
-					if version.naturalnocasecmp_to("0.8") >= 0:
-						newobj.user_height = obj["height"]
-						newobj.user_speed = obj["speed"]
-					newobj.update_menu.emit()
-					# 0.9
-					if version.naturalnocasecmp_to("0.9") >= 0:
-						newobj.usesingleimage = obj["usesingleimage"]
-						for imgload in [
-							["neutralpath", "neutral_texture", obj["neutralpath"]],
-							["blinkingpath", "blinking_texture", obj["blinkingpath"]],
-							["talkingpath", "talking_texture", obj["talkingpath"]],
-							["talkingandblinkingpath", "talking_and_blinking_texture", obj["talkingandblinkingpath"]]
-						]:
-							if imgload[2] != "":
-								openingfor = newobj
-								objectimagefield = imgload[1]
-								objectimagepathfield = imgload[0]
-								_open_image(imgload[2])
-					# 0.11
-					if version.naturalnocasecmp_to("0.11") >= 0:
-						newobj.auto_toggle_enabled = obj["auto_toggle_enabled"]
-						newobj.auto_toggle_time = obj["auto_toggle_time"]
-					# 0.13
-					if version.naturalnocasecmp_to("0.13") >= 0:
-						newobj.min_blink_delay = obj["min_blink_delay"] if obj.has("min_blink_delay") else 2 
-						newobj.max_blink_delay = obj["max_blink_delay"] if obj.has("max_blink_delay") else 4 
-						newobj.blink_duration = obj["blink_duration"] if obj.has("blink_duration") else 2 
-					
-					newobj.update_menu.emit()
-				else:
-					push_error("ERROR: object does not contain required fields")
-			# Load Program Settings
-			#0.4
-			if version.naturalnocasecmp_to("0.4") >= 0:
-				_set_profile_name(save_dict["profile_name"])
-			# 0.8
-			if version.naturalnocasecmp_to("0.8") >= 0:
-				background_color = Color.from_string(save_dict["background_color"], background_color)
-				_change_background_color(background_color)
-				bgcolorPicker.color = background_color
-				_toggle_transparent(save_dict["background_transparent"])
-				bgTransparentToggle.button_pressed = save_dict["background_transparent"]
-			if version.naturalnocasecmp_to("0.10") >= 0:
-				fixedWindowSizeToggle.button_pressed = save_dict["fixedWindowSize"]
-				fixedWindowWidthSpinbox.value = save_dict["fixedWindowWidth"]
-				fixedWindowHeightSpinbox.value = save_dict["fixedWindowHeight"]
-			if version.naturalnocasecmp_to("0.12") >= 0:
-				maxFpsSpinbox.set_value_no_signal(save_dict["fpsCapValue"] if save_dict["fpsCap"] else 60)
-				fpsCapToggle.set_pressed(save_dict["fpsCap"])
-		else:
-			push_error("ERROR: Required Fields for Save File Version not Found")
-	else:
-		push_error("ERROR: JSON file is invalid")
+func _load_data(path: String):
+	SceneFileLoad.load_scene_from_file(path, self)
+	gizmo.request_screen_object_gizmo_focus(null)
 
-func _request_image(requestor, imageproperty, pathproperty):
-	openingfor = requestor
-	objectimagefield = imageproperty
-	objectimagepathfield = pathproperty
-	file_dialog.popup_centered()
-
-func _open_image(path):
-	if openingfor:
-		var image = Image.new()
-		var err = image.load(path)
-		if err != OK:
-			push_error("cannot load image.")
-			return
-
-		openingfor.set(objectimagefield, ImageTexture.create_from_image(image))
-		openingfor.set(objectimagepathfield, path)
 
 func _on_autosave_timer_timeout():
 	_autosave()
@@ -465,51 +219,56 @@ func _set_menu_shown(value: bool):
 	menu.visible = value
 	# set_process_input(value)
 
+
 func _on_button_button_down():
 	menu_shown = false
 
-func _on_quit_button_button_down():
-	_save_system_data()
-	_save_profile_data()
-	_save_file(AUTOSAVE_PATH)
-	get_tree().quit()
 
+func _on_quit_button_button_down():
+	SystemSettings.save_system_data(input_device, threshold, input_gain)
+	_save_file(PlatformConsts.AUTOSAVE_PATH)
+	get_tree().quit()
 
 
 func _on_fixed_window_button_toggled(value):
 	var windowsize = DisplayServer.window_get_size()
-	fixedWindowSize = value
-	WindowManager.toggle_fixed_window_size(windowsize,value)
+	fixed_window_size = value
+	WindowManager.toggle_fixed_window_size(windowsize, value)
 	if value == true:
-		fixedWindowWidthSpinbox.value = windowsize.x
-		fixedWindowHeightSpinbox.value = windowsize.y
-		windowsizecontainer.show()
+		fixed_window_width_spinbox.value = windowsize.x
+		fixed_window_height_spinbox.value = windowsize.y
+		window_size_container.show()
 	else:
-		windowsizecontainer.hide()
+		window_size_container.hide()
+
 
 func _on_ws_lock_width_value_changed(value):
-	if fixedWindowSizeToggle.button_pressed and fixedWindowWidth != value:
-		fixedWindowWidth = value
-		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth,fixedWindowHeight),value)
+	if fixed_window_size_toggle.button_pressed and fixed_window_width != value:
+		fixed_window_width = value
+		WindowManager.toggle_fixed_window_size(Vector2i(fixed_window_width, fixed_window_height), value)
+
 
 func _on_ws_lock_height_value_changed(value):
-	if fixedWindowSizeToggle.button_pressed and fixedWindowHeight != value:
-		fixedWindowHeight = value
-		WindowManager.toggle_fixed_window_size(Vector2i(fixedWindowWidth,fixedWindowHeight),value)
+	if fixed_window_size_toggle.button_pressed and fixed_window_height != value:
+		fixed_window_height = value
+		WindowManager.toggle_fixed_window_size(Vector2i(fixed_window_width, fixed_window_height), value)
+
 
 func _on_fullscreen_toggle():
 	WindowManager.toggle_fullscreen()
 
+
 func _open_settings():
-	settingsmenu.visible = true
+	settings_menu.visible = true
 	mainmenu.visible = false
+
 
 func _close_settings():
 	mainmenu.visible = true
-	settingsmenu.visible = false
+	settings_menu.visible = false
 
 func _toggle_transparent(value):
-	bgcolor.visible = !value
+	bg_color.visible = !value
 	background.visible = !value
 	background_transparent = value
 
@@ -523,82 +282,12 @@ func _set_profile_name(pname: String):
 	get_tree().get_root().title = pname
 
 
-
-### Screen Object Management
-func _create_new_object() -> ScreenObject:
-	if MenusRoot and ObjectsRoot:
-		var newmenu: ScreenObjectMenu = somenuscene.instantiate() as ScreenObjectMenu
-		var newobject: ScreenObject = ScreenObject.new()
-		newobject.texture = default_avatar_texture
-		newobject.neutral_texture = default_neutral_texture
-		newobject.talking_texture = default_talking_texture
-		newobject.blinking_texture = default_blinking_texture
-		newobject.talking_and_blinking_texture = default_talking_and_blinking_texture
-		MenusRoot.add_child(newmenu)
-		ObjectsRoot.add_child(newobject)
-		newmenu.object = newobject
-		_connect_menu(newmenu)
-		newobject.user_position = get_viewport_rect().size/2
-		newmenu.update_menu()
-		return newobject
-	else:
-		return null
-
-func _connect_menu(smenu: ScreenObjectMenu):
-	smenu.request_image.connect(_request_image)
-	smenu.tree_exiting.connect(clear_gizmo)
-	smenu.duplicate_object.connect(_duplicate_object)
-	smenu.request_gizmo.connect(_on_drag_requested)
-	smenu.grab_gizmo.connect(_grab_gizmo)
-	smenu.order_changed.connect(_order_objects)
-
-func clear_gizmo():
-	gizmo.target = null
-	gizmo.visible = false
-
-func _grab_gizmo(object: ScreenObject):
-	gizmo.global_position = object.global_position
-
-func _on_drag_requested(object: ScreenObject):
-	if drag_target == object:
-		drag_target = null
-		gizmo.visible = false
-		gizmo.target = null
-	else:
-		gizmo.global_position = object.global_position
-		gizmo.visible = true
-		gizmo.target = object
-		drag_target = object
-
-func _duplicate_object(obj: ScreenObject):
-	var newobj = _create_new_object()
-
-	for property in obj.copy_properties:
-		newobj.set(property, obj.get(property))
-	newobj.update_menu.emit()
-	pass
-
-func _order_objects():
-	for node:ScreenObjectMenu in MenusRoot.get_children():
-		ObjectsRoot.move_child(node.object, node.get_index())
-		pass
-
-
-
 ### Audio Management
 func _on_popup_menu_index_pressed(index: int):
 	var popup_menu = device_dropdown.get_popup()
 	input_device = popup_menu.get_item_text(index)
 	AudioServer.set_input_device(input_device)
 
-
-var is_talking := false:
-	set(value):
-		if value != is_talking:
-			for screen_object in get_tree().get_nodes_in_group("reactive"):
-				if screen_object is ScreenObject:
-					screen_object.is_talking = value
-		is_talking = value
 
 func _get_average() -> float:
 	var mag_sum: float = 0.0
@@ -608,56 +297,25 @@ func _get_average() -> float:
 	mag_avg = mag_sum / float(samples.size())
 	return mag_avg
 
-func update_amplifier(_new_input_gain : float):
+
+func update_amplifier(_new_input_gain: float):
 	if _new_input_gain <= -10.0 || _new_input_gain >= 24.1:
 		return
 	if amplifier_effect.volume_db != _new_input_gain:
 		amplifier_effect.volume_db = _new_input_gain
 
+
 func _on_v_slider_drag_ended(value_changed):
 	threshold = value_changed
 
-func _on_input_gain_change(_new_input_gain : float):
+
+func _on_input_gain_change(_new_input_gain: float):
 	input_gain = _new_input_gain
 	update_amplifier(_new_input_gain)
 
 
-
 ### Input
-func _input(event):
-
-	if event is InputEventMouseMotion and drag_target and rotating:
-		var rotvector = event.global_position-rotation_center
-		var rotangle = atan2(rotvector.y, rotvector.x)
-		var targetrot = rotangle+starting_rotation
-		if Input.is_key_pressed(KEY_CTRL):
-			drag_target.user_rotation = round(targetrot/SNAP_ANGLE)*SNAP_ANGLE
-		else:
-			drag_target.user_rotation = targetrot
-
-	if event is InputEventMouseButton and drag_target:
-			match event.button_index:
-				MOUSE_BUTTON_RIGHT:
-					if event.is_pressed():
-						if !rotating:
-							rotation_center = drag_target.global_position
-							var rotvector = event.global_position-rotation_center
-							var rotangle = atan2(rotvector.y, rotvector.x)
-							starting_rotation = drag_target.user_rotation - rotangle
-							rotating = true
-					else:
-						rotating = false
-
 func _unhandled_input(event):
-
-	# Scroll to zoom
-	if event is InputEventMouseButton and drag_target:
-		if is_instance_valid(drag_target):
-			match event.button_index:
-				MOUSE_BUTTON_WHEEL_UP:
-					drag_target.user_scale *= SCALE_RATIO
-				MOUSE_BUTTON_WHEEL_DOWN:
-					drag_target.user_scale *= 1 / SCALE_RATIO
 	# Toggle Menu
 	if event is InputEventKey or event is InputEventMouse:
 		if event.is_pressed():
@@ -665,16 +323,17 @@ func _unhandled_input(event):
 
 
 func _on_fps_cap_toggled(toggled_on: bool) -> void:
-	fpsCap = toggled_on
+	fps_cap = toggled_on
 	if not toggled_on:
 		%FPSDropdownContainer.hide()
 		Engine.set_max_fps(0)
 		return
-	
+
 	%FPSDropdownContainer.show()
 	_on_max_fps_spinbox_value_changed(%MaxFPSSpinbox.get_value())
 
+
 func _on_max_fps_spinbox_value_changed(value: float) -> void:
-	fpsCapValue = int(value)
-	if int(value)!= Engine.get_max_fps():
+	fps_cap_value = int(value)
+	if int(value) != Engine.get_max_fps():
 		Engine.set_max_fps(int(value))

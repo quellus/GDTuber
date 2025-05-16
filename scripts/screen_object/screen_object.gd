@@ -1,5 +1,8 @@
 class_name ScreenObject extends Node2D
 
+
+signal update_menu
+
 var copy_properties = [
 	"user_position",
 	"user_hidden",
@@ -125,11 +128,10 @@ var reactive := true:
 		create_visual()
 var talking := true:
 	set(value):
-
 		talking = value
 		create_visual()
 
-var user_scale: Vector2  = Vector2(1, 1) :
+var user_scale: Vector2 = Vector2(1, 1):
 	set(value):
 		if sprite:
 			sprite.scale = value
@@ -137,7 +139,6 @@ var user_scale: Vector2  = Vector2(1, 1) :
 
 var user_name: String = ""
 
-signal update_menu
 
 var texturepath: String
 var neutralpath: String
@@ -179,10 +180,12 @@ var is_talking: bool:
 				else:
 					restart_tween()
 
+
 func _ready():
 	visualsroot.name = "VisualsRoot"
 	add_child(visualsroot)
 	create_visual()
+
 
 func create_visual():
 	remove_from_group("reactive")
@@ -220,8 +223,8 @@ func create_atlas():
 	sprite = AnimatedSprite2D.new()
 	sprite.scale = user_scale
 	sprite.sprite_frames = SpriteFrames.new()
-	var width = floor(float(texture.get_width())/2) if talking else texture.get_width()
-	var height = floor(float(texture.get_height())/2) if blinking else texture.get_height()
+	var width = floor(float(texture.get_width()) / 2) if talking else texture.get_width()
+	var height = floor(float(texture.get_height()) / 2) if blinking else texture.get_height()
 	var voffset = -height
 	if usesingleimage:
 		for i in range(2 if blinking else 1):
@@ -244,9 +247,10 @@ func create_atlas():
 	visualsroot.add_child(sprite)
 
 	if is_instance_valid(blink_timer):
-			blink_timer.queue_free()
+		blink_timer.queue_free()
 	if is_inside_tree():
 		_gentimer()
+
 
 func _gentimer():
 	if blinking:
@@ -255,8 +259,10 @@ func _gentimer():
 		blink_timer.timeout.connect(_on_blink_timer_timeout)
 		blink_timer.start(1)
 
+
 func _enter_tree():
 	_gentimer()
+
 
 func create_normal_sprite():
 	sprite = Sprite2D.new()
@@ -270,12 +276,16 @@ func create_normal_sprite():
 	if is_instance_valid(blink_timer):
 		blink_timer.queue_free()
 
+
 func restart_tween():
 	if is_talking and reactive:
 		bounce_tween = visualsroot.create_tween()
-		bounce_tween.tween_property(visualsroot, "position", Vector2(0, -user_height), 0.2/user_speed)
-		bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2/user_speed)
+		bounce_tween.tween_property(
+			visualsroot, "position", Vector2(0, -user_height), 0.2 / user_speed
+		)
+		bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2 / user_speed)
 		bounce_tween.tween_callback(restart_tween)
+
 
 func generate_animation():
 	visualsroot.position = Vector2()
@@ -286,14 +296,23 @@ func _on_animator_stopped(_anim_name):
 	if is_talking:
 		bounce_animator.play("bounce")
 
+
 func _on_blink_timer_timeout():
 	if is_blinking:
 		var timer_time = rng.randf_range(min_blink_delay, max_blink_delay)
 		blink_timer.start(timer_time)
 	else:
-		var duration_time = blink_duration/10.0
+		var duration_time = blink_duration / 10.0
 		blink_timer.start(duration_time)
 	is_blinking = !is_blinking
 
+
 func _set_hue(value):
 	sprite.material.set_shader_parameter("hue", value)
+
+func _init():
+	self.texture = PlatformConsts.default_avatar_texture
+	self.neutral_texture = PlatformConsts.default_neutral_texture
+	self.talking_texture = PlatformConsts.default_talking_texture
+	self.blinking_texture = PlatformConsts.default_blinking_texture
+	self.talking_and_blinking_texture = PlatformConsts.default_talking_and_blinking_texture
