@@ -95,6 +95,11 @@ func _request_talking_and_blinking():
 func _request_gizmo():
 	request_gizmo.emit(object)
 
+func gizmo_request_confirm(request_object: ScreenObject): 
+	if request_object == object:
+		%GizmoButton.self_modulate = Color(1,1,1,0.5)
+	else:
+		%GizmoButton.self_modulate = Color(1,1,1,1)
 
 func _open_menu():
 	var popuprect = popupanchor.get_global_rect()

@@ -133,7 +133,8 @@ texture_normal = ExtResource("10_l0soc")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="Gizmo" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
+[node name="GizmoButton" type="TextureButton" parent="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(26, 0)
 layout_mode = 2
 tooltip_text = "SO_MENU_GIZMO_TOOLTIP"
@@ -174,6 +175,6 @@ visible = false
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle" to="." method="_on_auto_toggle_pressed"]
 [connection signal="timeout" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/AutoToggle/AutoToggleTimer" to="." method="_auto_toggle_timer_timeout"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Duplicate" to="." method="_duplicate"]
-[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Gizmo" to="." method="_request_gizmo"]
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/GizmoButton" to="." method="_request_gizmo"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Recenter" to="." method="_recenter"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/HBoxContainer2/Delete" to="." method="_delete_object"]
