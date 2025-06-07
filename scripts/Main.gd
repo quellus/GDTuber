@@ -176,6 +176,7 @@ func add_scene_object_with_ui_to_scene(screen_object_menu_ui: ScreenObjectMenu):
 	screen_object_menu_ui.request_image.connect(_request_image)
 	screen_object_menu_ui.duplicate_object.connect(_duplicate_object_in_scene)
 	screen_object_menu_ui.order_changed.connect(_order_object_in_scene)
+	gizmo.gizmo_changed.connect(screen_object_menu_ui.update_gizmo_button)
 	screen_object_menu_ui.update_menu()
 
 

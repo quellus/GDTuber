@@ -1,5 +1,6 @@
 class_name Gizmo extends Control
 
+signal gizmo_changed(ScreenObject)
 
 var dragging: bool
 var target: ScreenObject
@@ -57,10 +58,12 @@ func request_screen_object_gizmo_focus(object_requesting_gizmo: ScreenObject):
 		target = null
 		self.visible = false
 		self.target = null
+		gizmo_changed.emit(null)
 	else:
 		self.global_position = object_requesting_gizmo.global_position
 		self.visible = true
 		self.target = object_requesting_gizmo
+		gizmo_changed.emit(object_requesting_gizmo)
 
 func handle_object_recenter(object_requesting_gizmo_recenter: ScreenObject):
 	if target == object_requesting_gizmo_recenter:
