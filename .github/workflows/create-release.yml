@@ -5,7 +5,7 @@ on:
     - '*'
 
 env:
-  GODOT_VERSION: 4.4
+  GODOT_VERSION: 4.4.1
   EXPORT_NAME: GDTuber
   PROJECT_PATH: GDTuber
 
@@ -17,20 +17,20 @@ jobs:
       contents: write
     steps:
       - name: Create Release
-        uses: ncipollo/release-action@v1.15.0
+        uses: ncipollo/release-action@v1.18.0
         with:
           allowUpdates: true
           draft: false
           makeLatest: true
   export-windows:
     name: Windows Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       repository-projects: write
     container:
-      image: barichello/godot-ci:4.4
+      image: barichello/godot-ci:4.4.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,19 +54,19 @@ jobs:
           name: windows
           path: build/windows     
       - name: Upload Artifacts to Release
-        uses: ncipollo/release-action@v1.15.0
+        uses: ncipollo/release-action@v1.18.0
         with:
           allowUpdates: true
           artifacts: "build/windows/*"
   export-linux:
     name: Linux Export
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
       repository-projects: write
     container:
-      image: barichello/godot-ci:4.4
+      image: barichello/godot-ci:4.4.1
     steps:
       - name: Checkout
         uses: actions/checkout@v4
