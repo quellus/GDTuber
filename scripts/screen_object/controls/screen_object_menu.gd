@@ -34,6 +34,7 @@ func _ready():
 	if settingsmenu:
 		settingsmenu.blinktoggle.toggled.connect(_set_blinks)
 		settingsmenu.bouncetoggle.toggled.connect(_set_bounce)
+		settingsmenu.singlebouncetoggle.toggled.connect(_set_single_bounce)
 		settingsmenu.mouthtoggle.toggled.connect(_set_mouth)
 		settingsmenu.filtertoggle.toggled.connect(_set_filter)
 		settingsmenu.timertoggle.toggled.connect(_auto_toggle_enabled)
@@ -127,6 +128,9 @@ func _auto_toggle_enabled(value):
 
 func _set_bounce(value):
 	object.reactive = value
+
+func _set_single_bounce(value):
+	object.single_react = value
 
 
 func _set_speed(value):

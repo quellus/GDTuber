@@ -30,9 +30,10 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
 layout_mode = 2
-current_tab = 0
+current_tab = 2
 
 [node name="SO_SETTINGS_IMAGE_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -435,7 +436,6 @@ step = 0.01
 value = 0.5
 
 [node name="SO_SETTINGS_ANIMATION_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -465,6 +465,26 @@ text = "SO_SETTINGS_ANIMATION_TOGGLE_LABEL"
 horizontal_alignment = 1
 
 [node name="BounceBox" type="CheckBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Bounces/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
+theme = ExtResource("2_ves45")
+
+[node name="SingleBounce" type="PanelContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/SingleBounce"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/SingleBounce/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
+mouse_filter = 1
+text = "SingleBounce"
+horizontal_alignment = 1
+
+[node name="SingleBounce" type="CheckBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/SingleBounce/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
@@ -656,6 +676,7 @@ value = 30.0
 [connection signal="value_changed" from="Control/PanelContainer/TabContainer/SO_SETTINGS_COLOR_TAB/VBoxContainer/Saturation/HBoxContainer/SatSlider" to="." method="sync_ui_sat_val_changed"]
 [connection signal="value_changed" from="Control/PanelContainer/TabContainer/SO_SETTINGS_COLOR_TAB/VBoxContainer/Value/HBoxContainer/ValSpinBox" to="." method="sync_ui_val_val_changed"]
 [connection signal="value_changed" from="Control/PanelContainer/TabContainer/SO_SETTINGS_COLOR_TAB/VBoxContainer/Value/HBoxContainer/ValSlider" to="." method="sync_ui_val_val_changed"]
+[connection signal="toggled" from="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Bounces/HBoxContainer/BounceBox" to="." method="on_bounce_box_pressed"]
 [connection signal="value_changed" from="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Height/HBoxContainer/HeightSpinBox" to="." method="sync_ui_hight_val_changed"]
 [connection signal="value_changed" from="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Height/HBoxContainer/HeightSlider" to="." method="sync_ui_hight_val_changed"]
 [connection signal="value_changed" from="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/Speed/HBoxContainer/SpeedSpinBox" to="." method="sync_ui_speed_val_changed"]
