@@ -468,7 +468,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
-theme = ExtResource("2_ves45")
 
 [node name="SingleBounce" type="PanelContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -488,7 +487,6 @@ horizontal_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
-theme = ExtResource("2_ves45")
 
 [node name="Height" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2
