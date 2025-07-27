@@ -30,10 +30,9 @@ grow_vertical = 2
 
 [node name="TabContainer" type="TabContainer" parent="Control/PanelContainer"]
 layout_mode = 2
-current_tab = 2
+current_tab = 0
 
 [node name="SO_SETTINGS_IMAGE_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
-visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -436,6 +435,7 @@ step = 0.01
 value = 0.5
 
 [node name="SO_SETTINGS_ANIMATION_TAB" type="MarginContainer" parent="Control/PanelContainer/TabContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -480,13 +480,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
 mouse_filter = 1
-text = "SingleBounce"
+text = "SO_SETTINGS_ANIMATION_SINGLE_BOUNCE_LABEL"
 horizontal_alignment = 1
 
 [node name="SingleBounce" type="CheckBox" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer/SingleBounce/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "SO_SETTINGS_ANIMATION_TOGGLE_TOOLTIP"
+tooltip_text = "SO_SETTINGS_ANIMATION_SINGLE_BOUNCE_LABEL_TOOLTIP"
 
 [node name="Height" type="VBoxContainer" parent="Control/PanelContainer/TabContainer/SO_SETTINGS_ANIMATION_TAB/ScrollContainer/VBoxContainer"]
 layout_mode = 2

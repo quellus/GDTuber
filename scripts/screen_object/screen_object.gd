@@ -12,6 +12,7 @@ var copy_properties = [
 	"texture",
 	"filter",
 	"reactive",
+	"single_react",
 	"talking",
 	"blinking",
 	"min_blink_delay",

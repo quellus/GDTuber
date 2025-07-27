@@ -33,6 +33,7 @@ static func serialize_scene_state_to_json(main_menu: Menu) -> String:
 					"texturepath": obj.texturepath,
 					"blinking": obj.blinking,
 					"reactive": obj.reactive,
+					"single_react": obj.single_react,
 					"talking": obj.talking,
 					"filter": obj.filter,
 					"rotation": obj.user_rotation,

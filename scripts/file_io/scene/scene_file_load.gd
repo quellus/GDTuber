@@ -189,6 +189,10 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 						new_onscreen_object.blink_duration = (
 							obj["blink_duration"] if obj.has("blink_duration") else 2
 						)
+					# 0.14
+					if version.naturalnocasecmp_to("0.14") >= 0:
+						new_onscreen_object.single_react = (obj["single_react"] if obj.has("single_react") else false
+						)
 
 					new_onscreen_object.update_menu.emit()
 				else:
