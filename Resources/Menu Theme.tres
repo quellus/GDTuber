@@ -1,10 +1,24 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d18y4voshb0um"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d18y4voshb0um"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wb5p2"]
 bg_color = Color(0.85098, 0.85098, 0.85098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hn8hj"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5erh5"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
 
 [resource]
 default_font_size = 11
 Button/colors/font_color = Color(0, 0, 0, 1)
 Button/font_sizes/font_size = 11
 Button/styles/normal = SubResource("StyleBoxFlat_wb5p2")
+CheckBox/styles/normal = SubResource("StyleBoxFlat_hn8hj")
+CheckBox/styles/pressed = SubResource("StyleBoxFlat_5erh5")
