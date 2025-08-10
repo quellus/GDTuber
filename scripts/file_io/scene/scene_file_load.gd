@@ -39,7 +39,9 @@ static func validate_object_json(dict: Dictionary, version: String) -> bool:
 		},
 		"0.11": {"auto_toggle_enabled": TYPE_BOOL, "auto_toggle_time": TYPE_FLOAT},
 		"0.13":
-		{"min_blink_delay": TYPE_FLOAT, "max_blink_delay": TYPE_FLOAT, "blink_duration": TYPE_FLOAT}
+			{"min_blink_delay": TYPE_FLOAT, "max_blink_delay": TYPE_FLOAT, "blink_duration": TYPE_FLOAT},
+		"0.15": 
+			{"single_react": TYPE_BOOL},
 	}
 	for v in versions:
 		if version.naturalnocasecmp_to(v) >= 0:
@@ -189,7 +191,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 						new_onscreen_object.blink_duration = (
 							obj["blink_duration"] if obj.has("blink_duration") else 2
 						)
-					# 0.14
+					# 0.15
 					if version.naturalnocasecmp_to("0.14") >= 0:
 						new_onscreen_object.single_react = (obj["single_react"] if obj.has("single_react") else false
 						)
