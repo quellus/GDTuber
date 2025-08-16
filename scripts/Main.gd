@@ -290,8 +290,3 @@ func _on_max_fps_spinbox_value_changed(value: float) -> void:
 	fps_cap_value = int(value)
 	if int(value) != Engine.get_max_fps():
 		Engine.set_max_fps(int(value))
-
-
-func _on_audio_reset_timer_timeout() -> void:
-	print_debug("Calling Resetting audio device")
-	AudioManager.audio_reset()

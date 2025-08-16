@@ -6,6 +6,8 @@ const MAX_SAMPLES = 20
 const THRESHOLD_DEFAULT: float = 0.5
 const INPUT_GAIN_DEFAULT: float = 0.0
 
+const AUDIO_REST_TIMEOUT = 60
+
 #Audio Vars
 var bus_index
 var analyzer: AudioEffectSpectrumAnalyzerInstance
@@ -14,14 +16,17 @@ var amplifier_effect = AudioEffectAmplify
 var threshold = 0.5
 var input_gain: float
 var input_device: String
-var mag_throbber_value:= 0.0 # maybe should be capitalized as a read value? 
-
-# UI should be subscribeing to events 
-# that animate this? I guess? 
+var mag_throbber_value:= 0.0
+var _microphone_reset_timer := Timer.new()
 
 func _ready() -> void:
     bus_index = AudioServer.get_bus_index("Record")
     amplifier_effect = AudioServer.get_bus_effect(bus_index, 1)
+
+    _microphone_reset_timer.wait_time=AUDIO_REST_TIMEOUT
+    _microphone_reset_timer.timeout.connect(self.audio_reset)
+    _microphone_reset_timer.autostart=true
+    add_child(_microphone_reset_timer)
 
 func get_audio_devices() -> PackedStringArray: 
     return  AudioServer.get_input_device_list()
