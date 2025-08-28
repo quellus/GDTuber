@@ -192,7 +192,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 							obj["blink_duration"] if obj.has("blink_duration") else 2
 						)
 					# 0.15
-					if version.naturalnocasecmp_to("0.14") >= 0:
+					if version.naturalnocasecmp_to("0.15") >= 0:
 						new_onscreen_object.single_react = (obj["single_react"] if obj.has("single_react") else false
 						)
 
