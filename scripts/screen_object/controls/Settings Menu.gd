@@ -16,6 +16,7 @@ signal blink_duration_change(blink_duration)
 @onready var timerspinbox: SpinBox = %TimerSpinBox
 
 @onready var bouncetoggle: Button = %BounceBox
+@onready var singlebouncetoggle: Button = %SingleBounce
 @onready var speedslider: Slider = %SpeedSlider
 @onready var heightslider: Slider = %HeightSlider
 
@@ -86,3 +87,8 @@ func sync_ui_sat_val_changed(value: float):
 func sync_ui_val_val_changed(value: float):
 	%ValSpinBox.value = value
 	%ValSlider.value = value
+
+func on_bounce_box_pressed(toggleState: bool):
+	# disable if we have bouncing disables all together 
+	%SingleBounce.disabled = (!toggleState)
+	
