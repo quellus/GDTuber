@@ -12,6 +12,7 @@ var copy_properties = [
 	"texture",
 	"filter",
 	"reactive",
+	"single_react",
 	"talking",
 	"blinking",
 	"min_blink_delay",
@@ -125,6 +126,10 @@ var blinking := true:
 var reactive := true:
 	set(value):
 		reactive = value
+		create_visual()
+var single_react := false:
+	set(value):
+		single_react = value
 		create_visual()
 var talking := true:
 	set(value):
@@ -284,6 +289,8 @@ func restart_tween():
 			visualsroot, "position", Vector2(0, -user_height), 0.2 / user_speed
 		)
 		bounce_tween.tween_property(visualsroot, "position", Vector2(0, 0), 0.2 / user_speed)
+		if single_react:
+			return 
 		bounce_tween.tween_callback(restart_tween)
 
 

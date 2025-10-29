@@ -7,11 +7,15 @@ Options for modifying the Hue, Saturation and Lightness(Value) of the image obje
 
 ## Animation
 
-<img src="./doc_pictures/animationControls.png" alt="image" width="150" height="auto"> 
+<img src="./doc_pictures/animationControls-v2.png" alt="image" width="150" height="auto"> 
 
-### Animate Object 
+### Animate Object
 
 Check box that controls if the screen object should bounce up and down. 
+
+### Single Bounce 
+
+Check box that when the [Animate Object](#Animate-Object) checkbox is enabled, screen object will bounce once per voice activity detection. Single Bounce is disabled when [Animate Object](#Animate-Object) is disabled
 
 ### Animate Object 
 
