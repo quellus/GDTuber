@@ -65,6 +65,7 @@ var input_device: String
 @onready var max_fps_spinbox = %MaxFPSSpinbox
 @onready var fps_cap: bool = false
 @onready var fps_cap_value: int = 0
+var FPS_LABEL_SETTING : String = ""
 
 # Audio Management
 @onready var input_gain_slider: Slider = %InputGainSlider
@@ -80,6 +81,9 @@ var input_device: String
 func _ready():
 	# Set Window Properties
 	get_tree().get_root().set_transparent_background(true)
+
+	# Set FPS translation label for later translations
+	FPS_LABEL_SETTING = %CurrentFPSLabel.text
 
 	# Set Audio Properties
 	bus_index = AudioServer.get_bus_index("Record")
@@ -122,8 +126,8 @@ func _process(_delta):
 			is_talking = false
 
 	%VolumeVisual.value = magnitude_avg
-
-	%CurrentFPSLabel.set_text("Current FPS %.1f" % Engine.get_frames_per_second())
+	
+	%CurrentFPSLabel.set_text("%s %.1f" % [ tr(FPS_LABEL_SETTING), Engine.get_frames_per_second()])
 
 
 func _notification(what):

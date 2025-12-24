@@ -14,7 +14,7 @@ config/name="GDTuber"
 config/description="No Description"
 config/version="0.15"
 run/main_scene="res://scenes/Main.tscn"
-config/features=PackedStringArray("4.4")
+config/features=PackedStringArray("4.5")
 run/low_processor_mode=true
 config/icon="res://Assets/GDTuber.png"
 config/windows_native_icon="res://GDTuber Icon.ico"
@@ -71,7 +71,7 @@ ui_down={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Translations/English.en.translation", "res://Translations/Hungarian.hu.translation")
+locale/translations=PackedStringArray("res://Translations/English.en.translation", "res://Translations/Hungarian.hu.translation", "res://Translations/Brazilian Portuguese.pt_BR.translation")
 
 [rendering]
 

@@ -215,17 +215,12 @@ text = "SETTINGS_SAVE_BUTTON"
 layout_mode = 2
 text = "SETTINGS_LOAD_BUTTON"
 
-[node name="Transparency Toggle" type="Panel" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
+[node name="Transparency Toggle" type="PanelContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Transparency Toggle"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Transparency Toggle/HBoxContainer"]
 layout_mode = 2
@@ -245,19 +240,14 @@ button_pressed = true
 alignment = 1
 icon_alignment = 1
 
-[node name="BackgroundColor" type="Panel" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
+[node name="BackgroundColor" type="PanelContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/BackgroundColor"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="Label" type="Label" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/BackgroundColor/HBoxContainer"]
 layout_mode = 2
@@ -273,18 +263,13 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.52
 color = Color(0, 1, 0, 1)
 
-[node name="Fixed Window Size" type="Panel" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
+[node name="Fixed Window Size" type="PanelContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
 clip_contents = true
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Fixed Window Size"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 tooltip_text = "SETTINGS_WINDOW_SIZE_TOOLTIP"
 
 [node name="MarginContainer" type="MarginContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/Fixed Window Size/HBoxContainer"]
@@ -313,25 +298,14 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("3_5cu1w")
 
-[node name="WindowSize" type="Panel" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
+[node name="WindowSize" type="PanelContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(0, 85)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/WindowSize"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -41.5
-offset_top = -33.0
-offset_right = 41.5
-offset_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Menu/PanelContainer/SettingsMenu/VBoxContainer2/TopMenuItems/WindowSize/VBoxContainer"]
 layout_mode = 2
@@ -509,7 +483,7 @@ use_native_dialog = true
 [node name="JSONLoadDialog" type="FileDialog" parent="."]
 unique_name_in_owner = true
 title = "Open a File"
-size = Vector2i(312, 175)
+size = Vector2i(348, 175)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
