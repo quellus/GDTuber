@@ -1,0 +1,15 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://dkm2agnlbu52s"
+valid=false
+
+[deps]
+
+source_file="res://Translations/Brazilian Portuguese.csv"
+
+[params]
+
+compress=true
+delimiter=0

@@ -21,9 +21,12 @@ func setup() -> void:
 
 
 func set_language_from_os():
+	var os_locale = OS.get_locale()
 	var os_lang = OS.get_locale_language()
 	if os_lang in available_locales:
 		TranslationServer.set_locale(os_lang)
+	elif os_locale in available_locales:
+		TranslationServer.set_locale(os_locale)
 	else:
 		TranslationServer.set_locale("en")
 
@@ -33,17 +36,19 @@ func set_locale(locale: String):
 	var language = TranslationServer.get_locale_name(locale)
 	for i in range(language_dropdown.item_count):
 		if language == language_dropdown.get_item_text(i):
-			print("selected ", i)
+			#print("selected ", i)
 			language_dropdown.selected = i
 			return
 
 
 func _on_locale_changed(index: int) -> void:
 	var language = language_dropdown.get_item_text(index)
-	if language == tr(DEFAULT_LANGUAGE_LABEL):
+	if index == 0:
 		set_language_from_os()
 	else:
 		TranslationServer.set_locale(language_map[language])
+		
+	language_dropdown.set_item_text(0, tr(DEFAULT_LANGUAGE_LABEL))
 
 
 func _populate_dropdown():

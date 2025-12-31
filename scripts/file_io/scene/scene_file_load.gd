@@ -90,7 +90,7 @@ static func load_scene_from_file(path: String, main_menu: Menu):
 	var background_color: Color = main_menu.background_color
 	var bg_color_picker: ColorPickerButton = main_menu.bg_color_picker
 	var background: ColorRect = main_menu.background
-	var bgcolor: Panel = main_menu.bg_color
+	var bgcolor: PanelContainer = main_menu.bg_color
 	var bg_transparent_toggle: CheckBox = main_menu.bg_transparent_toggle
 	var fixed_window_size_toggle: CheckBox = main_menu.fixed_window_size_toggle
 	var fixed_window_width_spinbox: SpinBox = main_menu.fixed_window_width_spinbox
