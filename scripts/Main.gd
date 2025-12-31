@@ -9,6 +9,9 @@ const MAX_SAMPLES = 20
 @export var gizmo: Gizmo
 
 # Screen Object Editing
+var image_property
+var path_property
+var requestor_menu
 
 # The project version is stored in Project Settings->Config->Version
 var project_version = ProjectSettings.get_setting("application/config/version")
@@ -99,6 +102,9 @@ func _ready():
 	menu_shown = true
 	SceneFileLoad.load_scene_from_file(PlatformConsts.AUTOSAVE_PATH, self)
 
+	# Initialize Load Image Dialog
+	file_dialog.file_selected.connect(_load_image)
+
 	_load_system_data()
 
 
@@ -136,6 +142,8 @@ func _notification(what):
 func _save_file(path: String):
 	SceneFileSave.save_scene_to_file(self, path)
 
+func _load_image(path):
+	requestor_menu.set_screen_object_image(path, image_property, path_property)
 
 func _on_save_button():
 	json_save_dialog.popup_centered()
@@ -150,9 +158,10 @@ func _order_object_in_scene():
 	for node: ScreenObjectMenu in MenusRoot.get_children():
 		ObjectsRoot.move_child(node.object, node.get_index())
 
-func _request_image(requestor_menu: ScreenObjectMenu, imageproperty: String, pathproperty: String):
-	file_dialog.file_selected.connect(func file_selector_return(path):
-		requestor_menu.set_screen_object_image(path, imageproperty, pathproperty))
+func _request_image(requestor_menu: ScreenObjectMenu, image_property: String, path_property: String):
+	self.requestor_menu = requestor_menu
+	self.image_property = image_property
+	self.path_property = path_property
 	file_dialog.popup_centered()
 
 func _duplicate_object_in_scene(object_for_duplication: ScreenObject):
