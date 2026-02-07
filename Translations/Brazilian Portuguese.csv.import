@@ -3,11 +3,13 @@
 importer="csv_translation"
 type="Translation"
 uid="uid://dkm2agnlbu52s"
-valid=false
 
 [deps]
 
+files=["res://Translations/Brazilian Portuguese.pt_BR.translation"]
+
 source_file="res://Translations/Brazilian Portuguese.csv"
+dest_files=["res://Translations/Brazilian Portuguese.pt_BR.translation"]
 
 [params]
 
