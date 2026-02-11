@@ -5,7 +5,7 @@ on:
     - '*'
 
 env:
-  GODOT_VERSION: 4.4.1
+  GODOT_VERSION: 4.6
   EXPORT_NAME: GDTuber
   PROJECT_PATH: GDTuber
 
@@ -30,7 +30,7 @@ jobs:
       pull-requests: write
       repository-projects: write
     container:
-      image: barichello/godot-ci:4.4.1
+      image: barichello/godot-ci:4.6
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -66,7 +66,7 @@ jobs:
       pull-requests: write
       repository-projects: write
     container:
-      image: barichello/godot-ci:4.4.1
+      image: barichello/godot-ci:4.6
     steps:
       - name: Checkout
         uses: actions/checkout@v4
