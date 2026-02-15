@@ -76,7 +76,7 @@ ui_down={
 
 [internationalization]
 
-locale/translations=PackedStringArray("res://Translations/English.en.translation", "res://Translations/Hungarian.hu.translation")
+locale/translations=PackedStringArray("res://Translations/English.en.translation", "res://Translations/Hungarian.hu.translation", "res://Translations/Brazilian Portuguese.pt_BR.translation")
 
 [rendering]
 
