@@ -104,6 +104,9 @@ func _process(_delta):
 		if is_talking:
 			is_talking = false
 
+	print("MagThrobberMain:", AudioManager.mag_throbber_value_sample)
+	%VolumeVisual2.value = AudioManager.mag_throbber_value_sample
+
 	%VolumeVisual.value = magnitude_avg
 	
 	%CurrentFPSLabel.set_text("%s %.1f" % [ tr(FPS_LABEL_SETTING), Engine.get_frames_per_second()])

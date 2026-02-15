@@ -17,16 +17,21 @@ var threshold = 0.5
 var input_gain: float
 var input_device: String
 var mag_throbber_value:= 0.0
-var _microphone_reset_timer := Timer.new()
+var mag_throbber_value_sample:= 0.0
+# var _microphone_reset_timer := Timer.new()
+
+@onready var input_mix_rate: int = int(AudioServer.get_input_mix_rate())
+var audio_chunk_time: float = 0.02
+@onready var audio_sample_size: int = int(input_mix_rate * audio_chunk_time + 0.5)
 
 func _ready() -> void:
     bus_index = AudioServer.get_bus_index("Record")
     amplifier_effect = AudioServer.get_bus_effect(bus_index, 1)
 
-    _microphone_reset_timer.wait_time=AUDIO_REST_TIMEOUT
-    _microphone_reset_timer.timeout.connect(self.audio_reset)
-    _microphone_reset_timer.autostart=true
-    add_child(_microphone_reset_timer)
+    # _microphone_reset_timer.wait_time=AUDIO_REST_TIMEOUT
+    # _microphone_reset_timer.timeout.connect(self.audio_reset)
+    # _microphone_reset_timer.autostart=true
+    # add_child(_microphone_reset_timer)
 
 func get_audio_devices() -> PackedStringArray: 
     return  AudioServer.get_input_device_list()
@@ -39,17 +44,54 @@ func _get_average() -> float:
     mag_avg = mag_sum / float(samples.size())
     return mag_avg
 
+func new_process(_delta: float) -> void:
+    print("------New Audio--------")
+    var peak = 0.0 
+    # Audio Processing
+    var left_sample_frame_totals: float = 0.0
+    var total_samples = 0
+
+    while AudioServer.get_input_frames_available() >= MAX_SAMPLES:
+        var audio_samples: PackedVector2Array = AudioServer.get_input_frames(MAX_SAMPLES)
+
+        if not audio_samples:
+            return
+        total_samples += audio_samples.size()
+        print("audio Sample size:",  total_samples)
+
+        for sample_frames in audio_samples:
+            if abs(sample_frames.x) > peak:
+                peak = abs(sample_frames.x)
+            left_sample_frame_totals += abs(sample_frames.x)
+
+    if total_samples > 0:
+        var frame_sample_average = left_sample_frame_totals/ float(total_samples)
+        var display_average = clamp(frame_sample_average * 10.0, 0.0, 1.0)
+        
+        mag_throbber_value_sample = display_average
+
+        print("Frame Sample: ", display_average) # should be left
+
+
 func _process(_delta: float) -> void:
+    print("--------Old Audio----------")
     # Audio Processing
     var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
+    print("left Bus db: ", current_db)
     var magnitude = db_to_linear(current_db)
+    # print("magnitude: ", magnitude)
 
     if samples.size() >= MAX_SAMPLES:
         samples.pop_front()
+        # print("sample pop:", )
     samples.append(magnitude)
     
     var magnitude_avg = _get_average() 
     mag_throbber_value = magnitude_avg
+    
+    print("Mag throbber Val: ", magnitude_avg)
+    
+    new_process(_delta)
 
 func set_input_source(new_input_device) -> void:
     AudioServer.set_input_device(new_input_device)
