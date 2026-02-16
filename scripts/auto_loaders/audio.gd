@@ -8,6 +8,11 @@ const INPUT_GAIN_DEFAULT: float = 0.0
 
 const AUDIO_REST_TIMEOUT = 60
 
+@export var min_db: float = -60.0
+@export var noise_floor: float = 0.02
+@export var throb_speed: float = 20.0
+@export var release_speed: float = 6.0
+
 #Audio Vars
 var bus_index
 var analyzer: AudioEffectSpectrumAnalyzerInstance
@@ -46,10 +51,11 @@ func _get_average() -> float:
 
 func new_process(_delta: float) -> void:
     print("------New Audio--------")
-    var peak = 0.0 
     # Audio Processing
     var left_sample_frame_totals: float = 0.0
     var total_samples = 0
+    var smoothed: float = 0.0
+
 
     while AudioServer.get_input_frames_available() >= MAX_SAMPLES:
         var audio_samples: PackedVector2Array = AudioServer.get_input_frames(MAX_SAMPLES)
@@ -57,27 +63,50 @@ func new_process(_delta: float) -> void:
         if not audio_samples:
             return
         total_samples += audio_samples.size()
-        print("audio Sample size:",  total_samples)
+        # print("audio Sample size:",  total_samples)
 
         for sample_frames in audio_samples:
-            if abs(sample_frames.x) > peak:
-                peak = abs(sample_frames.x)
-            left_sample_frame_totals += abs(sample_frames.x)
+            var s = sample_frames.x
+            left_sample_frame_totals += s * s
 
     if total_samples > 0:
-        var frame_sample_average = left_sample_frame_totals/ float(total_samples)
-        var display_average = clamp(frame_sample_average * 10.0, 0.0, 1.0)
-        
-        mag_throbber_value_sample = display_average
+        # root median squared, for smoother numbers 
+        var rms_sample_average = sqrt(left_sample_frame_totals/ float(total_samples))
 
-        print("Frame Sample: ", display_average) # should be left
+        rms_sample_average *= input_gain/6.0
+        var db = linear_to_db(rms_sample_average)
+        
+        var display_average = inverse_lerp(min_db, 0.0, db)
+        display_average = clamp(display_average, 0.0, 1.0)
+
+        mag_throbber_value_sample = display_average 
+
+
+        print("current Gain ", input_gain)
+        print("new throbber: ", mag_throbber_value_sample)
+
+        
+
+        #var display_average = clamp((db - min_db) / -min_db, 0.0, 1.0)
+        #display_average = clamp(display_average, 0.0, 1.0)
+#
+        #if display_average < noise_floor:
+        #    display_average = 0.0
+        #
+        #var speed = throb_speed if display_average > smoothed else release_speed
+        #smoothed = lerp(smoothed, display_average, 1.0 - exp(-speed * _delta))
+#
+        #mag_throbber_value_sample = smoothed * 2 
+        
+
+        # print("New Throbber: ", display_average) # should be left
 
 
 func _process(_delta: float) -> void:
     print("--------Old Audio----------")
     # Audio Processing
     var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
-    print("left Bus db: ", current_db)
+    # print("left Bus db: ", current_db)
     var magnitude = db_to_linear(current_db)
     # print("magnitude: ", magnitude)
 
@@ -89,7 +118,7 @@ func _process(_delta: float) -> void:
     var magnitude_avg = _get_average() 
     mag_throbber_value = magnitude_avg
     
-    print("Mag throbber Val: ", magnitude_avg)
+    print("Old Throbber: ", magnitude_avg)
     
     new_process(_delta)
 
