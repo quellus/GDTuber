@@ -15,5 +15,3 @@ dest_files=["res://Translations/Brazilian Portuguese.pt_BR.translation"]
 
 compress=true
 delimiter=0
-unescape_keys=false
-unescape_translations=true
