@@ -32,6 +32,7 @@ enable_audio_input=true
 [autoload]
 
 WindowManager="*res://scripts/WindowManager.gd"
+AudioManager="*res://scripts/auto_loaders/audio.gd"
 
 [display]
 

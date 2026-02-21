@@ -33,17 +33,6 @@ var is_talking := false:
 					screen_object.is_talking = value
 		is_talking = value
 
-
-#Audio Vars
-var bus_index
-var analyzer: AudioEffectSpectrumAnalyzerInstance
-var samples: Array[float] = []
-var amplifier_effect = AudioEffectAmplify
-var threshold = 0.5
-var input_gain: float
-var input_device: String
-
-
 # Window Management
 @onready var titleedit: LineEdit = %TitleEdit
 @onready var profilename: String = "GDTuber Avatar"
@@ -71,9 +60,7 @@ var input_device: String
 var FPS_LABEL_SETTING : String = ""
 
 # Audio Management
-@onready var input_gain_slider: Slider = %InputGainSlider
-@onready var threshold_slider: Slider = %ThresholdSlider
-@onready var device_dropdown := %DeviceDropdown
+@onready var device_dropdown = %DeviceDropdown.get_popup()
 
 # File Management
 @onready var file_dialog: FileDialog = %ImageOpenDialog
@@ -88,14 +75,8 @@ func _ready():
 	# Set FPS translation label for later translations
 	FPS_LABEL_SETTING = %CurrentFPSLabel.text
 
-	# Set Audio Properties
-	bus_index = AudioServer.get_bus_index("Record")
-	amplifier_effect = AudioServer.get_bus_effect(bus_index, 1)
-	var popup_menu = device_dropdown.get_popup()
-	var devices = AudioServer.get_input_device_list()
-	popup_menu.index_pressed.connect(_on_popup_menu_index_pressed)
-	for device_name in devices:
-		popup_menu.add_item(device_name)
+	for device_name in AudioManager.get_audio_devices(): device_dropdown.add_item(device_name)
+	device_dropdown.index_pressed.connect(_on_popup_menu_index_pressed)
 	%VersionLabel.text = "Version: " + ProjectSettings.get_setting("application/config/version")
 
 	# Initialize Localization
@@ -111,20 +92,12 @@ func _ready():
 
 	_load_system_data()
 
-
 ### Process
 func _process(_delta):
-	# Audio Processing
-	var current_db = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
-	var magnitude = db_to_linear(current_db)
 
-	if samples.size() >= MAX_SAMPLES:
-		samples.pop_front()
-	samples.append(magnitude)
+	var magnitude_avg = AudioManager.mag_throbber_value
 
-	var magnitude_avg = _get_average()
-
-	if magnitude_avg > threshold:
+	if magnitude_avg > AudioManager.threshold:
 		if !is_talking:
 			is_talking = true
 	else:
@@ -134,7 +107,6 @@ func _process(_delta):
 	%VolumeVisual.value = magnitude_avg
 	
 	%CurrentFPSLabel.set_text("%s %.1f" % [ tr(FPS_LABEL_SETTING), Engine.get_frames_per_second()])
-
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -154,9 +126,8 @@ func _on_save_button():
 
 
 func _autosave():
-	SystemSettings.save_system_data(input_device, threshold, input_gain)
+	SystemSettings.save_system_data()
 	SceneFileSave.save_scene_to_file(self)
-
 
 func _order_object_in_scene():
 	for node: ScreenObjectMenu in MenusRoot.get_children():
@@ -192,7 +163,6 @@ func add_scene_object_with_ui_to_scene(screen_object_menu_ui: ScreenObjectMenu):
 	gizmo.gizmo_changed.connect(screen_object_menu_ui.update_gizmo_button)
 	screen_object_menu_ui.update_menu()
 
-
 func _add_new_object_to_scene():
 	if MenusRoot and ObjectsRoot:
 		add_scene_object_with_ui_to_scene(
@@ -202,14 +172,15 @@ func _load_system_data():
 	var system_setting_array: Array = SystemSettings.load_system_data()
 
 	if system_setting_array.is_empty() == false:
-		input_device = system_setting_array[0]
-		threshold = system_setting_array[1]
-		input_gain = system_setting_array[2]
+		var input_device = system_setting_array[0]
+		var threshold = system_setting_array[1]
+		var input_gain = system_setting_array[2]
 		var locale = system_setting_array[3]
+		
+		AudioManager.set_audio_config(input_device,threshold,input_gain)
 
-		AudioServer.set_input_device(input_device)
-		threshold_slider.value = threshold
-		input_gain_slider.value = input_gain
+		%InputGainSlider.value=input_gain
+		%ThresholdSlider.value=threshold
 
 		if locale != TranslationServer.get_locale():
 			localization.set_locale(locale)
@@ -239,7 +210,7 @@ func _on_button_button_down():
 
 
 func _on_quit_button_button_down():
-	SystemSettings.save_system_data(input_device, threshold, input_gain)
+	SystemSettings.save_system_data()
 	_save_file(PlatformConsts.AUTOSAVE_PATH)
 	get_tree().quit()
 
@@ -298,34 +269,15 @@ func _set_profile_name(pname: String):
 
 ### Audio Management
 func _on_popup_menu_index_pressed(index: int):
-	var popup_menu = device_dropdown.get_popup()
-	input_device = popup_menu.get_item_text(index)
-	AudioServer.set_input_device(input_device)
-
-
-func _get_average() -> float:
-	var mag_sum: float = 0.0
-	var mag_avg: float = 0.0
-	for i in samples:
-		mag_sum += i
-	mag_avg = mag_sum / float(samples.size())
-	return mag_avg
-
-
-func update_amplifier(_new_input_gain: float):
-	if _new_input_gain <= -10.0 || _new_input_gain >= 24.1:
-		return
-	if amplifier_effect.volume_db != _new_input_gain:
-		amplifier_effect.volume_db = _new_input_gain
+	var input_device = device_dropdown.get_item_text(index)
+	AudioManager.set_input_source(input_device)
 
 
 func _on_v_slider_drag_ended(value_changed):
-	threshold = value_changed
-
+	AudioManager.threshold=value_changed
 
 func _on_input_gain_change(_new_input_gain: float):
-	input_gain = _new_input_gain
-	update_amplifier(_new_input_gain)
+	AudioManager.set_input_gain(_new_input_gain)
 
 
 ### Input
@@ -351,14 +303,3 @@ func _on_max_fps_spinbox_value_changed(value: float) -> void:
 	fps_cap_value = int(value)
 	if int(value) != Engine.get_max_fps():
 		Engine.set_max_fps(int(value))
-
-
-func _on_audio_reset_timer_timeout() -> void:
-	print_debug("Resetting audio device")
-	var orig_device = AudioServer.input_device
-	var devices = AudioServer.get_input_device_list()
-	var index = devices.find(orig_device)
-	var rand_index = (index + randi_range(1, devices.size() - 1)) % devices.size()
-	AudioServer.input_device = devices[rand_index]
-	await get_tree().create_timer(0.2).timeout
-	AudioServer.input_device = orig_device
