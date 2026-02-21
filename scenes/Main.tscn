@@ -109,15 +109,7 @@ mouse_filter = 1
 theme = ExtResource("3_5cu1w")
 text = "MAIN_THRESHOLD_LABEL"
 
-[node name="VolumeVisual2" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer" unique_id=777312804]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(15, 12.49)
-layout_mode = 2
-size_flags_vertical = 1
-max_value = 1.0
-show_percentage = false
-
-[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer" unique_id=612500922]
+[node name="VolumeVisual" type="ProgressBar" parent="Menu/PanelContainer/MainMenu/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(15, 12.49)
 layout_mode = 2
